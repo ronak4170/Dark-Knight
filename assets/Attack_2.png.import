@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c7kf350ejvyog"
-path="res://.godot/imported/Attack_2.png-57d7df966a42500cfb2564c10704c53f.ctex"
+path="res://.godot/imported/Attack_2.png-2300aa8807aebcaa5a0a0a757c770e2d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/craftpix-net-123681-free-samurai-pixel-art-sprite-sheets/Samurai/Attack_2.png"
-dest_files=["res://.godot/imported/Attack_2.png-57d7df966a42500cfb2564c10704c53f.ctex"]
+source_file="res://assets/Attack_2.png"
+dest_files=["res://.godot/imported/Attack_2.png-2300aa8807aebcaa5a0a0a757c770e2d.ctex"]
 
 [params]
 
