@@ -203,19 +203,22 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ur7pv"]
 radius = 12.0
-height = 74.0
+height = 70.0
 
 [node name="player" type="CharacterBody2D"]
+collision_layer = 2
 script = ExtResource("1_g2els")
 jump_velocity = -200.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(163, 157)
+scale = Vector2(1, 1.0078125)
 sprite_frames = SubResource("SpriteFrames_smehm")
 animation = &"jump_start"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(2, 31)
+position = Vector2(168, 186)
 shape = SubResource("CapsuleShape2D_ur7pv")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
