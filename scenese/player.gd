@@ -13,42 +13,82 @@ var animated_locked : bool = false
 var direction : Vector2 = Vector2.ZERO
 var was_in_air : bool = false
 var jumps_left : int 
+var is_attacking : bool = false
+var combo_step : int = 0
+var queue_attacks : int = 0
+var was_on_floor : bool = false
+var is_defending : bool = false
+
+func _ready() -> void:
+	was_on_floor = is_on_floor()
+	jumps_left = max_jumps
 
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
+	# Apply gravity
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-		was_in_air = true
-	else:
-		jumps_left = max_jumps
-		
-		if was_in_air == true:
-			land()
-			
-		was_in_air = false
-		
-	# Handle jump.
-	if Input.is_action_just_pressed("jump") and jumps_left > 0:
+
+	# Jump
+	if not is_defending and Input.is_action_just_pressed("jump") and jumps_left > 0:
 		if jumps_left == max_jumps:
 			jump()
 		else:
 			double_jump()
-			
 		jumps_left -= 1
+		
+	# Defend (hold)
+	if Input.is_action_pressed("defend") and is_on_floor():
+		is_defending = true
+		animated_locked = true
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	direction = Input.get_vector("left", "right",  "up" , "down")
-	if direction.x != 0 && animated_sprite.animation != "jump_end":
-		velocity.x = direction.x * speed
+		if animated_sprite.animation != "defend":
+			animated_sprite.play("defend")
 	else:
-		velocity.x = move_toward(velocity.x, 0, speed)
+		if is_defending:
+			is_defending = false
+			animated_locked = false
+
+	if is_defending:
+		velocity.x = 0
+		move_and_slide()
+		update_facing_direction()
+		return
+		
+	# Attack input
+	if Input.is_action_just_pressed("attack"):
+		handle_attack_input()
+
+	if is_attacking:
+		velocity.x = 0
+	else:
+		direction = Input.get_vector("left", "right", "up", "down")
+		if direction.x != 0 and animated_sprite.animation != "jump_end":
+			velocity.x = direction.x * speed
+		else:
+			velocity.x = move_toward(velocity.x, 0, speed)
+
+	# Save floor state before moving
+	var prev_on_floor := was_on_floor
 
 	move_and_slide()
+
+	var on_floor_now := is_on_floor()
+	was_on_floor = on_floor_now
+
+	if on_floor_now:
+		jumps_left = max_jumps
+
+	if on_floor_now and not prev_on_floor:
+		land()
+
 	update_animation()
 	update_facing_direction()
+
 	
 func update_animation():
+	if is_defending:
+		return
+		
 	if not animated_locked:
 		if not is_on_floor():
 			animated_sprite.play("jump_loop")
@@ -76,13 +116,41 @@ func land():
 	
 
 func _on_animated_sprite_2d_animation_finished():
-	if (animated_sprite.animation == "jump_end"):
+	if is_defending:
+		return
+	
+	print("animation finished: ", animated_sprite.animation)
+	if animated_sprite.animation == "jump_end" or animated_sprite.animation == "jump_start":
 		animated_locked = false
-	elif (animated_sprite.animation == "jump_start"):
-		animated_locked = false
+		return
 		
+	if animated_sprite.animation.begins_with("attack_"):
+		if queue_attacks > 0 and combo_step < 3:
+			queue_attacks -= 1
+			combo_step += 1
+			animated_sprite.play("attack_%d" % combo_step)
+		else:
+			is_attacking = false
+			combo_step = 0
+			queue_attacks = 0
+			animated_locked = false
+			
+ 		
 func double_jump():
 	velocity.y = double_jump_velocity
 	animated_sprite.play("jump_start")
 	animated_locked = true
+	
+func handle_attack_input():
+	if not is_attacking:
+		is_attacking = true
+		animated_locked = true
+		combo_step = 1
+		queue_attacks = 0
+		animated_sprite.play("attack_1")
+		return
+		
+	if combo_step + queue_attacks < 3:
+		queue_attacks += 1
+			
 		
