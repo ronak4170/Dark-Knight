@@ -12,7 +12,7 @@ extends CharacterBody2D
 var animated_locked : bool = false
 var direction : Vector2 = Vector2.ZERO
 var was_in_air : bool = false
-var jumps_left : int 
+var jumps_left : int
 var is_attacking : bool = false
 var combo_step : int = 0
 var queue_attacks : int = 0
@@ -79,7 +79,11 @@ func _physics_process(delta: float) -> void:
 		jumps_left = max_jumps
 
 	if on_floor_now and not prev_on_floor:
-		land()
+		if velocity.y > 100:
+			land()
+		else:
+			# If it was a tiny jitter, just reset the lock
+			animated_locked = false
 
 	update_animation()
 	update_facing_direction()
