@@ -82,7 +82,11 @@ func _physics_process(delta: float) -> void:
 		jumps_left = max_jumps
 
 	if on_floor_now and not prev_on_floor:
-		land()
+		if velocity.y > 100:
+			land()
+		else:
+			# If it was a tiny jitter, just reset the lock
+			animated_locked = false
 
 	update_animation()
 	update_facing_direction()

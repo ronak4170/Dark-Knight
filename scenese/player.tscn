@@ -477,16 +477,21 @@ script = ExtResource("1_g2els")
 jump_velocity = -200.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(163, 157)
-scale = Vector2(1, 1.0078125)
+position = Vector2(170, 155)
+scale = Vector2(0.81250006, 0.98632807)
 sprite_frames = SubResource("SpriteFrames_smehm")
+
 animation = &"death"
-autoplay = "idle"
+
 frame = 1
 frame_progress = 0.97973305
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+<<<<<<< HEAD
 position = Vector2(160, 185)
+=======
+position = Vector2(171, 184)
+>>>>>>> 9eb7784ce56201f5c2a110019cc655c53dea010e
 shape = SubResource("CapsuleShape2D_ur7pv")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
