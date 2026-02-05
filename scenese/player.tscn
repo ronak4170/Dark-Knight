@@ -313,7 +313,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"death",
-"speed": 10.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -480,11 +480,13 @@ jump_velocity = -200.0
 position = Vector2(163, 157)
 scale = Vector2(1, 1.0078125)
 sprite_frames = SubResource("SpriteFrames_smehm")
-animation = &"walk"
+animation = &"death"
 autoplay = "idle"
+frame = 1
+frame_progress = 0.97973305
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(168, 186)
+position = Vector2(160, 185)
 shape = SubResource("CapsuleShape2D_ur7pv")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
