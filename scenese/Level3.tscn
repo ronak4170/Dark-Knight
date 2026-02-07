@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://meir11ryexth"]
+[gd_scene load_steps=7 format=3 uid="uid://meir11ryexth"]
 
+[ext_resource type="Script" uid="uid://pub15f4q5rkl" path="res://scenese/level_3.gd" id="1_322up"]
 [ext_resource type="Texture2D" uid="uid://b7u1dk0hoapyy" path="res://2D Medieval Castle Dungeon Tileset Assets.png" id="1_et50y"]
 [ext_resource type="PackedScene" uid="uid://chkcxkd4hfmlm" path="res://scenese/player.tscn" id="2_pqu4x"]
+[ext_resource type="Script" uid="uid://dy6woaxrh5yoh" path="res://scenese/instr_3.gd" id="4_k0atl"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_322up"]
 texture = ExtResource("1_et50y")
@@ -234,7 +236,8 @@ physics_layer_0/collision_layer = 1
 physics_layer_1/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_322up")
 
-[node name="Node2D" type="Node2D"]
+[node name="Level3" type="Node2D"]
+script = ExtResource("1_322up")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_k0atl")
@@ -249,9 +252,21 @@ layer_1/tile_data = PackedInt32Array(1048581, 196608, 11, 1114117, 65536, 11, 11
 layer_2/name = "Layer2"
 
 [node name="player" parent="." instance=ExtResource("2_pqu4x")]
-
 position = Vector2(-28, 16)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 position = Vector2(160, 192)
-zoom = Vector2(2.7, 2.7)
+zoom = Vector2(4.3, 4.3)
+
+[node name="instr_3" type="Node2D" parent="."]
+script = ExtResource("4_k0atl")
+
+[node name="Panel" type="Panel" parent="instr_3"]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="instr_3/Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
