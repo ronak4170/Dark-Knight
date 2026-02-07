@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://do3pths33te6s"]
 
 [ext_resource type="PackedScene" uid="uid://chkcxkd4hfmlm" path="res://scenese/player.tscn" id="1_uwrxv"]
-[ext_resource type="Texture2D" uid="uid://b7u1dk0hoapyy" path="res://2D Medieval Castle Dungeon Tileset Assets.png" id="2_yqjtg"]
+[ext_resource type="Texture2D" uid="uid://b7u1dk0hoapyy" path="res://scenese/2D Medieval Castle Dungeon Tileset Assets.png" id="2_yqjtg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lnu2h"]
 texture = ExtResource("2_yqjtg")

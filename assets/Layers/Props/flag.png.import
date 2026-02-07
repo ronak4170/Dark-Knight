@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b7u1dk0hoapyy"
-path="res://.godot/imported/2D Medieval Castle Dungeon Tileset Assets.png-0bffd3a90b64c8c189ecaef06ad4293c.ctex"
+uid="uid://s7ecxft3ulre"
+path="res://.godot/imported/flag.png-149cf66da02f9799f5af9077a838348f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://2D Medieval Castle Dungeon Tileset Assets.png"
-dest_files=["res://.godot/imported/2D Medieval Castle Dungeon Tileset Assets.png-0bffd3a90b64c8c189ecaef06ad4293c.ctex"]
+source_file="res://assets/Layers/Props/flag.png"
+dest_files=["res://.godot/imported/flag.png-149cf66da02f9799f5af9077a838348f.ctex"]
 
 [params]
 
