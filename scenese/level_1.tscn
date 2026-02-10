@@ -1,10 +1,10 @@
 [gd_scene load_steps=10 format=3 uid="uid://b2nmvvkrwhpm2"]
 
-[ext_resource type="Script" uid="uid://cjwgwuf4527pc" path="res://scenese/level_1.gd" id="1_dwuv8"]
+[ext_resource type="Script" path="res://scenese/level_1.gd" id="1_dwuv8"]
 [ext_resource type="Texture2D" uid="uid://cowcd44l50ixh" path="res://dungeon_sidescroller-Raou/Tilesetv3.png" id="2_kvyfw"]
 [ext_resource type="PackedScene" uid="uid://chkcxkd4hfmlm" path="res://scenese/player.tscn" id="3_itj20"]
-[ext_resource type="Script" uid="uid://bdje0da88p78e" path="res://scenese/node_2d.gd" id="5_itj20"]
-[ext_resource type="Script" uid="uid://bqffpmcqgp6hr" path="res://scenese/lvl_1_2.gd" id="5_kvyfw"]
+[ext_resource type="Script" path="res://scenese/node_2d.gd" id="5_itj20"]
+[ext_resource type="Script" path="res://scenese/lvl_1_2.gd" id="5_kvyfw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0jmkl"]
 texture = ExtResource("2_kvyfw")

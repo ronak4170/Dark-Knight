@@ -9,27 +9,38 @@ extends CharacterBody2D
 
 var animated_locked : bool = false
 var direction : Vector2 = Vector2.ZERO
-var was_in_air : bool = false
 var jumps_left : int
 var is_attacking : bool = false
 var combo_step : int = 0
 var queue_attacks : int = 0
 var was_on_floor : bool = false
 var is_defending : bool = false
-var is_dead : bool = false   # ✅ NEW
+var is_dead : bool = false  
 
 func _ready() -> void:
 	was_on_floor = is_on_floor()
 	jumps_left = max_jumps
 
 func _physics_process(delta: float) -> void:
-	# ❌ Stop everything if dead
+	
 	if is_dead:
 		return
 
+	var on_floor := is_on_floor()
+	
 	# Apply gravity
-	if not is_on_floor():
+	if not on_floor:
 		velocity += get_gravity() * delta
+		
+	if not on_floor and is_defending:
+		is_defending = false
+		animated_locked = false
+		
+	if not on_floor and is_attacking:
+		is_attacking = false
+		queue_attacks = 0
+		combo_step = 0
+		animated_locked = false
 
 	# Jump
 	if not is_defending and Input.is_action_just_pressed("jump") and jumps_left > 0:
@@ -40,7 +51,7 @@ func _physics_process(delta: float) -> void:
 		jumps_left -= 1
 		
 	# Defend
-	if Input.is_action_pressed("defend") and is_on_floor():
+	if Input.is_action_pressed("defend") and on_floor:
 		is_defending = true
 		animated_locked = true
 		if animated_sprite.animation != "defend":
@@ -54,11 +65,11 @@ func _physics_process(delta: float) -> void:
 		velocity.x = 0
 		move_and_slide()
 		update_facing_direction()
-		check_deadly_tile()   # ✅ STILL CHECK
+		check_deadly_tile()
 		return
 		
-	# Attack input
-	if Input.is_action_just_pressed("attack"):
+	# Attack input (Ground only)
+	if Input.is_action_just_pressed("attack") and on_floor:
 		handle_attack_input()
 
 	if is_attacking:
@@ -73,7 +84,7 @@ func _physics_process(delta: float) -> void:
 	var prev_on_floor := was_on_floor
 
 	move_and_slide()
-	check_deadly_tile()   # ✅ CORE ADDITION
+	check_deadly_tile() 
 
 	var on_floor_now := is_on_floor()
 	was_on_floor = on_floor_now
@@ -82,11 +93,7 @@ func _physics_process(delta: float) -> void:
 		jumps_left = max_jumps
 
 	if on_floor_now and not prev_on_floor:
-		if velocity.y > 100:
-			land()
-		else:
-			# If it was a tiny jitter, just reset the lock
-			animated_locked = false
+		land()
 
 	update_animation()
 	update_facing_direction()
@@ -115,7 +122,7 @@ func die():
 	animated_sprite.play("death")
 
 func update_animation():
-	if is_defending or is_dead:
+	if is_defending or is_dead or is_attacking:
 		return
 		
 	if not animated_locked:
