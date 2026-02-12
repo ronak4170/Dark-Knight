@@ -1,6 +1,5 @@
-[gd_scene load_steps=10 format=3 uid="uid://b2nmvvkrwhpm2"]
+[gd_scene load_steps=8 format=3 uid="uid://b2nmvvkrwhpm2"]
 
-[ext_resource type="Script" path="res://scenese/level_1.gd" id="1_dwuv8"]
 [ext_resource type="Texture2D" uid="uid://cowcd44l50ixh" path="res://dungeon_sidescroller-Raou/Tilesetv3.png" id="2_kvyfw"]
 [ext_resource type="PackedScene" uid="uid://chkcxkd4hfmlm" path="res://scenese/player.tscn" id="3_itj20"]
 [ext_resource type="Script" path="res://scenese/node_2d.gd" id="5_itj20"]
@@ -728,13 +727,10 @@ texture = ExtResource("2_kvyfw")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_0jmkl")
 
-[sub_resource type="GDScript" id="GDScript_dwuv8"]
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kvyfw"]
 size = Vector2(20, 73)
 
 [node name="Level1" type="Node2D"]
-script = ExtResource("1_dwuv8")
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(14, 102)
@@ -760,7 +756,6 @@ limit_left = 14
 limit_top = 76
 limit_right = 2109
 limit_bottom = 206
-script = SubResource("GDScript_dwuv8")
 
 [node name="Lvl1_2" type="Area2D" parent="."]
 position = Vector2(2023, 145)
