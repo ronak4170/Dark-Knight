@@ -1,5 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://b2nmvvkrwhpm2"]
+[gd_scene load_steps=9 format=3 uid="uid://b2nmvvkrwhpm2"]
 
+[ext_resource type="Script" uid="uid://dokwdqy4h4eeu" path="res://scenese/level_1.gd" id="1_kvyfw"]
 [ext_resource type="Texture2D" uid="uid://cowcd44l50ixh" path="res://dungeon_sidescroller-Raou/Tilesetv3.png" id="2_kvyfw"]
 [ext_resource type="PackedScene" uid="uid://chkcxkd4hfmlm" path="res://scenese/player.tscn" id="3_itj20"]
 [ext_resource type="Script" path="res://scenese/node_2d.gd" id="5_itj20"]
@@ -731,6 +732,7 @@ sources/0 = SubResource("TileSetAtlasSource_0jmkl")
 size = Vector2(20, 73)
 
 [node name="Level1" type="Node2D"]
+script = ExtResource("1_kvyfw")
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(14, 102)
@@ -768,15 +770,15 @@ script = ExtResource("5_kvyfw")
 position = Vector2(-1, 4.5)
 shape = SubResource("RectangleShape2D_kvyfw")
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="Instr_1" type="Node2D" parent="."]
 script = ExtResource("5_itj20")
 
-[node name="Panel" type="Panel" parent="Node2D"]
+[node name="Panel" type="Panel" parent="Instr_1"]
 visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Label" type="Label" parent="Node2D/Panel"]
+[node name="Label" type="Label" parent="Instr_1/Panel"]
 layout_mode = 0
 offset_right = 144.0
 offset_bottom = 79.0
