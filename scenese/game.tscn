@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://do3pths33te6s"]
 
-[ext_resource type="PackedScene" uid="uid://chkcxkd4hfmlm" path="res://scenese/player.tscn" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://chkcxkd4hfmlm" path="res://scenese/player3.tscn" id="1_uwrxv"]
 [ext_resource type="Texture2D" uid="uid://b7u1dk0hoapyy" path="res://scenese/2D Medieval Castle Dungeon Tileset Assets.png" id="2_yqjtg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lnu2h"]
@@ -242,7 +242,7 @@ sources/0 = SubResource("TileSetAtlasSource_lnu2h")
 
 [node name="player" parent="." instance=ExtResource("1_uwrxv")]
 position = Vector2(-55, -80)
-jump_velocity = -400.0
+jump_velocity = -360.0
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 zoom = Vector2(2, 2)

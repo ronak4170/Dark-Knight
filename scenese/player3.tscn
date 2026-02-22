@@ -1,7 +1,7 @@
-[gd_scene load_steps=70 format=3 uid="uid://chkcxkd4hfmlm"]
+[gd_scene load_steps=71 format=3 uid="uid://d1le71o14tkcs"]
 
 [ext_resource type="Texture2D" uid="uid://dtl3kq5rsv61x" path="res://assets/Idle.png" id="1_3vyb7"]
-[ext_resource type="Script" uid="uid://drgsy5uv8cpgf" path="res://scenese/player.gd" id="1_g2els"]
+[ext_resource type="Script" uid="uid://drgsy5uv8cpgf" path="res://scenese/player3.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://c5jucflnj4aed" path="res://assets/Attack_1.png" id="2_ucb8g"]
 [ext_resource type="Texture2D" uid="uid://c7kf350ejvyog" path="res://assets/Attack_2.png" id="3_3amci"]
 [ext_resource type="Texture2D" uid="uid://b6veb1le7y841" path="res://assets/Jump.png" id="3_nrt8y"]
@@ -11,6 +11,10 @@
 [ext_resource type="Texture2D" uid="uid://em6u883v17hs" path="res://assets/Dead.png" id="5_photu"]
 [ext_resource type="Texture2D" uid="uid://b478l4e2yk8fj" path="res://assets/Hurt.png" id="7_dy4c8"]
 [ext_resource type="Texture2D" uid="uid://crlgon4s02ko0" path="res://assets/Walk.png" id="11_ajv57"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_photu"]
+radius = 109.53845
+height = 219.0769
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dy4c8"]
 atlas = ExtResource("2_ucb8g")
@@ -469,22 +473,31 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ur7pv"]
 radius = 12.0
-height = 70.0
+height = 72.0
 
-[node name="player" type="CharacterBody2D"]
-collision_layer = 2
+[node name="player3" type="CharacterBody2D" groups=["player_group"]]
+collision_mask = 7
 script = ExtResource("1_g2els")
-jump_velocity = -200.0
+
+[node name="AttackHitbox" type="Area2D" parent="."]
+position = Vector2(-19, 17.999996)
+scale = Vector2(0.81250006, 0.98632807)
+collision_layer = 8
+collision_mask = 16
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
+position = Vector2(78.76922, -69.956436)
+shape = SubResource("CapsuleShape2D_photu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(170, 155)
-scale = Vector2(0.81250006, 0.98632807)
+position = Vector2(8, -26)
+scale = Vector2(0.81250006, 0.9072266)
 sprite_frames = SubResource("SpriteFrames_smehm")
-animation = &"idle"
+animation = &"attack_1"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(171, 184)
 shape = SubResource("CapsuleShape2D_ur7pv")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
