@@ -781,7 +781,7 @@ double_jump_velocity = -150.0
 [node name="Camera2D" type="Camera2D" parent="TileMap/player"]
 position = Vector2(396.66663, 136.66667)
 offset = Vector2(-40, 0)
-zoom = Vector2(4.5, 4.5)
+zoom = Vector2(2.5, 2.5)
 limit_left = -146
 limit_top = -111
 limit_right = 1400
