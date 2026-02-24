@@ -1,43 +1,36 @@
 extends CharacterBody2D
 
 @export var speed : float = 300.0
-@export var jump_velocity : float = -360.0
+@export var jump_velocity = -360.0
 @export var max_jumps : int = 2
 @export var double_jump_velocity : float = -300.0
 @export var max_health : int = 100
 @export var attack_damage : int = 15
 
-# Knockback
-@export var knockback_friction : float = 800.0
+# Knockback settings
+@export var knockback_friction   : float = 800.0  # how fast knockback decelerates
 
-@onready var animated_sprite : AnimatedSprite2D = $AnimatedSprite2D
-@onready var attack_hitbox : Area2D = $AttackHitbox
+@onready var animated_sprite = $AnimatedSprite2D
+@onready var attack_hitbox = $AttackHitbox
 
+var animated_locked : bool = false
 var direction : Vector2 = Vector2.ZERO
 var jumps_left : int
-var was_on_floor : bool = false
-
 var is_attacking : bool = false
 var combo_step : int = 0
 var queue_attacks : int = 0
-
+var was_on_floor : bool = false
 var is_defending : bool = false
-var animated_locked : bool = false
 var is_dead : bool = false
-
 var health : int
 var invincible : bool = false
 var invincible_duration : float = 0.5
 var invincible_timer : float = 0.0
 
+# Knockback — applied by enemy hits
 var knockback_velocity : Vector2 = Vector2.ZERO
 
-
-# -------------------------------------------------------
-# READY
-# -------------------------------------------------------
-
-func _ready() -> void:
+func _ready():
 	if not is_in_group("player"):
 		add_to_group("player")
 
@@ -48,17 +41,10 @@ func _ready() -> void:
 	if attack_hitbox:
 		if not attack_hitbox.is_in_group("player_attack"):
 			attack_hitbox.add_to_group("player_attack")
-
 		attack_hitbox.monitoring = false
 		attack_hitbox.set("damage", attack_damage)
 
-
-# -------------------------------------------------------
-# PHYSICS
-# -------------------------------------------------------
-
 func _physics_process(delta: float) -> void:
-
 	if is_dead:
 		return
 
@@ -67,9 +53,9 @@ func _physics_process(delta: float) -> void:
 		invincible_timer -= delta
 		if invincible_timer <= 0:
 			invincible = false
-			animated_sprite.modulate = Color(1,1,1,1)
+			animated_sprite.modulate = Color(1, 1, 1, 1)
 		else:
-			animated_sprite.modulate = Color(1,1,1,0.5 + 0.5 * sin(invincible_timer * 30))
+			animated_sprite.modulate = Color(1, 1, 1, 0.5 + 0.5 * sin(invincible_timer * 30))
 
 	# Gravity
 	if not is_on_floor():
@@ -106,8 +92,9 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("attack"):
 		handle_attack_input()
 
-	# Knockback overrides movement
+	# Horizontal movement — knockback overrides player input while active
 	if knockback_velocity.x != 0:
+		# Decelerate knockback
 		knockback_velocity.x = move_toward(knockback_velocity.x, 0.0, knockback_friction * delta)
 		velocity.x = knockback_velocity.x
 	elif is_attacking:
@@ -119,10 +106,10 @@ func _physics_process(delta: float) -> void:
 		else:
 			velocity.x = move_toward(velocity.x, 0, speed)
 
-	# Vertical knockback (one-shot)
+	# Apply knockback vertical separately
 	if knockback_velocity.y != 0:
 		velocity.y = knockback_velocity.y
-		knockback_velocity.y = 0
+		knockback_velocity.y = 0  # vertical is one-shot, gravity takes over after
 
 	var prev_on_floor := was_on_floor
 
@@ -141,54 +128,33 @@ func _physics_process(delta: float) -> void:
 		else:
 			animated_locked = false
 
+	# Only update animation/direction if not being knocked back
 	if knockback_velocity.x == 0:
 		update_animation()
 		update_facing_direction()
 
-
-# -------------------------------------------------------
-# DAMAGE
-# -------------------------------------------------------
-
 func take_damage(damage: int, knockback_dir: int = 0) -> void:
-
 	if is_dead or invincible or is_defending:
+		if is_defending:
+			print("Player blocked!")
 		return
 
 	health -= damage
 	invincible = true
 	invincible_timer = invincible_duration
 
+	# Red flash
 	animated_sprite.modulate = Color(1, 0.3, 0.3, 1)
 
+	# Apply knockback — push player away from enemy
 	if knockback_dir != 0:
 		knockback_velocity.x = knockback_dir * 280.0
-		knockback_velocity.y = -150.0
+		knockback_velocity.y = -150.0  # slight upward bump
 
 	if health <= 0:
 		die()
 
-
-# -------------------------------------------------------
-# DEATH
-# -------------------------------------------------------
-
-func die() -> void:
-	if is_dead:
-		return
-
-	is_dead = true
-	velocity = Vector2.ZERO
-	knockback_velocity = Vector2.ZERO
-	animated_locked = true
-	animated_sprite.play("death")
-
-
-# -------------------------------------------------------
-# TILE CHECK
-# -------------------------------------------------------
-
-func check_deadly_tile() -> void:
+func check_deadly_tile():
 	for i in range(get_slide_collision_count()):
 		var collision = get_slide_collision(i)
 		var collider = collision.get_collider()
@@ -200,16 +166,19 @@ func check_deadly_tile() -> void:
 				die()
 				return
 
-
-# -------------------------------------------------------
-# MOVEMENT ANIMATION
-# -------------------------------------------------------
-
-func update_animation() -> void:
-
-	if is_defending or is_dead or is_attacking:
+func die():
+	if is_dead:
 		return
+	is_dead = true
+	velocity = Vector2.ZERO
+	knockback_velocity = Vector2.ZERO
+	animated_locked = true
+	animated_sprite.modulate = Color(1, 1, 1, 1)
+	animated_sprite.play("death")
 
+func update_animation():
+	if is_defending or is_dead:
+		return
 	if not animated_locked:
 		if not is_on_floor():
 			animated_sprite.play("jump_loop")
@@ -219,41 +188,27 @@ func update_animation() -> void:
 			else:
 				animated_sprite.play("idle")
 
-
-func update_facing_direction() -> void:
+func update_facing_direction():
 	if direction.x > 0:
 		animated_sprite.flip_h = false
 	elif direction.x < 0:
 		animated_sprite.flip_h = true
 
-
-# -------------------------------------------------------
-# JUMP
-# -------------------------------------------------------
-
-func jump() -> void:
+func jump():
 	velocity.y = jump_velocity
 	animated_sprite.play("jump_start")
 	animated_locked = true
 
+func land():
+	animated_sprite.play("jump_end")
+	animated_locked = true
 
-func double_jump() -> void:
+func double_jump():
 	velocity.y = double_jump_velocity
 	animated_sprite.play("jump_start")
 	animated_locked = true
 
-
-func land() -> void:
-	animated_sprite.play("jump_end")
-	animated_locked = true
-
-
-# -------------------------------------------------------
-# ATTACK SYSTEM
-# -------------------------------------------------------
-
-func handle_attack_input() -> void:
-
+func handle_attack_input():
 	if not is_attacking:
 		is_attacking = true
 		animated_locked = true
@@ -262,12 +217,10 @@ func handle_attack_input() -> void:
 		animated_sprite.play("attack_1")
 		enable_attack_hitbox()
 		return
-
 	if combo_step + queue_attacks < 3:
 		queue_attacks += 1
 
-
-func enable_attack_hitbox() -> void:
+func enable_attack_hitbox():
 	if attack_hitbox:
 		await get_tree().create_timer(0.2).timeout
 		if is_attacking:
@@ -275,9 +228,7 @@ func enable_attack_hitbox() -> void:
 			await get_tree().create_timer(0.3).timeout
 			attack_hitbox.monitoring = false
 
-
-func _on_animated_sprite_2d_animation_finished() -> void:
-
+func _on_animated_sprite_2d_animation_finished():
 	if is_dead and animated_sprite.animation == "death":
 		await get_tree().process_frame
 		get_tree().reload_current_scene()
@@ -291,7 +242,6 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		return
 
 	if animated_sprite.animation.begins_with("attack_"):
-
 		if queue_attacks > 0 and combo_step < 3:
 			queue_attacks -= 1
 			combo_step += 1
@@ -303,10 +253,8 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 			queue_attacks = 0
 			animated_locked = false
 
-
-# -------------------------------------------------------
-# OPTIONAL EXTERNAL PUSH
-# -------------------------------------------------------
+func _on_hitbox_body_entered(body: Node2D) -> void:
+	pass
 
 func apply_external_push(x_force: float, y_force: float) -> void:
 	velocity.x += x_force

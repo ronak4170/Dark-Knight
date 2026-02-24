@@ -15,6 +15,8 @@ extends CharacterBody2D
 @export var attack_range_mid   : float = 130.0
 @export var attack_range_far   : float = 180.0
 
+@export var knockback_force    : float = 280.0
+@export var knockback_up       : float = 120.0
 @export var hit_stun_time      : float = 0.35
 
 # -------------------------------------------------------
@@ -38,9 +40,10 @@ var is_dead : bool = false
 
 var facing_direction : int = 1
 var attack_hitbox_original_position : Vector2
-
 var hit_stun_timer : float = 0.0
 var is_in_hit_stun : bool = false
+
+var _last_facing : int = 1
 
 # -------------------------------------------------------
 # NODES
@@ -54,14 +57,15 @@ var is_in_hit_stun : bool = false
 # READY
 # -------------------------------------------------------
 
-func _ready() -> void:
+func _ready():
+
 	add_to_group("enemy")
 	health = max_health
 
 	player = get_tree().get_first_node_in_group("player")
 
-	# Force one-shot animations
-	for anim in ["attack_1", "attack_2", "attack_3", "hit", "death"]:
+	# Make combat animations one-shot
+	for anim in ["attack_1","attack_2","attack_3","hit","death"]:
 		if sprite.sprite_frames.has_animation(anim):
 			sprite.sprite_frames.set_animation_loop(anim, false)
 
@@ -70,7 +74,6 @@ func _ready() -> void:
 
 	if attack_hitbox:
 		attack_hitbox.monitoring = false
-		attack_hitbox.monitorable = false
 		attack_hitbox.body_entered.connect(_on_attack_hit)
 		attack_hitbox_original_position = attack_hitbox.position
 
@@ -81,9 +84,10 @@ func _ready() -> void:
 # PHYSICS
 # -------------------------------------------------------
 
-func _physics_process(delta: float) -> void:
+func _physics_process(delta):
 
 	if is_dead:
+		velocity.x = 0
 		if not is_on_floor():
 			velocity.y += gravity * delta
 		move_and_slide()
@@ -92,17 +96,14 @@ func _physics_process(delta: float) -> void:
 	if player == null:
 		return
 
-	# Gravity
 	if not is_on_floor():
 		velocity.y += gravity * delta
 	else:
 		velocity.y = 0
 
-	# Timers
-	attack_timer = maxf(0.0, attack_timer - delta)
-	hit_stun_timer = maxf(0.0, hit_stun_timer - delta)
+	attack_timer = max(0.0, attack_timer - delta)
+	hit_stun_timer = max(0.0, hit_stun_timer - delta)
 
-	# Hit stun
 	if is_in_hit_stun:
 		if hit_stun_timer <= 0.0:
 			is_in_hit_stun = false
@@ -110,7 +111,7 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		return
 
-	var distance : float = absf(player.global_position.x - global_position.x)
+	var distance = abs(player.global_position.x - global_position.x)
 
 	match current_state:
 		State.IDLE:
@@ -126,32 +127,31 @@ func _physics_process(delta: float) -> void:
 # STATES
 # -------------------------------------------------------
 
-func _state_idle(distance: float) -> void:
+func _state_idle(distance):
+
 	velocity.x = 0
-	_play_animation("idle")
+	sprite.play("idle")
 
 	if distance <= detection_range:
 		current_state = State.CHASE
 
 
-func _state_chase(distance: float) -> void:
+func _state_chase(distance):
 
 	if distance > detection_range:
-		velocity.x = 0
 		current_state = State.IDLE
 		return
 
 	if distance <= attack_range_far:
-		velocity.x = 0
 		current_state = State.ATTACK
 		return
 
 	_face_player()
 	velocity.x = facing_direction * speed
-	_play_animation("run")
+	sprite.play("run")
 
 
-func _state_attack(distance: float) -> void:
+func _state_attack(distance):
 
 	velocity.x = 0
 
@@ -162,8 +162,8 @@ func _state_attack(distance: float) -> void:
 	if is_attacking:
 		return
 
-	if attack_timer > 0.0:
-		_play_animation("idle")
+	if attack_timer > 0:
+		sprite.play("idle")
 		return
 
 	var available : Array[String] = []
@@ -179,28 +179,30 @@ func _state_attack(distance: float) -> void:
 		current_state = State.CHASE
 		return
 
-	_commit_attack(available[randi() % available.size()])
+	var chosen_attack = available[randi() % available.size()]
+	_commit_attack(chosen_attack)
 
 # -------------------------------------------------------
 # ATTACK
 # -------------------------------------------------------
 
-func _commit_attack(anim_name: String) -> void:
+func _commit_attack(anim_name : String):
+
 	is_attacking = true
 	has_hit_this_swing = false
 	attack_timer = attack_cooldown
 
-	_play_animation(anim_name)
+	sprite.play(anim_name)
 
 	if attack_hitbox:
 		attack_hitbox.monitoring = true
-		attack_hitbox.monitorable = true
 
+		# Catch already overlapping player
 		for body in attack_hitbox.get_overlapping_bodies():
 			_on_attack_hit(body)
 
 
-func _on_attack_hit(body: Node2D) -> void:
+func _on_attack_hit(body):
 
 	if has_hit_this_swing:
 		return
@@ -209,15 +211,17 @@ func _on_attack_hit(body: Node2D) -> void:
 		return
 
 	if body.is_in_group("player"):
+
 		has_hit_this_swing = true
+
 		if body.has_method("take_damage"):
-			body.take_damage(attack_damage)
+			body.take_damage(attack_damage)   # SINGLE PARAM SAFE CALL
 
 # -------------------------------------------------------
 # DAMAGE
 # -------------------------------------------------------
 
-func take_damage(amount: int) -> void:
+func take_damage(amount):
 
 	if is_dead:
 		return
@@ -230,38 +234,37 @@ func take_damage(amount: int) -> void:
 
 	is_in_hit_stun = true
 	hit_stun_timer = hit_stun_time
+	sprite.play("hit")
 	current_state = State.HIT
-	_play_animation("hit")
 
 
-func _die() -> void:
+func _die():
+
 	is_dead = true
 	current_state = State.DEATH
 	velocity.x = 0
 
 	if attack_hitbox:
 		attack_hitbox.monitoring = false
-		attack_hitbox.monitorable = false
 
-	if hurtbox:
-		hurtbox.monitoring = false
-		hurtbox.monitorable = false
-
-	_play_animation("death")
+	sprite.play("death")
 
 # -------------------------------------------------------
 # ANIMATION END
 # -------------------------------------------------------
 
-func _on_animation_finished() -> void:
+func _on_animation_finished():
 
 	var anim = sprite.animation
 
 	if anim.begins_with("attack_"):
 		is_attacking = false
 		has_hit_this_swing = false
-		_disable_attack_hitbox()
-		return
+		if attack_hitbox:
+			attack_hitbox.monitoring = false
+
+	if anim == "hit":
+		current_state = State.CHASE
 
 	if anim == "death":
 		queue_free()
@@ -270,41 +273,40 @@ func _on_animation_finished() -> void:
 # HURTBOX
 # -------------------------------------------------------
 
-func _on_hurtbox_area_entered(area: Area2D) -> void:
+func _on_hurtbox_area_entered(area):
+
 	if area.is_in_group("player_attack"):
-		var damage : int = 10
-		if "damage" in area:
-			damage = area.damage
-		take_damage(damage)
+		take_damage(10)
 
 # -------------------------------------------------------
 # FACING
 # -------------------------------------------------------
 
-func _face_player() -> void:
+func _face_player():
+
 	if player == null:
 		return
 
-	var diff : float = player.global_position.x - global_position.x
+	var diff = player.global_position.x - global_position.x
 
-	if absf(diff) > 2.0:
-		facing_direction = 1 if diff > 0 else -1
-	_apply_facing()
+	# Larger deadzone to prevent twitching
+	if abs(diff) > 20:
+
+		var new_dir = 1 if diff > 0 else -1
+
+		if new_dir != facing_direction:
+			facing_direction = new_dir
+			_apply_facing()
 
 
-func _apply_facing() -> void:
-	sprite.flip_h = (facing_direction < 0)
+func _apply_facing():
+
+	if _last_facing == facing_direction:
+		return
+
+	_last_facing = facing_direction
+
+	sprite.flip_h = facing_direction < 0
 
 	if attack_hitbox:
-		attack_hitbox.position.x = facing_direction * absf(attack_hitbox_original_position.x)
-
-
-func _disable_attack_hitbox() -> void:
-	if attack_hitbox:
-		attack_hitbox.monitoring = false
-		attack_hitbox.monitorable = false
-
-
-func _play_animation(anim_name: String) -> void:
-	if sprite.animation != anim_name or not sprite.is_playing():
-		sprite.play(anim_name)
+		attack_hitbox.position.x = facing_direction * abs(attack_hitbox_original_position.x)
