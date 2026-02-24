@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://b3kqrrfl4n3yu"]
+[gd_scene load_steps=32 format=3 uid="uid://b3kqrrfl4n3yu"]
 
 [ext_resource type="Texture2D" uid="uid://bn8td674ur235" path="res://assets/free-dungeon-platformer-pixel-art-tileset/PNG/Background/Bright/Background.png" id="1_2d6lq"]
 [ext_resource type="Script" uid="uid://ctsk6g4qi8vnu" path="res://scenese/level_2.gd" id="1_k6j1b"]
@@ -15,7 +15,6 @@
 [ext_resource type="Texture2D" uid="uid://ckfjcmiyewecw" path="res://assets/free-dungeon-platformer-pixel-art-tileset/PNG/Background/Bright/bg.png" id="8_if06q"]
 [ext_resource type="Texture2D" uid="uid://ux4lkt8xu3v1" path="res://assets/free-dungeon-platformer-pixel-art-tileset/PNG/Details/door.png" id="9_sx87u"]
 [ext_resource type="Texture2D" uid="uid://co2c0yrgorbyw" path="res://assets/free-dungeon-platformer-pixel-art-tileset/PNG/Tiles_rock/tile34.png" id="10_k3h0j"]
-[ext_resource type="Script" uid="uid://6fd6r1d2n488" path="res://scenese/lv_2_3.gd" id="15_yqpkv"]
 [ext_resource type="Script" uid="uid://brerfdkyvrbf3" path="res://scenese/instr_2.gd" id="17_k6j1b"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yqpkv"]
@@ -6641,15 +6640,14 @@ jump_velocity = -280.0
 double_jump_velocity = -420.0
 
 [node name="Camera2D" type="Camera2D" parent="player"]
-position = Vector2(159, 172)
-zoom = Vector2(3, 3)
+position = Vector2(159, 58)
+zoom = Vector2(1.5, 1.5)
 limit_enabled = false
 position_smoothing_enabled = true
 
 [node name="Lv2_3" type="Area2D" parent="."]
 position = Vector2(316, -72)
 collision_mask = 2
-script = ExtResource("15_yqpkv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Lv2_3"]
 position = Vector2(1, 3)

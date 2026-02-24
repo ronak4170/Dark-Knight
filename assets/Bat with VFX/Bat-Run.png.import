@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b7u1dk0hoapyy"
-path="res://.godot/imported/2D Medieval Castle Dungeon Tileset Assets.png-0bffd3a90b64c8c189ecaef06ad4293c.ctex"
+uid="uid://d3713ym7kdq4n"
+path="res://.godot/imported/Bat-Run.png-e21cb33b9ab9a719dac47877f4ef20a1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://2D Medieval Castle Dungeon Tileset Assets.png"
-dest_files=["res://.godot/imported/2D Medieval Castle Dungeon Tileset Assets.png-0bffd3a90b64c8c189ecaef06ad4293c.ctex"]
+source_file="res://assets/Bat with VFX/Bat-Run.png"
+dest_files=["res://.godot/imported/Bat-Run.png-e21cb33b9ab9a719dac47877f4ef20a1.ctex"]
 
 [params]
 

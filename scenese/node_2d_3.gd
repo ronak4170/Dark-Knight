@@ -1,12 +1,12 @@
 extends Node2D
 
 @export var default_duration := 2.5
-@export var offset := Vector2(15, 60) 
+@export var offset := Vector2(10, 80) 
 
 @onready var panel = $Panel
 @onready var label = $Panel/Label
 
-# show instruction near player 
+#show instruction near player
 func show_instruction(text: String, duration: float = -1):
 	if duration <= 0:
 		duration = default_duration
@@ -16,7 +16,7 @@ func show_instruction(text: String, duration: float = -1):
 	panel.modulate.a = 0 
 
 	# position above player
-	var player = get_tree().get_root().get_node("Level3/player") 
+	var player = get_tree().get_root().get_node("Level_3/player3") 
 	global_position = player.global_position + offset
 
 	var fade_time = 0.3
@@ -25,7 +25,7 @@ func show_instruction(text: String, duration: float = -1):
 		panel.modulate.a = timer / fade_time
 		timer += get_process_delta_time()
 		await get_tree().process_frame
-	
+
 	panel.modulate.a = 1.0 
 
 
