@@ -1,7 +1,9 @@
-[gd_scene load_steps=77 format=3 uid="uid://b2nmvvkrwhpm2"]
+[gd_scene load_steps=79 format=3 uid="uid://b2nmvvkrwhpm2"]
 
 [ext_resource type="Script" uid="uid://dokwdqy4h4eeu" path="res://scenese/Level_1_Scene/level_1.gd" id="1_tnuwx"]
+[ext_resource type="PackedScene" uid="uid://dpjh4d6f84m6f" path="res://scenese/Memory_Fragment/memory_fragment.tscn" id="2_0ly4g"]
 [ext_resource type="Texture2D" uid="uid://cowcd44l50ixh" path="res://dungeon_sidescroller-Raou/Tilesetv3.png" id="2_6gjcc"]
+[ext_resource type="PackedScene" uid="uid://d3aucpbiae3pl" path="res://scenese/Memory_Fragment/memory_bar.tscn" id="2_16dq7"]
 [ext_resource type="Script" uid="uid://bqffpmcqgp6hr" path="res://scenese/Level_1_Scene/lvl_1_2.gd" id="4_3fw1y"]
 [ext_resource type="Texture2D" uid="uid://c5jucflnj4aed" path="res://assets/Attack_1.png" id="4_4k0o3"]
 [ext_resource type="Script" uid="uid://mdea02a5wynp" path="res://scenese/Level_1_Scene/player1.gd" id="4_6gjcc"]
@@ -16,7 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://b1gneict7cgpl" path="res://assets/Run.png" id="12_r45wr"]
 [ext_resource type="Texture2D" uid="uid://crlgon4s02ko0" path="res://assets/Walk.png" id="13_ggtcp"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0jmkl"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_16dq7"]
 texture = ExtResource("2_6gjcc")
 0:0/0 = 0
 1:0/0 = 0
@@ -736,7 +738,7 @@ texture = ExtResource("2_6gjcc")
 
 [sub_resource type="TileSet" id="TileSet_mdt63"]
 physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_0jmkl")
+sources/0 = SubResource("TileSetAtlasSource_16dq7")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dy4c8"]
 atlas = ExtResource("4_4k0o3")
@@ -1204,6 +1206,11 @@ size = Vector2(20, 73)
 position = Vector2(17, -189)
 script = ExtResource("1_tnuwx")
 
+[node name="MemoryBar" parent="." instance=ExtResource("2_16dq7")]
+
+[node name="memory_fragment" parent="." instance=ExtResource("2_0ly4g")]
+position = Vector2(222, 131)
+
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(14, 102)
 tile_set = SubResource("TileSet_mdt63")
@@ -1219,7 +1226,7 @@ layer_3/tile_data = PackedInt32Array(-458751, 327680, 23, -393215, 327680, 24, -
 
 [node name="player" type="CharacterBody2D" parent="."]
 position = Vector2(181, 118)
-collision_layer = 2
+collision_layer = 3
 script = ExtResource("4_6gjcc")
 double_jump_velocity = -380.0
 

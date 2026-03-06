@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://brr1gmsw4r2gl"]
+[gd_scene load_steps=57 format=3 uid="uid://brr1gmsw4r2gl"]
 
 [ext_resource type="Script" uid="uid://dbh87488ncchv" path="res://scenese/Level_3_Scene/Bat2.gd" id="1_n1elw"]
 [ext_resource type="Texture2D" uid="uid://cy2br5hc31elt" path="res://assets/Bat with VFX/Bat-Attack2.png" id="2_jfrdd"]
@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://0tjwooyv1qgw" path="res://assets/Bat with VFX/Bat-IdleFly.png" id="4_w3i74"]
 [ext_resource type="Texture2D" uid="uid://ccnjyjdgtnrww" path="res://assets/Bat with VFX/Bat-Attack1.png" id="5_gb0wr"]
 [ext_resource type="Texture2D" uid="uid://d3713ym7kdq4n" path="res://assets/Bat with VFX/Bat-Run.png" id="6_2noaj"]
-
+[ext_resource type="AudioStream" uid="uid://beewe08whskbi" path="res://audio/bat_attack_sound.mp3" id="7_grniy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dqlfb"]
 atlas = ExtResource("2_jfrdd")
@@ -352,23 +352,23 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_15rca"]
-radius = 27.0
-height = 64.0
+radius = 12.459961
+height = 24.919922
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o1yyv"]
-size = Vector2(60, 28)
+size = Vector2(23.787842, 13.644661)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w64e6"]
-radius = 60.035645
-height = 122.1523
+radius = 8.446701
+height = 16.893402
 
 [node name="Bat2" type="CharacterBody2D"]
-position = Vector2(3861, 134)
+position = Vector2(3905, 132)
 script = ExtResource("1_n1elw")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(-4.000244, 16.000092)
-scale = Vector2(1.7656249, 2.3789063)
+position = Vector2(3.9999814, 5.0000057)
+scale = Vector2(1.194, 1.539)
 sprite_frames = SubResource("SpriteFrames_jfpnj")
 animation = &"fly"
 
@@ -377,11 +377,12 @@ position = Vector2(638.43744, 325.89063)
 scale = Vector2(1.7656249, 1.5390625)
 
 [node name="DetectionArea" type="Area2D" parent="."]
+visible = false
 position = Vector2(5458.0005, 444)
 scale = Vector2(1.7656249, 1.5390625)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
-position = Vector2(-3089.558, -291.73605)
+position = Vector2(-3088.9912, -287.18784)
 shape = SubResource("CapsuleShape2D_15rca")
 
 [node name="AttackArea" type="Area2D" parent="."]
@@ -389,15 +390,23 @@ position = Vector2(-63, 46.00006)
 scale = Vector2(1.7656249, 1.5390625)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-position = Vector2(27.185883, -24.040604)
+position = Vector2(37.946777, -28.264)
+scale = Vector2(1, 1.0000005)
 shape = SubResource("RectangleShape2D_o1yyv")
 
 [node name="Hurtbox" type="Area2D" parent="."]
+visible = false
 position = Vector2(5403, 420.99994)
 scale = Vector2(1.7656249, 1.5390625)
 collision_layer = 16
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
-position = Vector2(-3057.841, -269.64462)
+position = Vector2(-3057.841, -272.24362)
 shape = SubResource("CapsuleShape2D_w64e6")
+
+[node name="BatAttackSound" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(37.999996, 7.9999995)
+scale = Vector2(0.99999994, 0.99999994)
+stream = ExtResource("7_grniy")
+volume_db = -6.0

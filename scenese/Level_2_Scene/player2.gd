@@ -30,6 +30,7 @@ func _ready():
 	
 	print("Player groups: ", get_groups())
 	
+
 	health = max_health
 	was_on_floor = is_on_floor()
 	jumps_left = max_jumps
