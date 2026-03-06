@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b7u1dk0hoapyy"
-path="res://.godot/imported/2D Medieval Castle Dungeon Tileset Assets.png-d169f4b6eb7ae61e7d12228963a5d738.ctex"
+uid="uid://dr8hop51qhkww"
+path="res://.godot/imported/diamond2.png-c7148bb63c100080f61a932cf10a8269.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenese/2D Medieval Castle Dungeon Tileset Assets.png"
-dest_files=["res://.godot/imported/2D Medieval Castle Dungeon Tileset Assets.png-d169f4b6eb7ae61e7d12228963a5d738.ctex"]
+source_file="res://assets/PixelPlatformerSet2v.1.1/Anim/diamond2.png"
+dest_files=["res://.godot/imported/diamond2.png-c7148bb63c100080f61a932cf10a8269.ctex"]
 
 [params]
 

@@ -1241,7 +1241,7 @@ scale = Vector2(0.9, 0.9)
 zoom = Vector2(5.5, 5.5)
 limit_left = 0
 limit_top = -109
-limit_right = 2095
+limit_right = 2141
 limit_bottom = 21
 
 [node name="Lvl1_2" type="Area2D" parent="."]

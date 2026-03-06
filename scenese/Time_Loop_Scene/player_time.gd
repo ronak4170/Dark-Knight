@@ -31,6 +31,7 @@ var invincible : bool = false
 var invincible_duration : float = 0.5
 var invincible_timer : float = 0.0
 var knockback_velocity : Vector2 = Vector2.ZERO
+var carrying_torch : bool = false
 
 # =============================
 # NODES
