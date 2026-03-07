@@ -1,11 +1,11 @@
-[gd_scene load_steps=86 format=3 uid="uid://byossdi7xj41n"]
+[gd_scene load_steps=91 format=3 uid="uid://byossdi7xj41n"]
 
 [ext_resource type="Script" uid="uid://cjwgwuf4527pc" path="res://scenese/Level_3_Scene/level_3.gd" id="1_3tpim"]
 [ext_resource type="Texture2D" uid="uid://dfocwi30g3sao" path="res://assets/Layers/tileset.png" id="2_vv5ey"]
 [ext_resource type="Texture2D" uid="uid://cq1vydp4a8b5o" path="res://assets/Layers/mountains.png" id="3_jr016"]
 [ext_resource type="Texture2D" uid="uid://dj2ywpl58qoda" path="res://assets/Layers/back.png" id="4_ti2vy"]
 [ext_resource type="Texture2D" uid="uid://dsheyk136ucca" path="res://assets/Layers/all-props.png" id="5_dpxlm"]
-[ext_resource type="Script" uid="uid://drgsy5uv8cpgf" path="res://scenese/Level_3_Scene/player3.gd" id="6_xhml8"]
+[ext_resource type="Script" uid="uid://drgsy5uv8cpgf" path="res://scenese/Level_3_Scene/player3.gd" id="6_u64iv"]
 [ext_resource type="Texture2D" uid="uid://c5jucflnj4aed" path="res://assets/Attack_1.png" id="7_dfx48"]
 [ext_resource type="Texture2D" uid="uid://c7kf350ejvyog" path="res://assets/Attack_2.png" id="8_ifr1v"]
 [ext_resource type="Texture2D" uid="uid://dcc3flu6yrlq8" path="res://assets/Attack_3.png" id="9_l3i51"]
@@ -17,11 +17,20 @@
 [ext_resource type="Texture2D" uid="uid://b1gneict7cgpl" path="res://assets/Run.png" id="15_jn162"]
 [ext_resource type="Texture2D" uid="uid://crlgon4s02ko0" path="res://assets/Walk.png" id="16_1jnq5"]
 [ext_resource type="PackedScene" uid="uid://du1pmqlu1ohed" path="res://scenese/Level_3_Scene/Bat.tscn" id="17_0v417"]
+[ext_resource type="AudioStream" uid="uid://coryskovn1wcq" path="res://audio/SwordSound.mp3" id="17_i3yjj"]
 [ext_resource type="PackedScene" uid="uid://brr1gmsw4r2gl" path="res://scenese/Level_3_Scene/Bat2.tscn" id="18_4vrvg"]
 [ext_resource type="Script" uid="uid://blw4kaqldr2uh" path="res://scenese/Level_3_Scene/instr_3.gd" id="19_gscjm"]
 [ext_resource type="Script" uid="uid://b7qub4urty3jq" path="res://scenese/Level_3_Scene/3_4.gd" id="20_wbw4a"]
+[ext_resource type="PackedScene" uid="uid://dpjh4d6f84m6f" path="res://scenese/Memory_Fragment/memory_fragment.tscn" id="22_u64iv"]
+[ext_resource type="PackedScene" uid="uid://d3aucpbiae3pl" path="res://scenese/Memory_Fragment/memory_bar.tscn" id="23_nk4dh"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_e86mq"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i3yjj"]
+size = Vector2(5.5, 353.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yu10v"]
+size = Vector2(7, 469)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_i3yjj"]
 texture = ExtResource("2_vv5ey")
 6:0/0 = 0
 7:0/0 = 0
@@ -103,7 +112,7 @@ texture = ExtResource("2_vv5ey")
 12:3/0 = 0
 9:4/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uxnl6"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yu10v"]
 texture = ExtResource("3_jr016")
 2:6/0 = 0
 3:6/0 = 0
@@ -260,7 +269,7 @@ texture = ExtResource("3_jr016")
 14:16/0 = 0
 15:16/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mfmon"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u64iv"]
 texture = ExtResource("4_ti2vy")
 0:0/0 = 0
 1:0/0 = 0
@@ -331,7 +340,7 @@ texture = ExtResource("4_ti2vy")
 2:16/0 = 0
 3:16/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d0gcy"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nk4dh"]
 texture = ExtResource("5_dpxlm")
 9:4/0 = 0
 10:4/0 = 0
@@ -407,14 +416,26 @@ texture = ExtResource("5_dpxlm")
 
 [sub_resource type="TileSet" id="TileSet_hlaxe"]
 physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_e86mq")
-sources/1 = SubResource("TileSetAtlasSource_uxnl6")
-sources/2 = SubResource("TileSetAtlasSource_mfmon")
-sources/3 = SubResource("TileSetAtlasSource_d0gcy")
+sources/0 = SubResource("TileSetAtlasSource_i3yjj")
+sources/1 = SubResource("TileSetAtlasSource_yu10v")
+sources/2 = SubResource("TileSetAtlasSource_u64iv")
+sources/3 = SubResource("TileSetAtlasSource_nk4dh")
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_photu"]
-radius = 109.53845
-height = 219.0769
+radius = 48.158417
+height = 96.31683
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xhml8"]
+atlas = ExtResource("12_5sqm8")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i3yjj"]
+atlas = ExtResource("12_5sqm8")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yu10v"]
+atlas = ExtResource("12_5sqm8")
+region = Rect2(256, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dy4c8"]
 atlas = ExtResource("7_dfx48")
@@ -495,18 +516,6 @@ region = Rect2(640, 0, 128, 128)
 [sub_resource type="AtlasTexture" id="AtlasTexture_ynmg5"]
 atlas = ExtResource("11_l4ney")
 region = Rect2(128, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vgdy7"]
-atlas = ExtResource("12_5sqm8")
-region = Rect2(0, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_c8e8i"]
-atlas = ExtResource("12_5sqm8")
-region = Rect2(128, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dwn6o"]
-atlas = ExtResource("12_5sqm8")
-region = Rect2(256, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g2els"]
 atlas = ExtResource("13_uefdg")
@@ -643,6 +652,20 @@ region = Rect2(1024, 0, 128, 128)
 [sub_resource type="SpriteFrames" id="SpriteFrames_smehm"]
 animations = [{
 "frames": [{
+"duration": 0.41,
+"texture": SubResource("AtlasTexture_xhml8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i3yjj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yu10v")
+}],
+"loop": true,
+"name": &"Player-Hurt",
+"speed": 5.0
+}, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dy4c8")
 }, {
@@ -726,20 +749,6 @@ animations = [{
 "loop": true,
 "name": &"defend",
 "speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vgdy7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_c8e8i")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dwn6o")
-}],
-"loop": false,
-"name": &"hurt",
-"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -882,6 +891,17 @@ size = Vector2(45, 57)
 position = Vector2(-113, -297)
 script = ExtResource("1_3tpim")
 
+[node name="BoundaryWalls" type="StaticBody2D" parent="."]
+position = Vector2(3445, 217)
+
+[node name="CollisionShape2D_left" type="CollisionShape2D" parent="BoundaryWalls"]
+position = Vector2(-3328.75, -149)
+shape = SubResource("RectangleShape2D_i3yjj")
+
+[node name="CollisionShape2D_right" type="CollisionShape2D" parent="BoundaryWalls"]
+position = Vector2(112.5, -210.5)
+shape = SubResource("RectangleShape2D_yu10v")
+
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_hlaxe")
 format = 2
@@ -901,7 +921,7 @@ layer_3/tile_data = PackedInt32Array(327721, 2, 3, 393257, 2, 4, 458793, 2, 5, 5
 position = Vector2(307, 209)
 scale = Vector2(0.8, 0.8)
 collision_mask = 7
-script = ExtResource("6_xhml8")
+script = ExtResource("6_u64iv")
 
 [node name="AttackHitbox" type="Area2D" parent="player3"]
 position = Vector2(-19, 17.999996)
@@ -911,18 +931,18 @@ collision_mask = 16
 monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player3/AttackHitbox"]
-position = Vector2(78.76922, -69.956436)
+position = Vector2(32.61538, -15.714848)
 shape = SubResource("CapsuleShape2D_photu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="player3"]
-position = Vector2(7.999999, -32)
+position = Vector2(5.0000067, -17.500002)
 scale = Vector2(0.81250006, 0.9072266)
 sprite_frames = SubResource("SpriteFrames_smehm")
-animation = &"attack_1"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player3"]
-position = Vector2(0, -7)
+position = Vector2(7.5, 7.499996)
 shape = SubResource("CapsuleShape2D_ur7pv")
 
 [node name="Camera2D" type="Camera2D" parent="player3" groups=["player_group"]]
@@ -932,6 +952,11 @@ limit_left = -66
 limit_top = -398
 limit_right = 3636
 limit_bottom = 275
+
+[node name="SwordSound" type="AudioStreamPlayer2D" parent="player3"]
+position = Vector2(13.750008, 5.000002)
+scale = Vector2(1.2499999, 1.2499999)
+stream = ExtResource("17_i3yjj")
 
 [node name="Bat" parent="." groups=["player_group"] instance=ExtResource("17_0v417")]
 position = Vector2(1786, 162)
@@ -944,7 +969,6 @@ collision_mask = 7
 script = ExtResource("19_gscjm")
 
 [node name="Panel" type="Panel" parent="instr_3"]
-visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 
@@ -958,8 +982,13 @@ collision_layer = 2
 script = ExtResource("20_wbw4a")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="3_4"]
-position = Vector2(3445, 205)
+position = Vector2(3440, 211)
 shape = SubResource("RectangleShape2D_72lw7")
+
+[node name="memory_fragment" parent="." instance=ExtResource("22_u64iv")]
+position = Vector2(3392, 215)
+
+[node name="MemoryBar" parent="." instance=ExtResource("23_nk4dh")]
 
 [connection signal="animation_finished" from="player3/AnimatedSprite2D" to="player3" method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="3_4" to="3_4" method="_on_body_entered"]

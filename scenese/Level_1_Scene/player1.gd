@@ -29,6 +29,11 @@ func _ready():
 		add_to_group("player")
 	
 	print("Player groups: ", get_groups())
+	Global.reset_memory()
+	await get_tree().process_frame
+	Global.memory_total = get_tree().get_nodes_in_group("memory_fragment").size()
+	Global.emit_signal("memory_updated", Global.memory_collected, Global.memory_total)
+	print("Level 1 fragments: ", Global.memory_total)
 	
 	health = max_health
 	was_on_floor = is_on_floor()
