@@ -47,7 +47,7 @@ func _show_statue_text() -> void:
 	if solved:
 		popup_label.text = "Thou be cautious!"
 	else:
-		popup_label.text = "Thou shalt not pass — the switches are not aligned."
+		popup_label.text = "Thou be cautious!"
 
 	popup_panel.visible = true
 

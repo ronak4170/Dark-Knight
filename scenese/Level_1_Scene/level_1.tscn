@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://dpjh4d6f84m6f" path="res://scenese/Memory_Fragment/memory_fragment.tscn" id="2_0ly4g"]
 [ext_resource type="Texture2D" uid="uid://cowcd44l50ixh" path="res://dungeon_sidescroller-Raou/Tilesetv3.png" id="2_6gjcc"]
 [ext_resource type="PackedScene" uid="uid://d3aucpbiae3pl" path="res://scenese/Memory_Fragment/memory_bar.tscn" id="2_16dq7"]
-[ext_resource type="Script" uid="uid://bqffpmcqgp6hr" path="res://scenese/Level_1_Scene/lvl_1_2.gd" id="4_3fw1y"]
 [ext_resource type="Texture2D" uid="uid://c5jucflnj4aed" path="res://assets/Attack_1.png" id="4_4k0o3"]
 [ext_resource type="Script" uid="uid://mdea02a5wynp" path="res://scenese/Level_1_Scene/player1.gd" id="4_6gjcc"]
 [ext_resource type="Texture2D" uid="uid://c7kf350ejvyog" path="res://assets/Attack_2.png" id="5_0ly4g"]
@@ -17,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://b6veb1le7y841" path="res://assets/Jump.png" id="11_5njk0"]
 [ext_resource type="Texture2D" uid="uid://b1gneict7cgpl" path="res://assets/Run.png" id="12_r45wr"]
 [ext_resource type="Texture2D" uid="uid://crlgon4s02ko0" path="res://assets/Walk.png" id="13_ggtcp"]
+[ext_resource type="Script" uid="uid://c2mss75yih01b" path="res://scenese/Level_1_Scene/Exit door to Level 2.gd" id="17_16dq7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_16dq7"]
 texture = ExtResource("2_6gjcc")
@@ -1199,8 +1199,8 @@ animations = [{
 radius = 7.0
 height = 56.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kvyfw"]
-size = Vector2(20, 73)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0ly4g"]
+size = Vector2(16, 66)
 
 [node name="Level1" type="Node2D"]
 position = Vector2(17, -189)
@@ -1251,17 +1251,6 @@ limit_top = -109
 limit_right = 2095
 limit_bottom = 21
 
-[node name="Lvl1_2" type="Area2D" parent="."]
-position = Vector2(2023, 145)
-collision_layer = 4
-collision_mask = 2
-collision_priority = 2.0
-script = ExtResource("4_3fw1y")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Lvl1_2"]
-position = Vector2(-1, 4.5)
-shape = SubResource("RectangleShape2D_kvyfw")
-
 [node name="Instr_1" type="Node2D" parent="."]
 position = Vector2(622, 40)
 script = ExtResource("5_5t241")
@@ -1276,7 +1265,13 @@ layout_mode = 0
 offset_right = 144.0
 offset_bottom = 79.0
 
+[node name="Exit Door to Level 2 (Jump and Lava)" type="Area2D" parent="."]
+script = ExtResource("17_16dq7")
+player_path = NodePath("../player")
+next_level_scene = "uid://b3kqrrfl4n3yu"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Exit Door to Level 2 (Jump and Lava)"]
+position = Vector2(2030, 148)
+shape = SubResource("RectangleShape2D_0ly4g")
+
 [connection signal="animation_finished" from="player/AnimatedSprite2D" to="player" method="_on_animated_sprite_2d_animation_finished"]
-[connection signal="body_entered" from="Lvl1_2" to="." method="_on_lvl_1_2_body_entered"]
-[connection signal="body_entered" from="Lvl1_2" to="Lvl1_2" method="_on_body_entered"]
-[connection signal="body_exited" from="Lvl1_2" to="Lvl1_2" method="_on_body_exited"]

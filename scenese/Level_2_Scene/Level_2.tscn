@@ -17,9 +17,9 @@
 [ext_resource type="PackedScene" uid="uid://chkcxkd4hfmlm" path="res://scenese/player.tscn" id="15_pkbjj"]
 [ext_resource type="Script" uid="uid://brerfdkyvrbf3" path="res://scenese/Level_2_Scene/instr_2.gd" id="16_27vgs"]
 [ext_resource type="Script" uid="uid://b3mbe51hew8ps" path="res://scenese/Level_2_Scene/player2.gd" id="16_syhm5"]
-[ext_resource type="Script" uid="uid://1kt03jb6ir54" path="res://scenese/Level_2_Scene/2_3.gd" id="17_n52g1"]
 [ext_resource type="PackedScene" uid="uid://d3aucpbiae3pl" path="res://scenese/Memory_Fragment/memory_bar.tscn" id="19_bxcjq"]
 [ext_resource type="PackedScene" uid="uid://dpjh4d6f84m6f" path="res://scenese/Memory_Fragment/memory_fragment.tscn" id="20_55d6s"]
+[ext_resource type="Script" uid="uid://8mpra38wlh0h" path="res://scenese/Level_2_Scene/ExitDoor to level 3.gd" id="20_bxcjq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yqpkv"]
 texture = ExtResource("2_syhm5")
@@ -6617,8 +6617,8 @@ sources/11 = SubResource("TileSetAtlasSource_32mgf")
 sources/12 = SubResource("TileSetAtlasSource_o5de6")
 sources/3 = SubResource("TileSetAtlasSource_ithfe")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_k0sux"]
-size = Vector2(38, 65)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pocj3"]
+size = Vector2(20, 69)
 
 [node name="Level_2" type="Node2D"]
 position = Vector2(0, 10)
@@ -6648,7 +6648,6 @@ position = Vector2(-1974, -54)
 collision_layer = 1
 script = ExtResource("16_syhm5")
 jump_velocity = -360.0
-max_health = 100
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 position = Vector2(6, -11)
@@ -6671,14 +6670,11 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
-[node name="2_3" type="Area2D" parent="."]
-position = Vector2(321, -66)
-collision_layer = 2
-script = ExtResource("17_n52g1")
+[node name="Exit Door to Level 3 (Attack_Bats)" type="Area2D" parent="."]
+script = ExtResource("20_bxcjq")
+player_path = NodePath("../player")
+next_level_scene = "uid://byossdi7xj41n"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="2_3"]
-position = Vector2(0, -5)
-shape = SubResource("RectangleShape2D_k0sux")
-
-[connection signal="body_entered" from="2_3" to="2_3" method="_on_body_entered"]
-[connection signal="body_exited" from="2_3" to="2_3" method="_on_body_exited"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Exit Door to Level 3 (Attack_Bats)"]
+position = Vector2(327, -67.5)
+shape = SubResource("RectangleShape2D_pocj3")
