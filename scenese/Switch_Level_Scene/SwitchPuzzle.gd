@@ -7,6 +7,7 @@ extends Node
 # target combo: 1 open, 2 open, 3 closed, 4 open
 var target := { 1: true, 2: true, 3: false, 4: true }
 var current := {}
+var solved := false
 
 func _ready() -> void:
 	var tm := get_node(tilemap_path) as TileMap
@@ -46,28 +47,25 @@ func _on_switch_state_changed(switch_id: int, is_open: bool) -> void:
 	_check_solution()
 
 func _check_solution() -> void:
-	# must have all 4
 	for id in target.keys():
 		if not current.has(id):
-			print("Puzzle waiting; missing switch:", id)
 			return
 
-	# compare to target
 	for id in target.keys():
 		if current[id] != target[id]:
+			solved = false
 			_set_pillar(true)
-			print("Not solved. Current:", current)
 			return
 
+	solved = true
 	_set_pillar(false)
-	print("SOLVED! Current:", current)
 
 func _set_pillar(blocking: bool) -> void:
 	var tm := get_node(tilemap_path) as TileMap
 	tm.set_layer_enabled(pillar_layer_index, blocking)
 	
-#func _input(event):
-	#if event.is_action_pressed("interact"):
-		#var tm := get_node(tilemap_path) as TileMap
-		#print("Toggling pillar layer for test:", pillar_layer_index)
-		#tm.set_layer_enabled(pillar_layer_index, not tm.is_layer_enabled(pillar_layer_index))
+func reset_puzzle() -> void:
+	solved = false
+	_set_pillar(true)
+	current.clear()
+	call_deferred("_pull_initial_states")

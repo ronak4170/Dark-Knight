@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://byeppe3b2ljfa"]
+
+[ext_resource type="Script" uid="uid://1dpkkjgf3ugf" path="res://scenese/Switch_Level_Scene/TileShaker.gd" id="1_ppgvk"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_ppgvk")
