@@ -9,3 +9,7 @@ func _ready():
 	
 func _on_lvl_1_2_body_entered(PhysicsBody2D) -> void:
 	$Instr_1.show_instruction("Press E to move to the next level")
+
+
+func _on_close_button_pressed() -> void:
+	pass # Replace with function body.
