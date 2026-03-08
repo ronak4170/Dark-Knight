@@ -1,12 +1,13 @@
-[gd_scene load_steps=56 format=3 uid="uid://du1pmqlu1ohed"]
+[gd_scene load_steps=63 format=3 uid="uid://du1pmqlu1ohed"]
 
 [ext_resource type="Script" uid="uid://r5bnqdfsmyi" path="res://scenese/Level_3_Scene/Bat.gd" id="1_xxo6f"]
 [ext_resource type="Texture2D" uid="uid://cy2br5hc31elt" path="res://assets/Bat with VFX/Bat-Attack2.png" id="3_5bilp"]
 [ext_resource type="Texture2D" uid="uid://ccnjyjdgtnrww" path="res://assets/Bat with VFX/Bat-Attack1.png" id="3_tewci"]
 [ext_resource type="Texture2D" uid="uid://d3713ym7kdq4n" path="res://assets/Bat with VFX/Bat-Run.png" id="4_5bilp"]
 [ext_resource type="Texture2D" uid="uid://ds4o8r3pjgt7i" path="res://assets/Bat with VFX/Bat-Die.png" id="4_j2j3p"]
+[ext_resource type="Texture2D" uid="uid://dcn4jr526mn20" path="res://assets/Bat with VFX/Bat-Hurt.png" id="4_v4vbj"]
 [ext_resource type="Texture2D" uid="uid://0tjwooyv1qgw" path="res://assets/Bat with VFX/Bat-IdleFly.png" id="5_j2j3p"]
-
+[ext_resource type="AudioStream" uid="uid://beewe08whskbi" path="res://audio/bat_attack_sound.mp3" id="8_ykvxa"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dqlfb"]
 atlas = ExtResource("3_5bilp")
@@ -87,6 +88,26 @@ region = Rect2(448, 0, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_w35m3"]
 atlas = ExtResource("4_j2j3p")
 region = Rect2(512, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ykvxa"]
+atlas = ExtResource("4_v4vbj")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7g8an"]
+atlas = ExtResource("4_v4vbj")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5gcu2"]
+atlas = ExtResource("4_v4vbj")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y4hku"]
+atlas = ExtResource("4_v4vbj")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_amhc6"]
+atlas = ExtResource("4_v4vbj")
+region = Rect2(256, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pqmsj"]
 atlas = ExtResource("5_j2j3p")
@@ -261,6 +282,26 @@ animations = [{
 "speed": 10.0
 }, {
 "frames": [{
+"duration": 0.21,
+"texture": SubResource("AtlasTexture_ykvxa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7g8an")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5gcu2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y4hku")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_amhc6")
+}],
+"loop": true,
+"name": &"Bat-Hurt",
+"speed": 5.0
+}, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_pqmsj")
 }, {
@@ -372,8 +413,8 @@ script = ExtResource("1_xxo6f")
 position = Vector2(24, 14.999999)
 scale = Vector2(1.7656249, 1.5390625)
 sprite_frames = SubResource("SpriteFrames_dqlfb")
-animation = &"fly"
-frame_progress = 0.9151885
+animation = &"Bat-Hurt"
+frame_progress = 0.65228486
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(348, 202)
@@ -386,16 +427,13 @@ collision_layer = 16
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
-visible = false
 position = Vector2(30, 5)
 shape = SubResource("CapsuleShape2D_j2j3p")
 
 [node name="AttackArea" type="Area2D" parent="."]
-visible = false
 position = Vector2(347, 196)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-visible = false
 position = Vector2(-324, -182)
 shape = SubResource("RectangleShape2D_j2j3p")
 
@@ -405,6 +443,11 @@ position = Vector2(-2, 2)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 position = Vector2(25, 7)
 shape = SubResource("CapsuleShape2D_ixf42")
+
+[node name="BatAttackSound" type="AudioStreamPlayer2D" parent="."]
+scale = Vector2(0.99999994, 0.99999994)
+stream = ExtResource("8_ykvxa")
+volume_db = -6.0
 
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_area_2d_body_exited"]

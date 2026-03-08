@@ -1,8 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://bqrdgehcjtfsm"]
 
-[ext_resource type="Script" uid="uid://byt8nctckcprp" path="res://scenese/Level_1_Scene/balloon.gd" id="1_36de5"]
+[ext_resource type="Script" uid="uid://5a8gpddq5k20" path="res://scenese/balloon.gd" id="1_36de5"]
 [ext_resource type="PackedScene" uid="uid://ckvgyvclnwggo" path="res://addons/dialogue_manager/dialogue_label.tscn" id="2_a8ve6"]
-[ext_resource type="Script" uid="uid://bb52rsfwhkxbn" path="res://addons/dialogue_manager/dialogue_responses_menu.gd" id="3_72ixx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_spyqn"]
 bg_color = Color(0, 0, 0, 1)
@@ -63,6 +62,18 @@ MarginContainer/constants/margin_right = 30
 MarginContainer/constants/margin_top = 15
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_qkmqt")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_35p1v"]
+bg_color = Color(0.012920001, 0.012920001, 0.012920001, 0.90000004)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.9063318, 0.7977378, 0.3491902, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
 [sub_resource type="Animation" id="Animation_nlsx6"]
 length = 0.001
 tracks/0/type = "bezier"
@@ -105,12 +116,14 @@ script = ExtResource("1_36de5")
 
 [node name="Balloon" type="Control" parent="."]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 120)
 layout_mode = 3
-anchors_preset = 15
+anchors_preset = 12
+anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 theme = SubResource("Theme_qq3yp")
 
 [node name="MarginContainer" type="MarginContainer" parent="Balloon"]
@@ -125,11 +138,17 @@ grow_vertical = 0
 
 [node name="PanelContainer" type="PanelContainer" parent="Balloon/MarginContainer"]
 clip_children = 2
+custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
 mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_35p1v")
 
 [node name="MarginContainer" type="MarginContainer" parent="Balloon/MarginContainer/PanelContainer"]
 layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Balloon/MarginContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
@@ -137,14 +156,17 @@ layout_mode = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="Balloon/MarginContainer/PanelContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/separation = 12
 
 [node name="CharacterLabel" type="RichTextLabel" parent="Balloon/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.501961)
 layout_mode = 2
 mouse_filter = 1
+theme_override_colors/default_color = Color(1, 0.13333334, 0.13333334, 1)
+theme_override_font_sizes/normal_font_size = 30
 bbcode_enabled = true
-text = "Character"
+text = "Samurai"
 fit_content = true
 scroll_active = false
 
@@ -152,6 +174,8 @@ scroll_active = false
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_colors/default_color = Color(0.8, 0.6, 0.09803922, 1)
+theme_override_font_sizes/normal_font_size = 20
 text = "Dialogue..."
 
 [node name="Control" type="Control" parent="Balloon/MarginContainer/PanelContainer/MarginContainer/HBoxContainer"]
@@ -169,32 +193,7 @@ libraries = {
 }
 autoplay = "progress"
 
-[node name="ResponsesMenu" type="VBoxContainer" parent="Balloon" node_paths=PackedStringArray("response_template")]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -290.5
-offset_top = -35.0
-offset_right = 290.5
-offset_bottom = 35.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_vertical = 8
-theme_override_constants/separation = 2
-alignment = 1
-script = ExtResource("3_72ixx")
-response_template = NodePath("ResponseExample")
-
-[node name="ResponseExample" type="Button" parent="Balloon/ResponsesMenu"]
-layout_mode = 2
-text = "Response example"
-
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 
 [connection signal="gui_input" from="Balloon" to="." method="_on_balloon_gui_input"]
-[connection signal="response_selected" from="Balloon/ResponsesMenu" to="." method="_on_responses_menu_response_selected"]

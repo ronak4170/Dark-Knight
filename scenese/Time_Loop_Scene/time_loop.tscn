@@ -1,8 +1,10 @@
-[gd_scene load_steps=107 format=3 uid="uid://cuywyc3gn3ujv"]
+[gd_scene load_steps=109 format=3 uid="uid://cuywyc3gn3ujv"]
 
 [ext_resource type="Script" uid="uid://30wj7iaynmcg" path="res://scenese/Time_Loop_Scene/time_loop.gd" id="1_iri56"]
 [ext_resource type="Texture2D" uid="uid://cowcd44l50ixh" path="res://dungeon_sidescroller-Raou/Tilesetv3.png" id="2_b66cj"]
+[ext_resource type="PackedScene" uid="uid://dpjh4d6f84m6f" path="res://scenese/Memory_Fragment/memory_fragment.tscn" id="2_d7ss3"]
 [ext_resource type="Texture2D" uid="uid://by0b4md0qgh8c" path="res://assets/tilemap.png" id="3_485u2"]
+[ext_resource type="PackedScene" uid="uid://d3aucpbiae3pl" path="res://scenese/Memory_Fragment/memory_bar.tscn" id="3_ggrlu"]
 [ext_resource type="Script" uid="uid://bkfufsuplqf4i" path="res://scenese/Time_Loop_Scene/player_time.gd" id="4_485u2"]
 [ext_resource type="Texture2D" uid="uid://v421nmsbs07l" path="res://assets/PixelPlatformerSet2v.1.1/main_lev_buildA.png" id="4_seung"]
 [ext_resource type="Script" uid="uid://dwrfvi4h77ngq" path="res://scenese/Time_Loop_Scene/loop.gd" id="5_seung"]
@@ -3399,6 +3401,11 @@ radius = 13.152946
 position = Vector2(-14, -1871)
 script = ExtResource("1_iri56")
 
+[node name="memory_fragment" parent="." instance=ExtResource("2_d7ss3")]
+position = Vector2(2314, 3801)
+
+[node name="MemoryBar" parent="." instance=ExtResource("3_ggrlu")]
+
 [node name="TileMap_loop" type="TileMap" parent="."]
 position = Vector2(0, 7)
 tile_set = SubResource("TileSet_spd7c")
@@ -3464,13 +3471,12 @@ shape = SubResource("CapsuleShape2D_ur7pv")
 script = ExtResource("5_seung")
 
 [node name="Camera2D" type="Camera2D" parent="player_time_loop"]
-visible = false
 position = Vector2(-63, 41)
 zoom = Vector2(4, 4)
-limit_left = 20
-limit_top = 359
-limit_right = 15265
-limit_bottom = 2005
+limit_left = 0
+limit_top = 320
+limit_right = 15245
+limit_bottom = 1970
 
 [node name="Ghosts" type="Node2D" parent="."]
 position = Vector2(258, 3372)
@@ -3512,6 +3518,7 @@ offset_top = -86.0
 offset_right = 104.0
 offset_bottom = -57.0
 text = "Press F to set checkpoint"
+metadata/_edit_use_anchors_ = true
 
 [node name="PuzzleManager" type="Node" parent="."]
 script = ExtResource("22_248fq")

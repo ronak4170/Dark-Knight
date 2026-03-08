@@ -17,12 +17,14 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+Global="*res://global.gd"
 Music="*res://scenese/Music.tscn"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
+<<<<<<<HEADDialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 
 [dialogue_manager]
 
-runtime/balloon_path="res://scenese/Level_1_Scene/balloon.tscn"
+runtime/balloon_path="res://scenese/balloon.tscn"
 
 [editor_plugins]
 
@@ -78,7 +80,7 @@ interact={
 
 [internationalization]
 
-locale/translations_pot_files=PackedStringArray("res://scenese/Level_1_Scene/Level1.dialogue")
+locale/translations_pot_files=PackedStringArray("res://scenese/Level_1_Scene/Level1.dialogue", "res://scenese/Level_2_Scene/Level2.dialogue", "res://scenese/Level_3_Scene/Level3.dialogue", "res://scenese/Switch_Level_Scene/Level4.dialogue", "res://scenese/Time_Loop_Scene/Level5.dialogue")
 
 [layer_names]
 

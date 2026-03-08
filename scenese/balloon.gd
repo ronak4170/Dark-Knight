@@ -12,7 +12,7 @@ extends CanvasLayer
 @export var auto_start: bool = false
 
 ## If all other input is blocked as long as dialogue is shown.
-@export var will_block_other_input: bool = true
+@export var will_block_other_input: bool = false
 
 ## The action to use for advancing the dialogue
 @export var next_action: StringName = &"ui_accept"
@@ -65,7 +65,7 @@ var mutation_cooldown: Timer = Timer.new()
 @onready var dialogue_label: DialogueLabel = %DialogueLabel
 
 ## The menu of responses
-@onready var responses_menu: DialogueResponsesMenu = %ResponsesMenu
+##@onready var responses_menu: DialogueResponsesMenu = %ResponsesMenu
 
 ## Indicator to show that player can progress dialogue.
 @onready var progress: Polygon2D = %Progress
@@ -76,8 +76,8 @@ func _ready() -> void:
 	Engine.get_singleton("DialogueManager").mutated.connect(_on_mutated)
 
 	# If the responses menu doesn't have a next action set, use this one
-	if responses_menu.next_action.is_empty():
-		responses_menu.next_action = next_action
+	##if responses_menu.next_action.is_empty():
+		##responses_menu.next_action = next_action
 
 	mutation_cooldown.timeout.connect(_on_mutation_cooldown_timeout)
 	add_child(mutation_cooldown)
@@ -90,7 +90,8 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if is_instance_valid(dialogue_line):
-		progress.visible = not dialogue_label.is_typing and dialogue_line.responses.size() == 0 and not dialogue_line.has_tag("voice")
+		progress.visible = not dialogue_label.is_typing and not dialogue_line.has_tag("voice")
+		##dialogue_line.responses.size() == 0
 
 
 func _unhandled_input(_event: InputEvent) -> void:
@@ -131,13 +132,13 @@ func apply_dialogue_line() -> void:
 	balloon.grab_focus()
 
 	character_label.visible = not dialogue_line.character.is_empty()
-	character_label.text = tr(dialogue_line.character, "dialogue")
+	character_label.text = "[b][u]" + tr(dialogue_line.character, "dialogue") + "[/u][/b]"
 
 	dialogue_label.hide()
 	dialogue_label.dialogue_line = dialogue_line
 
-	responses_menu.hide()
-	responses_menu.responses = dialogue_line.responses
+	##responses_menu.hide()
+	##responses_menu.responses = dialogue_line.responses
 
 	# Show our balloon
 	balloon.show()
@@ -154,17 +155,17 @@ func apply_dialogue_line() -> void:
 		audio_stream_player.play()
 		await audio_stream_player.finished
 		next(dialogue_line.next_id)
-	elif dialogue_line.responses.size() > 0:
-		balloon.focus_mode = Control.FOCUS_NONE
-		responses_menu.show()
+	##elif dialogue_line.responses.size() > 0:
+		##balloon.focus_mode = Control.FOCUS_NONE
+		##responses_menu.show()
 	elif dialogue_line.time != "":
 		var time: float = dialogue_line.text.length() * 0.02 if dialogue_line.time == "auto" else dialogue_line.time.to_float()
 		await get_tree().create_timer(time).timeout
 		next(dialogue_line.next_id)
 	else:
-		is_waiting_for_input = true
-		balloon.focus_mode = Control.FOCUS_ALL
-		balloon.grab_focus()
+		var auto_time: float = max(2.0, dialogue_line.text.length() * 0.05)
+		await get_tree().create_timer(auto_time).timeout
+		next(dialogue_line.next_id)
 
 
 ## Go to the next line
@@ -210,8 +211,8 @@ func _on_balloon_gui_input(event: InputEvent) -> void:
 		next(dialogue_line.next_id)
 
 
-func _on_responses_menu_response_selected(response: DialogueResponse) -> void:
-	next(response.next_id)
+##func _on_responses_menu_response_selected(response: DialogueResponse) -> void:
+	##next(response.next_id)
 
 
 #endregion

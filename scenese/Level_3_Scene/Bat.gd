@@ -10,109 +10,123 @@ extends CharacterBody2D
 
 @export var attack_damage: int = 1
 @export var attack_cooldown: float = 1.0
+@export var attack_hit_delay: float = 0.12  # tweak to match hit frame
 
 @export var max_hp: int = 3
 var hp: int
 
+@export var hurt_time: float = 0.18
+
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var hitbox: Area2D = $Hitbox
+
+
+@onready var bat_attack_sound: AudioStreamPlayer2D = $BatAttackSound
 
 var player: Node2D = null
 var can_attack: bool = true
 var dead: bool = false
 var attacking: bool = false
+var hitstunned: bool = false
 
 
 func _ready() -> void:
 	motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
 	hp = max_hp
 	add_to_group("enemy")
-	
+
 	if anim and anim.sprite_frames and anim.sprite_frames.has_animation("fly"):
-		anim.play("fly") # guarantees playing = true
+		anim.play("fly")
+
 
 func _physics_process(delta: float) -> void:
 	if dead:
 		return
 
+	# hurt pause (smooth slow-down)
+	if hitstunned:
+		velocity = velocity.move_toward(Vector2.ZERO, accel * delta)
+		move_and_slide()
+		return
+
+	# find player
 	if player == null or not is_instance_valid(player):
 		player = get_player()
 
+	# no player: slow down
 	if player == null:
 		velocity = velocity.move_toward(Vector2.ZERO, accel * delta)
-		move_and_slide()
-		return
-		
-	#  if no player, just slow down
-	if player == null:
-		velocity = velocity.move_toward(Vector2.ZERO, accel * delta)
+		_play_fly_if_exists()
 		move_and_slide()
 		return
 
-	#  STOP EVERYTHING if player is dead
+	# stop everything if player dead
 	if player.has_method("is_dead") and player.is_dead():
 		can_attack = false
 		velocity = velocity.move_toward(Vector2.ZERO, accel * delta)
-		if anim and anim.sprite_frames and anim.sprite_frames.has_animation("fly"):
-			if anim.animation != "fly" or not anim.is_playing():
-				anim.play("fly")
+		_play_fly_if_exists()
 		move_and_slide()
 		return
-		
-	# Move to a point above the player's head
+
+	# move to hover above player
 	var hover_point: Vector2 = player.global_position + Vector2(0.0, -hover_height)
 	var to_hover: Vector2 = hover_point - global_position
 	var dist: float = to_hover.length()
 
-	# Arrive behavior (no overshoot)
 	if dist > stop_distance:
 		var t: float = clamp(dist / 300.0, 0.0, 1.0)
 		var desired_speed: float = lerp(min_speed, max_speed, t)
 		var desired_vel: Vector2 = to_hover.normalized() * desired_speed
 		velocity = velocity.move_toward(desired_vel, accel * delta)
-
-		if anim and anim.sprite_frames and anim.sprite_frames.has_animation("fly"):
-			if anim.animation != "fly" or not anim.is_playing():
-				anim.play("fly")
 	else:
-		# Snap exactly to hover point so it doesn't drift past
-		global_position = hover_point
-		velocity = Vector2.ZERO
-
-		# Attack when positioned correctly above player
+		velocity = velocity.move_toward(Vector2.ZERO, accel * delta)
 		if dist <= attack_distance:
 			try_attack()
-			
-	var moving := velocity.length() > 5.0
-	if anim and anim.sprite_frames:
-		if moving and anim.sprite_frames.has_animation("fly"):
-			if anim.animation != "fly" or not anim.is_playing():
-				anim.play("fly")
+
+	# animation
+	if velocity.length() > 5.0:
+		_play_fly_if_exists()
 
 	move_and_slide()
 
 
+func _play_fly_if_exists() -> void:
+	if anim and anim.sprite_frames and anim.sprite_frames.has_animation("fly"):
+		if anim.animation != "fly" or not anim.is_playing():
+			anim.play("fly")
+
+
 func try_attack() -> void:
-	if dead or not can_attack:
+	if dead or hitstunned or not can_attack:
 		return
 	if player == null or not is_instance_valid(player):
 		return
-
-	#  don't attack dead player
 	if player.has_method("is_dead") and player.is_dead():
 		return
 
 	can_attack = false
 	attacking = true
-	
+
+	# play attack anim (or fallback wait)
 	if anim and anim.sprite_frames and anim.sprite_frames.has_animation("attack"):
 		anim.play("attack")
-		attacking = true
 	else:
-		# if no attack anim, just don't get stuck
 		await get_tree().physics_frame
-			
-	if player.has_method("take_damage"):
+
+	# play bat sound (independent of anim)
+	if bat_attack_sound and bat_attack_sound.stream:
+		bat_attack_sound.pitch_scale = randf_range(0.95, 1.05)
+		bat_attack_sound.play()
+
+	# sync damage to "hit" moment
+	await get_tree().create_timer(attack_hit_delay).timeout
+
+	# if got hurt/died during delay, cancel
+	if dead or hitstunned:
+		attacking = false
+		return
+
+	if player and is_instance_valid(player) and player.has_method("take_damage"):
 		player.take_damage(attack_damage)
 
 	# cooldown
@@ -120,9 +134,9 @@ func try_attack() -> void:
 	can_attack = true
 	attacking = false
 
-	#  force fly after attack
-	if not dead and anim and anim.sprite_frames and anim.sprite_frames.has_animation("fly"):
-		anim.play("fly")
+	if not dead and not hitstunned:
+		_play_fly_if_exists()
+
 
 func take_damage(amount: int) -> void:
 	if dead:
@@ -131,8 +145,23 @@ func take_damage(amount: int) -> void:
 	hp -= amount
 	print("BAT TOOK DAMAGE! HP:", hp)
 
+	hitstunned = true
+	can_attack = false
+	attacking = false
+
+	if anim and anim.sprite_frames and anim.sprite_frames.has_animation("Bat-Hurt"):
+		anim.play("Bat-Hurt")
+
+	await get_tree().create_timer(hurt_time).timeout
+
+	hitstunned = false
+
 	if hp <= 0:
 		die()
+		return
+
+	can_attack = true
+	_play_fly_if_exists()
 
 
 func die() -> void:
@@ -143,12 +172,10 @@ func die() -> void:
 	can_attack = false
 	velocity = Vector2.ZERO
 
-	# Disable hitbox so it stops interacting
 	if hitbox:
 		hitbox.monitoring = false
 		hitbox.monitorable = false
 
-	# Play death animation if it exists
 	if anim and anim.sprite_frames and anim.sprite_frames.has_animation("die"):
 		anim.play("die")
 		await anim.animation_finished

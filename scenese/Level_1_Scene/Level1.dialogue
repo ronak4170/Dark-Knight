@@ -1,11 +1,15 @@
-~ start
-
+~ intro_locked
 Player: ...Where am I?
 Player: Why won't my body— what's wrong with me?
 Player: Who am I? I can't— I don't know who I am.
+
+~ intro_moving
+Player: ...I can move.
+Player: Maybe the answers are somewhere ahead.
+
+~ orb_spotted
 Player: What is that?
-Player: ...I can move. That's something.
+
+~ orb_touched
 Player: There was... something. Someone. It's gone.
 Player: Keep moving. Answers are forward, not behind.
-
-~ end

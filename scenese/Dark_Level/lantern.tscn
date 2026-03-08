@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=3 uid="uid://dj6wdxymbmfgv"]
+
+[ext_resource type="Script" uid="uid://c4meixxdgnr34" path="res://scenese/Dark_Level/lantern.gd" id="1_bbsvt"]
+[ext_resource type="Texture2D" uid="uid://blwsu765b1r40" path="res://assets/Dark/Lantern 1 - Silver and Orange.png" id="1_t78op"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bjuf2"]
+atlas = ExtResource("1_t78op")
+region = Rect2(240, 168, 40, 56)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2oju0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bjuf2")
+}],
+"loop": true,
+"name": &"burn",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_bbsvt"]
+offsets = PackedFloat32Array(0.17333333, 0.7266667, 0.8666667)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1, 0.111111164, 0.111111164, 0.111111164, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_cqbpg"]
+gradient = SubResource("Gradient_bbsvt")
+width = 400
+height = 200
+fill = 1
+fill_from = Vector2(0.5373832, 0.6030841)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t78op"]
+radius = 168.19334
+
+[node name="lantern" type="CharacterBody2D"]
+position = Vector2(1, 0)
+script = ExtResource("1_bbsvt")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_2oju0")
+animation = &"burn"
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(3, -238.1875)
+scale = Vector2(3.0468748, 1.4041342)
+color = Color(0.98039216, 0.9411765, 0.5764706, 1)
+energy = 2.27
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_cqbpg")
+texture_scale = 3.0
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(8, -43)
+shape = SubResource("CircleShape2D_t78op")

@@ -1,7 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://btyx3t3se7r2v"]
+[gd_scene load_steps=17 format=3 uid="uid://btyx3t3se7r2v"]
 
 [ext_resource type="Texture2D" uid="uid://ce8wqyrbdvxvv" path="res://assets/dungeon_sidescroller-Raou/Tilesetv3.png" id="1_gaulc"]
+[ext_resource type="PackedScene" uid="uid://dpjh4d6f84m6f" path="res://scenese/Memory_Fragment/memory_fragment.tscn" id="1_k3aj3"]
+[ext_resource type="Script" uid="uid://cq7sn7wejou3a" path="res://scenese/Switch_Level_Scene/switch_level.gd" id="1_tj1f2"]
 [ext_resource type="PackedScene" uid="uid://chkcxkd4hfmlm" path="res://scenese/player.tscn" id="2_lssj2"]
+[ext_resource type="PackedScene" uid="uid://d3aucpbiae3pl" path="res://scenese/Memory_Fragment/memory_bar.tscn" id="2_tj1f2"]
 [ext_resource type="Script" uid="uid://dpb11swcb26e6" path="res://scenese/Switch_Level_Scene/switchLevel_player.gd" id="3_k3aj3"]
 [ext_resource type="Script" uid="uid://cyl4tpgf2f0vn" path="res://scenese/Switch_Level_Scene/switch_1_area.gd" id="4_tj1f2"]
 [ext_resource type="FontFile" uid="uid://b3q6sjw4d0u62" path="res://assets/Font/Cinzel-Regular.otf" id="5_p16kd"]
@@ -726,6 +729,31 @@ size = Vector2(20, 102)
 size = Vector2(20, 75)
 
 [node name="switchLevel" type="Node2D"]
+script = ExtResource("1_tj1f2")
+
+[node name="player" parent="." instance=ExtResource("2_lssj2")]
+z_index = 1
+position = Vector2(-22, -17)
+scale = Vector2(0.7, 0.7)
+collision_layer = 1
+script = ExtResource("3_k3aj3")
+speed = 150.0
+jump_velocity = -250.0
+double_jump_velocity = -150.0
+
+[node name="Camera2D" type="Camera2D" parent="player"]
+position = Vector2(4.9999995, -18.333332)
+zoom = Vector2(7, 7)
+limit_left = -151
+limit_top = -140
+limit_right = 1408
+limit_bottom = 110
+position_smoothing_enabled = true
+
+[node name="memory_fragment" parent="." instance=ExtResource("1_k3aj3")]
+position = Vector2(1222, -13)
+
+[node name="MemoryBar" parent="." instance=ExtResource("2_tj1f2")]
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_re3ws")
@@ -772,24 +800,6 @@ layer_17/enabled = false
 layer_17/tile_data = PackedInt32Array(-131004, 327680, 49)
 layer_18/name = "EXIT_STATUE"
 layer_18/tile_data = PackedInt32Array(-262072, 917504, 0, -196536, 917504, 1, -131000, 917504, 2, -65464, 917504, 3, -196535, 983040, 1, -130999, 983040, 2, -65463, 983040, 3)
-
-[node name="player" parent="TileMap" instance=ExtResource("2_lssj2")]
-position = Vector2(-22, -17)
-scale = Vector2(0.7, 0.7)
-collision_layer = 1
-script = ExtResource("3_k3aj3")
-speed = 150.0
-jump_velocity = -250.0
-double_jump_velocity = -150.0
-
-[node name="Camera2D" type="Camera2D" parent="TileMap/player"]
-position = Vector2(4.9999995, -18.333332)
-zoom = Vector2(7, 7)
-limit_left = -151
-limit_top = -140
-limit_right = 1408
-limit_bottom = 110
-position_smoothing_enabled = true
 
 [node name="Switch1-Area" type="Area2D" parent="."]
 script = ExtResource("4_tj1f2")

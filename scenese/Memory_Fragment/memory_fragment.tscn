@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://dpjh4d6f84m6f"]
+
+[ext_resource type="Script" uid="uid://b158gdgdes2nu" path="res://scenese/Memory_Fragment/memory_fragment.gd" id="1_l8h4y"]
+[ext_resource type="Texture2D" uid="uid://jknrtjltrnj2" path="res://assets/Dark/orb.png" id="1_nysfc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_l8h4y"]
+radius = 15.033297
+
+[node name="memory_fragment" type="Area2D" groups=["memory_fragment"]]
+z_index = 1
+script = ExtResource("1_l8h4y")
+
+[node name="Orb" type="Sprite2D" parent="." groups=["memory_fragment"]]
+position = Vector2(-2, 3.000001)
+scale = Vector2(0.015, 0.015)
+texture = ExtResource("1_nysfc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["memory_fragment"]]
+position = Vector2(-2, 2)
+shape = SubResource("CircleShape2D_l8h4y")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="." groups=["memory_fragment"]]
+position = Vector2(0, 1)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

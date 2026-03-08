@@ -1,7 +1,9 @@
-[gd_scene load_steps=77 format=3 uid="uid://b2nmvvkrwhpm2"]
+[gd_scene load_steps=80 format=3 uid="uid://b2nmvvkrwhpm2"]
 
 [ext_resource type="Script" uid="uid://dokwdqy4h4eeu" path="res://scenese/Level_1_Scene/level_1.gd" id="1_tnuwx"]
+[ext_resource type="PackedScene" uid="uid://dpjh4d6f84m6f" path="res://scenese/Memory_Fragment/memory_fragment.tscn" id="2_0ly4g"]
 [ext_resource type="Texture2D" uid="uid://cowcd44l50ixh" path="res://dungeon_sidescroller-Raou/Tilesetv3.png" id="2_6gjcc"]
+[ext_resource type="PackedScene" uid="uid://d3aucpbiae3pl" path="res://scenese/Memory_Fragment/memory_bar.tscn" id="2_16dq7"]
 [ext_resource type="Script" uid="uid://bqffpmcqgp6hr" path="res://scenese/Level_1_Scene/lvl_1_2.gd" id="4_3fw1y"]
 [ext_resource type="Texture2D" uid="uid://c5jucflnj4aed" path="res://assets/Attack_1.png" id="4_4k0o3"]
 [ext_resource type="Script" uid="uid://mdea02a5wynp" path="res://scenese/Level_1_Scene/player1.gd" id="4_6gjcc"]
@@ -16,7 +18,10 @@
 [ext_resource type="Texture2D" uid="uid://b1gneict7cgpl" path="res://assets/Run.png" id="12_r45wr"]
 [ext_resource type="Texture2D" uid="uid://crlgon4s02ko0" path="res://assets/Walk.png" id="13_ggtcp"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0jmkl"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_16dq7"]
+radius = 98.0816
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_16dq7"]
 texture = ExtResource("2_6gjcc")
 0:0/0 = 0
 1:0/0 = 0
@@ -736,7 +741,7 @@ texture = ExtResource("2_6gjcc")
 
 [sub_resource type="TileSet" id="TileSet_mdt63"]
 physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_0jmkl")
+sources/0 = SubResource("TileSetAtlasSource_16dq7")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dy4c8"]
 atlas = ExtResource("4_4k0o3")
@@ -1204,6 +1209,19 @@ size = Vector2(20, 73)
 position = Vector2(17, -189)
 script = ExtResource("1_tnuwx")
 
+[node name="MemoryBar" parent="." instance=ExtResource("2_16dq7")]
+
+[node name="memory_fragment" parent="." instance=ExtResource("2_0ly4g")]
+position = Vector2(686, 126)
+
+[node name="Orb_spot" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Orb_spot"]
+top_level = true
+light_mask = 0
+position = Vector2(632, -109)
+shape = SubResource("CircleShape2D_16dq7")
+
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(14, 102)
 tile_set = SubResource("TileSet_mdt63")
@@ -1218,10 +1236,9 @@ layer_3/name = "Torch"
 layer_3/tile_data = PackedInt32Array(-458751, 327680, 23, -393215, 327680, 24, -458750, 393216, 23, -393214, 393216, 24, -458748, 327680, 23, -393212, 327680, 24, -458747, 393216, 23, -393211, 393216, 24, -458745, 327680, 23, -393209, 327680, 24, -458744, 393216, 23, -393208, 393216, 24, -458742, 327680, 23, -393206, 327680, 24, -458741, 393216, 23, -393205, 393216, 24, -458739, 327680, 23, -393203, 327680, 24, -458738, 393216, 23, -393202, 393216, 24, -458736, 327680, 23, -393200, 327680, 24, -458735, 393216, 23, -393199, 393216, 24, -458733, 327680, 23, -393197, 327680, 24, -458732, 393216, 23, -393196, 393216, 24, -458730, 327680, 23, -393194, 327680, 24, -458729, 393216, 23, -393193, 393216, 24, -458727, 327680, 23, -393191, 327680, 24, -458726, 393216, 23, -393190, 393216, 24, -458724, 327680, 23, -393188, 327680, 24, -458723, 393216, 23, -393187, 393216, 24, -458721, 327680, 23, -393185, 327680, 24, -458720, 393216, 23, -393184, 393216, 24, -458718, 327680, 23, -393182, 327680, 24, -458717, 393216, 23, -393181, 393216, 24, -458715, 327680, 23, -393179, 327680, 24, -458714, 393216, 23, -393178, 393216, 24, -458712, 327680, 23, -393176, 327680, 24, -458711, 393216, 23, -393175, 393216, 24, -458709, 327680, 23, -393173, 327680, 24, -458708, 393216, 23, -393172, 393216, 24, -458706, 327680, 23, -393170, 327680, 24, -458705, 393216, 23, -393169, 393216, 24, -458703, 327680, 23, -393167, 327680, 24, -458702, 393216, 23, -393166, 393216, 24, -458700, 327680, 23, -393164, 327680, 24, -458699, 393216, 23, -393163, 393216, 24, -458697, 327680, 23, -393161, 327680, 24, -458696, 393216, 23, -393160, 393216, 24, -458694, 327680, 23, -393158, 327680, 24, -458693, 393216, 23, -393157, 393216, 24, -458691, 327680, 23, -393155, 327680, 24, -458690, 393216, 23, -393154, 393216, 24, -458688, 327680, 23, -393152, 327680, 24, -458687, 393216, 23, -393151, 393216, 24, -458685, 327680, 23, -393149, 327680, 24, -458684, 393216, 23, -393148, 393216, 24, -458682, 327680, 23, -393146, 327680, 24, -458681, 393216, 23, -393145, 393216, 24, -458679, 327680, 23, -393143, 327680, 24, -458678, 393216, 23, -393142, 393216, 24, -458676, 327680, 23, -393140, 327680, 24, -458675, 393216, 23, -393139, 393216, 24, -458673, 327680, 23, -393137, 327680, 24, -458672, 393216, 23, -393136, 393216, 24, -458670, 327680, 23, -393134, 327680, 24, -458669, 393216, 23, -393133, 393216, 24, -458667, 327680, 23, -393131, 327680, 24, -458666, 393216, 23, -393130, 393216, 24, -458664, 327680, 23, -393128, 327680, 24, -458663, 393216, 23, -393127, 393216, 24, -458661, 327680, 23, -393125, 327680, 24, -458660, 393216, 23, -393124, 393216, 24, -458658, 327680, 23, -393122, 327680, 24, -458657, 393216, 23, -393121, 393216, 24, -458655, 327680, 23, -393119, 327680, 24, -458654, 393216, 23, -393118, 393216, 24, -458652, 327680, 23, -393116, 327680, 24, -458651, 393216, 23, -393115, 393216, 24, -458649, 327680, 23, -393113, 327680, 24, -458648, 393216, 23, -393112, 393216, 24, -458646, 327680, 23, -393110, 327680, 24, -458645, 393216, 23, -393109, 393216, 24, -458643, 327680, 23, -393107, 327680, 24, -458642, 393216, 23, -393106, 393216, 24, -458640, 327680, 23, -393104, 327680, 24, -458639, 393216, 23, -393103, 393216, 24, -458637, 327680, 23, -393101, 327680, 24, -458636, 393216, 23, -393100, 393216, 24, -458634, 327680, 23, -393098, 327680, 24, -458633, 393216, 23, -393097, 393216, 24, -458631, 327680, 23, -393095, 327680, 24, -458630, 393216, 23, -393094, 393216, 24, -458628, 327680, 23, -393092, 327680, 24, -458627, 393216, 23, -393091, 393216, 24, -458625, 327680, 23, -393089, 327680, 24, -458624, 393216, 23, -393088, 393216, 24)
 
 [node name="player" type="CharacterBody2D" parent="."]
-position = Vector2(181, 118)
-collision_layer = 2
+position = Vector2(173, 122)
+collision_layer = 3
 script = ExtResource("4_6gjcc")
-double_jump_velocity = -380.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="player"]
 position = Vector2(-53.000008, 8)
@@ -1236,6 +1253,7 @@ position = Vector2(-52, 32)
 shape = SubResource("CapsuleShape2D_ur7pv")
 
 [node name="Camera2D" type="Camera2D" parent="player"]
+visible = false
 position = Vector2(-45, 33)
 scale = Vector2(0.9, 0.9)
 zoom = Vector2(5.5, 5.5)
