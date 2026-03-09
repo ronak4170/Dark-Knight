@@ -51,3 +51,21 @@ func _on_body_exited(body):
 		player_in_range = false
 		if hint_label:
 			hint_label.visible = false
+
+func reset_to_default() -> void:
+	# default = closed
+	is_open = false
+
+	var tm := get_node(tilemap_path) as TileMap
+	tm.set_layer_enabled(closed_index, true)
+	tm.set_layer_enabled(open_index, false)
+
+	emit_signal("state_changed", switch_id, is_open)
+
+	# optional: hide hint on respawn
+	player_in_range = false
+	if hint_label:
+		hint_label.visible = false
+		var c := hint_label.modulate
+		c.a = 0.0
+		hint_label.modulate = c

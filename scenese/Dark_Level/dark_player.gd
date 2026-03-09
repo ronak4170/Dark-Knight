@@ -58,12 +58,6 @@ func _ready() -> void:
 
 	_base_modulate = animated_sprite.modulate
 
-	Global.reset_memory()
-	# count fragments in this level
-	await get_tree().process_frame  # wait for all nodes to be ready
-	Global.memory_total = get_tree().get_nodes_in_group("memory_fragment").size()
-	print("Total fragments in level: ", Global.memory_total)
-	
 	# Save respawn point
 	var spawn = get_tree().get_first_node_in_group("spawn_point")
 	if spawn:

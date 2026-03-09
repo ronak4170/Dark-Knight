@@ -39,7 +39,7 @@ func _collect():
 	if collected:
 		return
 	collected = true
-	print("✅ MEMORY COLLECTED!")
+	print("MEMORY COLLECTED!")
 	
 	Global.collect_memory()
 	

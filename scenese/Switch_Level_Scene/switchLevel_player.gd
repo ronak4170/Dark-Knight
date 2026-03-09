@@ -8,6 +8,9 @@ extends CharacterBody2D
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
+@onready var jump_sound = $jump_sound
+@onready var double_jump_sound = $double_jump_sound
+
 var direction: Vector2 = Vector2.ZERO
 var jumps_left: int = 0
 var animated_locked: bool = false
@@ -35,9 +38,16 @@ func _physics_process(delta: float) -> void:
 	# Jump / Double jump
 	if Input.is_action_just_pressed("jump") and jumps_left > 0:
 		if jumps_left == max_jumps:
+			jump_sound.play()
 			jump()
 		else:
 			double_jump()
+			double_jump_sound.play()
+		if jumps_left == max_jumps:
+			velocity.y = jump_velocity
+		else:
+			velocity.y = double_jump_velocity
+		
 		jumps_left -= 1
 
 	var prev_on_floor := was_on_floor

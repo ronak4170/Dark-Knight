@@ -2,7 +2,7 @@ extends Node
 
 # total fragments collected across ALL levels
 var memory_collected: int = 0
-var memory_total: int = 0  
+var memory_total: int = 0
 
 signal memory_updated(current, total)
 
