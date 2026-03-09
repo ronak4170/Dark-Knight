@@ -10,6 +10,9 @@ extends CharacterBody2D
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var attack_hitbox = $AttackHitbox
 
+@onready var jump_sound: AudioStreamPlayer2D = $jump_sound
+@onready var double_jump_sound: AudioStreamPlayer2D = $double_jump_sound
+
 var animated_locked : bool = false
 var direction : Vector2 = Vector2.ZERO
 var jumps_left : int
@@ -59,10 +62,12 @@ func _physics_process(delta: float) -> void:
 	
 	if not is_defending and Input.is_action_just_pressed("jump") and jumps_left > 0:
 		if jumps_left == max_jumps:
+			jump_sound.play()
 			jump()
 		else:
+			double_jump_sound.play()
 			double_jump()
-		jumps_left -= 1
+			jumps_left -= 1
 	
 	if Input.is_action_pressed("defend") and is_on_floor():
 		is_defending = true

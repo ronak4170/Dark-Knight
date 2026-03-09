@@ -5,8 +5,8 @@ extends CharacterBody2D
 @export var accel: float = 1800.0
 
 @export var hover_height: float = 40.0
-@export var stop_distance: float = 30.0
-@export var attack_distance: float = 25.0
+@export var stop_distance: float = 40.0
+@export var attack_distance: float = 35.0
 
 @export var attack_damage: int = 1
 @export var attack_cooldown: float = 1.0

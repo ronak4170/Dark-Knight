@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://b3kqrrfl4n3yu"]
+[gd_scene load_steps=38 format=3 uid="uid://b3kqrrfl4n3yu"]
 
 [ext_resource type="Script" uid="uid://ctsk6g4qi8vnu" path="res://scenese/Level_2_Scene/level_2.gd" id="1_hov62"]
 [ext_resource type="Texture2D" uid="uid://ckfjcmiyewecw" path="res://assets/free-dungeon-platformer-pixel-art-tileset/PNG/Background/Bright/bg.png" id="2_syhm5"]
@@ -18,8 +18,10 @@
 [ext_resource type="Script" uid="uid://brerfdkyvrbf3" path="res://scenese/Level_2_Scene/instr_2.gd" id="16_27vgs"]
 [ext_resource type="Script" uid="uid://b3mbe51hew8ps" path="res://scenese/Level_2_Scene/player2.gd" id="16_syhm5"]
 [ext_resource type="Script" uid="uid://1kt03jb6ir54" path="res://scenese/Level_2_Scene/2_3.gd" id="17_n52g1"]
+[ext_resource type="AudioStream" uid="uid://c2nq8l777acwn" path="res://assets/Audio/player_double_jump.wav" id="19_63pjn"]
 [ext_resource type="PackedScene" uid="uid://d3aucpbiae3pl" path="res://scenese/Memory_Fragment/memory_bar.tscn" id="19_bxcjq"]
 [ext_resource type="PackedScene" uid="uid://dpjh4d6f84m6f" path="res://scenese/Memory_Fragment/memory_fragment.tscn" id="20_55d6s"]
+[ext_resource type="AudioStream" uid="uid://cp2dg75a3l7ig" path="res://assets/Audio/player_jump.wav" id="20_hodly"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yqpkv"]
 texture = ExtResource("2_syhm5")
@@ -6648,7 +6650,6 @@ position = Vector2(-1974, -54)
 collision_layer = 1
 script = ExtResource("16_syhm5")
 jump_velocity = -360.0
-max_health = 100
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 position = Vector2(6, -11)
@@ -6658,6 +6659,13 @@ limit_top = -607
 limit_right = 510
 limit_bottom = 218
 position_smoothing_enabled = true
+
+[node name="double_jump_sound" type="AudioStreamPlayer2D" parent="player"]
+scale = Vector2(0.99999994, 0.99999994)
+stream = ExtResource("19_63pjn")
+
+[node name="jump_sound" type="AudioStreamPlayer2D" parent="player"]
+stream = ExtResource("20_hodly")
 
 [node name="Instr_2" type="Node2D" parent="."]
 script = ExtResource("16_27vgs")

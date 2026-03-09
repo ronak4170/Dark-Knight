@@ -51,6 +51,8 @@ func _ready() -> void:
 
 	_base_modulate = animated_sprite.modulate
 
+@onready var jump_sound = $jump_sound
+@onready var double_jump_sound = $double_jump_sound
 
 func _physics_process(delta: float) -> void:
 	# dead: just fall + slide (no input)
@@ -93,18 +95,33 @@ func _physics_process(delta: float) -> void:
 		update_facing_direction()
 		return
 
+
 	# jump / double jump
+
 	if Input.is_action_just_pressed("jump") and jumps_left > 0 and not is_defending:
 		if jumps_left == max_jumps:
+			jump_sound.play()
 			jump()
 		else:
 			double_jump()
+			double_jump_sound.play()
+		if jumps_left == max_jumps:
+			velocity.y = jump_velocity
+		else:
+			velocity.y = double_jump_velocity
+		
 		jumps_left -= 1
 
 	# attack input
-	if Input.is_action_just_pressed("attack"):
-		handle_attack_input()
+	if Input.is_action_just_pressed("attack_1"):
+		start_attack(1)
 
+	if Input.is_action_just_pressed("attack_2"):
+		start_attack(2)
+
+	if Input.is_action_just_pressed("attack_3"):
+		start_attack(3)
+	
 	# movement
 	if is_attacking:
 		velocity.x = 0
@@ -180,24 +197,19 @@ func land() -> void:
 	animated_sprite.play("jump_end")
 	animated_locked = true
 
-
-func handle_attack_input() -> void:
-	if hitstunned or dead:
-		return
-	
-	if is_attacking:
-		if combo_step + queue_attacks < 3:
-			queue_attacks += 1
+func start_attack(num: int) -> void:
+	if hitstunned or dead or is_attacking:
 		return
 
-	# start combo
 	is_attacking = true
 	animated_locked = true
-	combo_step = 1
-	queue_attacks = 0
-	animated_sprite.play("attack_1")
+	combo_step = num
+
+	animated_sprite.play("attack_%d" % num)
+
 	if sword_sound:
 		sword_sound.play()
+
 	_start_attack_hit_once()
 
 
@@ -210,16 +222,10 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		return
 
 	if animated_sprite.animation.begins_with("attack_"):
-		if queue_attacks > 0 and combo_step < 3:
-			queue_attacks -= 1
-			combo_step += 1
-			animated_sprite.play("attack_%d" % combo_step)
-			_start_attack_hit_once()
-		else:
-			is_attacking = false
-			combo_step = 0
-			queue_attacks = 0
-			animated_locked = false
+		is_attacking = false
+		combo_step = 0
+		queue_attacks = 0
+		animated_locked = false
 
 
 func _start_attack_hit_once() -> void:

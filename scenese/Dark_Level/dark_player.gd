@@ -72,6 +72,9 @@ func _ready() -> void:
 		respawn_point = global_position
 
 
+@onready var jump_sound = $jump_sound
+@onready var double_jump_sound = $double_jump_sound
+
 func _physics_process(delta: float) -> void:
 	# dead: just fall + slide (no input)
 	if dead:
@@ -114,16 +117,31 @@ func _physics_process(delta: float) -> void:
 		return
 
 	# jump / double jump
+
 	if Input.is_action_just_pressed("jump") and jumps_left > 0 and not is_defending:
 		if jumps_left == max_jumps:
+			jump_sound.play()
 			jump()
 		else:
 			double_jump()
+			double_jump_sound.play()
+		if jumps_left == max_jumps:
+			velocity.y = jump_velocity
+		else:
+			velocity.y = double_jump_velocity
+		
 		jumps_left -= 1
 
 	# attack input
-	if Input.is_action_just_pressed("attack"):
-		handle_attack_input()
+	# attack input
+	if Input.is_action_just_pressed("attack_1"):
+		start_attack(1)
+
+	if Input.is_action_just_pressed("attack_2"):
+		start_attack(2)
+
+	if Input.is_action_just_pressed("attack_3"):
+		start_attack(3)
 
 	# movement
 	if is_attacking:
@@ -216,23 +234,19 @@ func land() -> void:
 	animated_locked = true
 
 
-func handle_attack_input() -> void:
-	if hitstunned or dead:
+func start_attack(num: int) -> void:
+	if hitstunned or dead or is_attacking:
 		return
 
-	if is_attacking:
-		if combo_step + queue_attacks < 3:
-			queue_attacks += 1
-		return
-
-	# start combo
 	is_attacking = true
 	animated_locked = true
-	combo_step = 1
-	queue_attacks = 0
-	animated_sprite.play("attack_1")
+	combo_step = num
+
+	animated_sprite.play("attack_%d" % num)
+
 	if sword_sound:
 		sword_sound.play()
+
 	_start_attack_hit_once()
 
 
