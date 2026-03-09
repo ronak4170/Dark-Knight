@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cq1vydp4a8b5o" path="res://assets/Layers/mountains.png" id="3_jr016"]
 [ext_resource type="Texture2D" uid="uid://dj2ywpl58qoda" path="res://assets/Layers/back.png" id="4_ti2vy"]
 [ext_resource type="Texture2D" uid="uid://dsheyk136ucca" path="res://assets/Layers/all-props.png" id="5_dpxlm"]
-[ext_resource type="Script" uid="uid://drgsy5uv8cpgf" path="res://scenese/player.gd" id="6_u64iv"]
+[ext_resource type="Script" uid="uid://drgsy5uv8cpgf" path="res://scenese/Level_3_Scene/player3.gd" id="6_u64iv"]
 [ext_resource type="Texture2D" uid="uid://c5jucflnj4aed" path="res://assets/Attack_1.png" id="7_dfx48"]
 [ext_resource type="Texture2D" uid="uid://c7kf350ejvyog" path="res://assets/Attack_2.png" id="8_ifr1v"]
 [ext_resource type="Texture2D" uid="uid://dcc3flu6yrlq8" path="res://assets/Attack_3.png" id="9_l3i51"]
@@ -20,9 +20,9 @@
 [ext_resource type="AudioStream" uid="uid://coryskovn1wcq" path="res://audio/SwordSound.mp3" id="17_i3yjj"]
 [ext_resource type="PackedScene" uid="uid://brr1gmsw4r2gl" path="res://scenese/Level_3_Scene/Bat2.tscn" id="18_4vrvg"]
 [ext_resource type="Script" uid="uid://blw4kaqldr2uh" path="res://scenese/Level_3_Scene/instr_3.gd" id="19_gscjm"]
-[ext_resource type="Script" uid="uid://b7qub4urty3jq" path="res://scenese/Level_3_Scene/3_4.gd" id="20_wbw4a"]
 [ext_resource type="PackedScene" uid="uid://dpjh4d6f84m6f" path="res://scenese/Memory_Fragment/memory_fragment.tscn" id="22_u64iv"]
 [ext_resource type="PackedScene" uid="uid://d3aucpbiae3pl" path="res://scenese/Memory_Fragment/memory_bar.tscn" id="23_nk4dh"]
+[ext_resource type="Script" path="res://scenese/Level_3_Scene/Exit Door to Level 4.gd" id="24_nk4dh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i3yjj"]
 size = Vector2(5.5, 353.5)
@@ -884,8 +884,8 @@ animations = [{
 radius = 12.0
 height = 70.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_72lw7"]
-size = Vector2(45, 57)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u64iv"]
+size = Vector2(17, 70.5)
 
 [node name="Level_3" type="Node2D"]
 position = Vector2(-113, -297)
@@ -948,11 +948,10 @@ shape = SubResource("CapsuleShape2D_ur7pv")
 [node name="Camera2D" type="Camera2D" parent="player3" groups=["player_group"]]
 position = Vector2(139, -12)
 zoom = Vector2(4, 4)
-limit_left = 11
-limit_top = -233
-limit_right = 3440
-limit_bottom = -17
-limit_smoothed = true
+limit_left = -66
+limit_top = -398
+limit_right = 3636
+limit_bottom = 275
 
 [node name="SwordSound" type="AudioStreamPlayer2D" parent="player3"]
 position = Vector2(13.750008, 5.000002)
@@ -962,8 +961,6 @@ stream = ExtResource("17_i3yjj")
 [node name="Bat" parent="." groups=["player_group"] instance=ExtResource("17_0v417")]
 position = Vector2(1786, 162)
 collision_mask = 7
-min_speed = 200.0
-max_speed = 600.0
 
 [node name="Bat2" parent="." instance=ExtResource("18_4vrvg")]
 collision_mask = 7
@@ -980,19 +977,18 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
-[node name="3_4" type="Area2D" parent="."]
-collision_layer = 2
-script = ExtResource("20_wbw4a")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="3_4"]
-position = Vector2(3440, 211)
-shape = SubResource("RectangleShape2D_72lw7")
-
 [node name="memory_fragment" parent="." instance=ExtResource("22_u64iv")]
 position = Vector2(3392, 215)
 
 [node name="MemoryBar" parent="." instance=ExtResource("23_nk4dh")]
 
+[node name="Exit Door to Level 4 (Switch Level)" type="Area2D" parent="."]
+script = ExtResource("24_nk4dh")
+player_path = NodePath("../player3")
+next_level_scene = "uid://ba6ga2ipepl3l"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Exit Door to Level 4 (Switch Level)"]
+position = Vector2(3450.5, 205.25)
+shape = SubResource("RectangleShape2D_u64iv")
+
 [connection signal="animation_finished" from="player3/AnimatedSprite2D" to="player3" method="_on_animated_sprite_2d_animation_finished"]
-[connection signal="body_entered" from="3_4" to="3_4" method="_on_body_entered"]
-[connection signal="body_exited" from="3_4" to="3_4" method="_on_body_exited"]

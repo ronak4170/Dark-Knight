@@ -71,7 +71,8 @@ func _physics_process(delta: float) -> void:
 			velocity.x = 0
 
 		move_and_slide()
-		update_animation()
+		if not (animated_sprite.animation == "revive" and animated_sprite.is_playing()):
+			update_animation()
 		update_facing_direction()
 		return
 
@@ -199,6 +200,12 @@ func update_animation():
 
 	if is_defending or is_dead or is_attacking:
 		return
+	
+	if animated_sprite.animation == "revive" and animated_sprite.is_playing():
+		return
+	# Clear lock if revive finished
+	if animated_sprite.animation == "revive" and not animated_sprite.is_playing():
+		animated_locked = false
 
 	if not animated_locked:
 		if not is_on_floor():
@@ -270,7 +277,9 @@ func enable_attack_hitbox():
 
 
 func _on_animated_sprite_2d_animation_finished():
-
+	if animated_sprite.animation == "revive":
+		animated_locked = false
+		return
 	if is_dead and animated_sprite.animation == "death":
 		await get_tree().process_frame
 		get_tree().reload_current_scene()

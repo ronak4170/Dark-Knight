@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://ds02icr5t17vl"
+path="res://.godot/imported/orb_collect.dialogue-62d79639378ecdcbe534e733492e90d4.tres"
+
+[deps]
+
+source_file="res://scenese/Level_1_Scene/Dialogue/orb_collect.dialogue"
+dest_files=["res://.godot/imported/orb_collect.dialogue-62d79639378ecdcbe534e733492e90d4.tres"]
+
+[params]
+
+defaults=true
