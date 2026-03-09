@@ -1,4 +1,4 @@
-[gd_scene load_steps=85 format=3 uid="uid://ba6ga2ipepl3l"]
+[gd_scene load_steps=88 format=3 uid="uid://ba6ga2ipepl3l"]
 
 [ext_resource type="Texture2D" uid="uid://ce8wqyrbdvxvv" path="res://assets/dungeon_sidescroller-Raou/Tilesetv3.png" id="1_m153c"]
 [ext_resource type="Script" uid="uid://dpb11swcb26e6" path="res://scenese/Switch_Level_Scene/switchLevel_player.gd" id="2_l4fbc"]
@@ -14,10 +14,13 @@
 [ext_resource type="Texture2D" uid="uid://crlgon4s02ko0" path="res://assets/Walk.png" id="12_hy6b8"]
 [ext_resource type="Script" uid="uid://cyl4tpgf2f0vn" path="res://scenese/Switch_Level_Scene/switch_1_area.gd" id="13_fntw7"]
 [ext_resource type="FontFile" uid="uid://b3q6sjw4d0u62" path="res://assets/Font/Cinzel-Regular.otf" id="14_2ur1w"]
+[ext_resource type="AudioStream" uid="uid://dt2a7c3efgsws" path="res://audio/Switch Click.wav" id="14_l4fbc"]
+[ext_resource type="AudioStream" uid="uid://iog6aib4x6xf" path="res://audio/switch_clack_final.wav" id="15_l4fbc"]
 [ext_resource type="Script" uid="uid://bj507fppfsumt" path="res://scenese/Switch_Level_Scene/SwitchPuzzle.gd" id="15_y6mr1"]
 [ext_resource type="Script" uid="uid://dvtksnul8myw8" path="res://scenese/Switch_Level_Scene/FragileTileManager.gd" id="17_gbsh4"]
 [ext_resource type="Script" uid="uid://dff1unh5c5d0v" path="res://scenese/Switch_Level_Scene/DarkLevelJump.gd" id="18_382vt"]
 [ext_resource type="Script" uid="uid://bytf525k2s5fj" path="res://scenese/Switch_Level_Scene/StatueArea.gd" id="19_bpyos"]
+[ext_resource type="AudioStream" uid="uid://q42p8rhell25" path="res://audio/fragile_tile_sound.wav" id="19_e04ep"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d25ov"]
 texture = ExtResource("1_m153c")
@@ -1288,6 +1291,8 @@ script = ExtResource("13_fntw7")
 tilemap_path = NodePath("../TileMap")
 closed_index = 10
 open_index = 11
+switch_on_sound = ExtResource("14_l4fbc")
+switch_off_sound = ExtResource("15_l4fbc")
 hint_label_path = NodePath("HintLabel")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Switch1-Area"]
@@ -1306,12 +1311,16 @@ theme_override_font_sizes/font_size = 12
 text = "Press F to interact"
 metadata/_edit_use_anchors_ = true
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Switch1-Area"]
+
 [node name="Switch2-Area" type="Area2D" parent="."]
 script = ExtResource("13_fntw7")
 tilemap_path = NodePath("../TileMap")
 switch_id = 2
 closed_index = 12
 open_index = 13
+switch_on_sound = ExtResource("14_l4fbc")
+switch_off_sound = ExtResource("15_l4fbc")
 hint_label_path = NodePath("HintLabel")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Switch2-Area"]
@@ -1329,12 +1338,16 @@ theme_override_fonts/font = ExtResource("14_2ur1w")
 theme_override_font_sizes/font_size = 12
 text = "Press F to interact"
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Switch2-Area"]
+
 [node name="Switch3-Area" type="Area2D" parent="."]
 script = ExtResource("13_fntw7")
 tilemap_path = NodePath("../TileMap")
 switch_id = 3
 closed_index = 14
 open_index = 15
+switch_on_sound = ExtResource("14_l4fbc")
+switch_off_sound = ExtResource("15_l4fbc")
 hint_label_path = NodePath("HintLabel")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Switch3-Area"]
@@ -1352,12 +1365,16 @@ theme_override_fonts/font = ExtResource("14_2ur1w")
 theme_override_font_sizes/font_size = 12
 text = "Press F to interact"
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Switch3-Area"]
+
 [node name="Switch4-Area" type="Area2D" parent="."]
 script = ExtResource("13_fntw7")
 tilemap_path = NodePath("../TileMap")
 switch_id = 4
 closed_index = 16
 open_index = 17
+switch_on_sound = ExtResource("14_l4fbc")
+switch_off_sound = ExtResource("15_l4fbc")
 hint_label_path = NodePath("HintLabel")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Switch4-Area"]
@@ -1374,6 +1391,8 @@ theme_override_colors/font_color = Color(0.9946967, 0.9946967, 0.99469656, 1)
 theme_override_fonts/font = ExtResource("14_2ur1w")
 theme_override_font_sizes/font_size = 12
 text = "Press F to interact"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Switch4-Area"]
 
 [node name="SwitchPuzzle" type="Node" parent="."]
 script = ExtResource("15_y6mr1")
@@ -1398,6 +1417,9 @@ player_path = NodePath("../TileMap/player")
 fragile_layer = 19
 warn_time = 0.05
 fall_time = 0.08
+fragile_tile_sound = ExtResource("19_e04ep")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="FragileTileManager"]
 
 [node name="JumpToDarkLevel" type="Area2D" parent="."]
 script = ExtResource("18_382vt")

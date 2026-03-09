@@ -8,6 +8,13 @@ extends CharacterBody2D
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
+@export var footstep_left: AudioStream
+@export var footstep_right: AudioStream
+
+@onready var footstep_player: AudioStreamPlayer2D = $FootstepPlayer
+
+var last_run_frame := -1
+
 var direction: Vector2 = Vector2.ZERO
 var jumps_left: int = 0
 var animated_locked: bool = false
@@ -55,6 +62,7 @@ func _physics_process(delta: float) -> void:
 		land()
 
 	update_animation()
+	_handle_run_footsteps()
 	update_facing_direction()
 
 func jump() -> void:
@@ -93,3 +101,29 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 	# Unlock after jump transitions
 	if animated_sprite.animation == "jump_start" or animated_sprite.animation == "jump_end":
 		animated_locked = false
+		
+func _handle_run_footsteps() -> void:
+	if animated_sprite.animation != "run":
+		last_run_frame = -1
+		return
+
+	if not is_on_floor():
+		last_run_frame = -1
+		return
+
+	var frame := animated_sprite.frame
+
+	if frame != last_run_frame:
+		if frame == 0:
+			_play_footstep(footstep_left)
+		elif frame == 4:
+			_play_footstep(footstep_right)
+
+	last_run_frame = frame
+	
+func _play_footstep(sound: AudioStream) -> void:
+	if footstep_player == null or sound == null:
+		return
+
+	footstep_player.stream = sound
+	footstep_player.play()

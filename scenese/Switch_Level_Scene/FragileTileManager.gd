@@ -13,6 +13,9 @@ extends Node
 # Adjust depending on tile size (we’ll tune this)
 @export var foot_y_offset: float = 18.0
 
+@export var fragile_tile_sound: AudioStream
+@onready var fragile_sound_player: AudioStreamPlayer2D = $AudioStreamPlayer2D
+
 var tilemap: TileMap
 var player: CharacterBody2D
 
@@ -29,11 +32,6 @@ func _ready() -> void:
 		push_error("FragileTileManager: player_path is invalid.")
 
 func _physics_process(_delta: float) -> void:
-	if Input.is_action_just_pressed("interact"):
-		var foot_position := player.global_position + Vector2(0, foot_y_offset)
-		var cell := tilemap.local_to_map(tilemap.to_local(foot_position))
-		print("CELL:", cell, " fragile_layer:", fragile_layer,
-			" source_id:", tilemap.get_cell_source_id(fragile_layer, cell))
 	
 	if tilemap == null or player == null:
 		return
@@ -72,6 +70,11 @@ func _break_tile(cell: Vector2i) -> void:
 	var source_id := tilemap.get_cell_source_id(fragile_layer, cell)
 	var atlas_coords := tilemap.get_cell_atlas_coords(fragile_layer, cell)
 	var alt_tile := tilemap.get_cell_alternative_tile(fragile_layer, cell)
+
+	# Play fragile tile sound immediately
+	if fragile_sound_player and fragile_tile_sound:
+		fragile_sound_player.stream = fragile_tile_sound
+		fragile_sound_player.play()
 
 	# Trigger camera shake
 	var cam := player.get_node_or_null("Camera2D") as Camera2D

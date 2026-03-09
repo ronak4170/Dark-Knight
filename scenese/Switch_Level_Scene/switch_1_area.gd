@@ -7,7 +7,11 @@ signal state_changed(switch_id: int, is_open: bool)
 @export var closed_index: int
 @export var open_index: int
 
-@export var hint_label_path: NodePath  # drag your HintLabel here in inspector
+@export var switch_on_sound: AudioStream
+@export var switch_off_sound: AudioStream
+@onready var switch_sound: AudioStreamPlayer2D = $AudioStreamPlayer2D
+
+@export var hint_label_path: NodePath  
 
 var player_in_range := false
 var is_open := false
@@ -38,6 +42,15 @@ func toggle():
 	var tm := get_node(tilemap_path) as TileMap
 	tm.set_layer_enabled(closed_index, not is_open)
 	tm.set_layer_enabled(open_index, is_open)
+
+	if switch_sound:
+		if is_open and switch_on_sound:
+			switch_sound.stream = switch_on_sound
+			switch_sound.play()
+		elif not is_open and switch_off_sound:
+			switch_sound.stream = switch_off_sound
+			switch_sound.play()
+
 	emit_signal("state_changed", switch_id, is_open)
 
 func _on_body_entered(body):

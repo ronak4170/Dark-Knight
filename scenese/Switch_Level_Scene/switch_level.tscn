@@ -1,8 +1,10 @@
-[gd_scene load_steps=87 format=3 uid="uid://btyx3t3se7r2v"]
+[gd_scene load_steps=92 format=3 uid="uid://btyx3t3se7r2v"]
 
 [ext_resource type="Texture2D" uid="uid://ce8wqyrbdvxvv" path="res://assets/dungeon_sidescroller-Raou/Tilesetv3.png" id="1_gaulc"]
 [ext_resource type="Texture2D" uid="uid://c5jucflnj4aed" path="res://assets/Attack_1.png" id="3_ebv50"]
 [ext_resource type="Script" uid="uid://dpb11swcb26e6" path="res://scenese/Switch_Level_Scene/switchLevel_player.gd" id="3_k3aj3"]
+[ext_resource type="AudioStream" uid="uid://cfpd7s5f5id1n" path="res://audio/Footstep_1.wav" id="3_l6kca"]
+[ext_resource type="AudioStream" uid="uid://fwfvpnm6pxgi" path="res://audio/footstep_2.wav" id="4_21o6d"]
 [ext_resource type="Script" uid="uid://cyl4tpgf2f0vn" path="res://scenese/Switch_Level_Scene/switch_1_area.gd" id="4_tj1f2"]
 [ext_resource type="Texture2D" uid="uid://c7kf350ejvyog" path="res://assets/Attack_2.png" id="4_tpoc8"]
 [ext_resource type="Texture2D" uid="uid://dcc3flu6yrlq8" path="res://assets/Attack_3.png" id="5_8mc08"]
@@ -16,9 +18,12 @@
 [ext_resource type="Texture2D" uid="uid://b6veb1le7y841" path="res://assets/Jump.png" id="10_gcw6l"]
 [ext_resource type="Texture2D" uid="uid://b1gneict7cgpl" path="res://assets/Run.png" id="11_l6kca"]
 [ext_resource type="Texture2D" uid="uid://crlgon4s02ko0" path="res://assets/Walk.png" id="12_21o6d"]
+[ext_resource type="AudioStream" uid="uid://dt2a7c3efgsws" path="res://audio/Switch Click.wav" id="14_bm8nu"]
+[ext_resource type="AudioStream" uid="uid://iog6aib4x6xf" path="res://audio/switch_clack_final.wav" id="15_wtpat"]
 [ext_resource type="Script" uid="uid://dvtksnul8myw8" path="res://scenese/Switch_Level_Scene/FragileTileManager.gd" id="17_tpoc8"]
 [ext_resource type="Script" uid="uid://bq7q1mlau1rd7" path="res://scenese/Switch_Level_Scene/KillZone.gd" id="18_8mc08"]
 [ext_resource type="Script" uid="uid://bytf525k2s5fj" path="res://scenese/Switch_Level_Scene/StatueArea.gd" id="19_upatl"]
+[ext_resource type="AudioStream" uid="uid://q42p8rhell25" path="res://audio/fragile_tile_sound.wav" id="20_wtpat"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a6uq1"]
 texture = ExtResource("1_gaulc")
@@ -1265,13 +1270,16 @@ script = ExtResource("3_k3aj3")
 speed = 125.0
 jump_velocity = -250.0
 double_jump_velocity = -150.0
+footstep_left = ExtResource("3_l6kca")
+footstep_right = ExtResource("4_21o6d")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="TileMap/player"]
 position = Vector2(-7.6293945e-06, -18.571426)
 scale = Vector2(0.56250006, 0.7744141)
 sprite_frames = SubResource("SpriteFrames_smehm")
-animation = &"idle"
+animation = &"run"
 autoplay = "idle"
+frame_progress = 0.93901753
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/player"]
 position = Vector2(1.4285016, 2.8571427)
@@ -1286,11 +1294,15 @@ limit_right = 2938
 limit_bottom = 90
 position_smoothing_enabled = true
 
+[node name="FootstepPlayer" type="AudioStreamPlayer2D" parent="TileMap/player"]
+
 [node name="Switch1-Area" type="Area2D" parent="."]
 script = ExtResource("4_tj1f2")
 tilemap_path = NodePath("../TileMap")
 closed_index = 10
 open_index = 11
+switch_on_sound = ExtResource("14_bm8nu")
+switch_off_sound = ExtResource("15_wtpat")
 hint_label_path = NodePath("HintLabel")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Switch1-Area"]
@@ -1309,12 +1321,16 @@ theme_override_font_sizes/font_size = 12
 text = "Press F to interact"
 metadata/_edit_use_anchors_ = true
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Switch1-Area"]
+
 [node name="Switch2-Area" type="Area2D" parent="."]
 script = ExtResource("4_tj1f2")
 tilemap_path = NodePath("../TileMap")
 switch_id = 2
 closed_index = 12
 open_index = 13
+switch_on_sound = ExtResource("14_bm8nu")
+switch_off_sound = ExtResource("15_wtpat")
 hint_label_path = NodePath("HintLabel")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Switch2-Area"]
@@ -1332,12 +1348,16 @@ theme_override_fonts/font = ExtResource("5_p16kd")
 theme_override_font_sizes/font_size = 12
 text = "Press F to interact"
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Switch2-Area"]
+
 [node name="Switch3-Area" type="Area2D" parent="."]
 script = ExtResource("4_tj1f2")
 tilemap_path = NodePath("../TileMap")
 switch_id = 3
 closed_index = 14
 open_index = 15
+switch_on_sound = ExtResource("14_bm8nu")
+switch_off_sound = ExtResource("15_wtpat")
 hint_label_path = NodePath("HintLabel")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Switch3-Area"]
@@ -1355,12 +1375,16 @@ theme_override_fonts/font = ExtResource("5_p16kd")
 theme_override_font_sizes/font_size = 12
 text = "Press F to interact"
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Switch3-Area"]
+
 [node name="Switch4-Area" type="Area2D" parent="."]
 script = ExtResource("4_tj1f2")
 tilemap_path = NodePath("../TileMap")
 switch_id = 4
 closed_index = 16
 open_index = 17
+switch_on_sound = ExtResource("14_bm8nu")
+switch_off_sound = ExtResource("15_wtpat")
 hint_label_path = NodePath("HintLabel")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Switch4-Area"]
@@ -1377,6 +1401,8 @@ theme_override_colors/font_color = Color(0.9946967, 0.9946967, 0.99469656, 1)
 theme_override_fonts/font = ExtResource("5_p16kd")
 theme_override_font_sizes/font_size = 12
 text = "Press F to interact"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Switch4-Area"]
 
 [node name="SwitchPuzzle" type="Node" parent="."]
 script = ExtResource("6_unuor")
@@ -1410,6 +1436,9 @@ player_path = NodePath("../TileMap/player")
 fragile_layer = 19
 warn_time = 0.05
 fall_time = 0.08
+fragile_tile_sound = ExtResource("20_wtpat")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="FragileTileManager"]
 
 [node name="KillZone" type="Area2D" parent="."]
 script = ExtResource("18_8mc08")
