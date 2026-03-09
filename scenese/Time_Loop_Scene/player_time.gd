@@ -10,6 +10,11 @@ extends CharacterBody2D
 @export var max_health : int = 100
 @export var attack_damage : int = 15
 @export var knockback_friction : float = 800.0
+@export var footstep_left: AudioStream
+@export var footstep_right: AudioStream
+@onready var footstep_player: AudioStreamPlayer2D = $FootstepPlayerTimeLoop
+
+var last_run_frame := -1
 
 # =============================
 # STATE
@@ -136,6 +141,7 @@ func process_frame(delta):
 			animated_locked = false
 
 	update_animation()
+	_handle_run_footsteps()
 	update_facing_direction()
 
 # =============================
@@ -247,3 +253,29 @@ func double_jump():
 	velocity.y = double_jump_velocity
 	animated_sprite.play("jump_start")
 	animated_locked = true
+	
+func _handle_run_footsteps() -> void:
+	if animated_sprite.animation != "run":
+		last_run_frame = -1
+		return
+
+	if not is_on_floor():
+		last_run_frame = -1
+		return
+
+	var frame = animated_sprite.frame
+
+	if frame != last_run_frame:
+		if frame == 0:
+			_play_footstep(footstep_left)
+		elif frame == 3:
+			_play_footstep(footstep_right)
+
+	last_run_frame = frame
+	
+func _play_footstep(sound: AudioStream) -> void:
+	if footstep_player == null or sound == null:
+		return
+
+	footstep_player.stream = sound
+	footstep_player.play()

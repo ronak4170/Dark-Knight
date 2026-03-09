@@ -11,7 +11,7 @@ extends CharacterBody2D
 @export var footstep_left: AudioStream
 @export var footstep_right: AudioStream
 
-@onready var footstep_player: AudioStreamPlayer2D = $FootstepPlayerSwitchLevel
+@onready var footstep_player: AudioStreamPlayer2D = $FootstepPlayerFallDownToDarkLevel
 
 var last_run_frame := -1
 

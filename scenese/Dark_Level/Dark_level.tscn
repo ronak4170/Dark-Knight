@@ -1,4 +1,4 @@
-[gd_scene load_steps=164 format=3 uid="uid://ct6xi8t6neg1s"]
+[gd_scene load_steps=166 format=3 uid="uid://ct6xi8t6neg1s"]
 
 [ext_resource type="Script" uid="uid://baddbxucf5orv" path="res://scenese/Dark_Level/dark_bat.gd" id="1_4glte"]
 [ext_resource type="Script" uid="uid://c4meixxdgnr34" path="res://scenese/Dark_Level/lantern.gd" id="1_b0k3v"]
@@ -28,6 +28,8 @@
 [ext_resource type="Texture2D" uid="uid://b1gneict7cgpl" path="res://assets/Run.png" id="14_j7kk5"]
 [ext_resource type="Texture2D" uid="uid://crlgon4s02ko0" path="res://assets/Walk.png" id="15_drbs5"]
 [ext_resource type="AudioStream" uid="uid://coryskovn1wcq" path="res://audio/SwordSound.mp3" id="16_lyp8e"]
+[ext_resource type="AudioStream" uid="uid://ds2i0xwwr1o0m" path="res://audio/footstep_left.wav" id="19_hcq3d"]
+[ext_resource type="AudioStream" uid="uid://u25accuh2d5y" path="res://audio/footstep_right.wav" id="20_8asrk"]
 [ext_resource type="Script" uid="uid://c7cq4wgx6d5h8" path="res://scenese/Dark_Level/spike_hazard.gd" id="28_b0k3v"]
 [ext_resource type="PackedScene" uid="uid://dpjh4d6f84m6f" path="res://scenese/Memory_Fragment/memory_fragment.tscn" id="30_sf0xi"]
 [ext_resource type="Script" uid="uid://r3f2r0lbjqjy" path="res://scenese/Dark_Level/Exit door back to Switch Level.gd" id="31_5ova1"]
@@ -3948,7 +3950,7 @@ fill_to = Vector2(0.3, 0.1)
 radius = 50.24938
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w48wm"]
-size = Vector2(33, 129)
+size = Vector2(25, 129)
 
 [node name="Dark_level" type="Node2D"]
 position = Vector2(-789, -355)
@@ -4160,6 +4162,8 @@ collision_mask = 7
 script = ExtResource("5_nlan2")
 speed = 290.0
 jump_velocity = -460.0
+footstep_left = ExtResource("19_hcq3d")
+footstep_right = ExtResource("20_8asrk")
 
 [node name="AttackHitbox" type="Area2D" parent="dark_player"]
 position = Vector2(-19, 17.999996)
@@ -4202,6 +4206,8 @@ scale = Vector2(0.39279515, 0.46440947)
 energy = 2.0
 texture = SubResource("GradientTexture2D_g1flr")
 texture_scale = 4.5
+
+[node name="FootstepPlayerDarkLevel" type="AudioStreamPlayer2D" parent="dark_player"]
 
 [node name="DirectionalLight2D2" type="DirectionalLight2D" parent="."]
 position = Vector2(1064.2, 707.4)
@@ -4279,7 +4285,7 @@ player_path = NodePath("../dark_player")
 next_level_scene = "uid://btyx3t3se7r2v"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Exit Door back to Switch Level (but with respawn)"]
-position = Vector2(3982.5, 863.5)
+position = Vector2(3986.5, 863.5)
 shape = SubResource("RectangleShape2D_w48wm")
 
 [connection signal="body_entered" from="Bat/DetectionArea" to="Bat" method="_on_area_2d_body_entered"]

@@ -19,6 +19,13 @@ var invulnerable := false
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_hitbox: Area2D = $AttackHitbox
 
+@export var footstep_left: AudioStream
+@export var footstep_right: AudioStream
+
+@onready var footstep_player: AudioStreamPlayer2D = $FootstepPlayerDarkLevel
+
+var last_run_frame := -1
+
 var animated_locked: bool = false
 var direction: Vector2 = Vector2.ZERO
 var jumps_left: int
@@ -151,6 +158,7 @@ func _physics_process(delta: float) -> void:
 			animated_locked = false
 
 	update_animation()
+	_handle_run_footsteps()
 	update_facing_direction()
 	_update_attack_hitbox_position()
 
@@ -410,6 +418,31 @@ func _respawn() -> void:
 
 	print("PLAYER RESPAWNED")
 
+func _handle_run_footsteps() -> void:
+	if animated_sprite.animation != "run":
+		last_run_frame = -1
+		return
+
+	if not is_on_floor():
+		last_run_frame = -1
+		return
+
+	var frame := animated_sprite.frame
+
+	if frame != last_run_frame:
+		if frame == 0:
+			_play_footstep(footstep_left)
+		elif frame == 3:
+			_play_footstep(footstep_right)
+
+	last_run_frame = frame
+	
+func _play_footstep(sound: AudioStream) -> void:
+	if footstep_player == null or sound == null:
+		return
+
+	footstep_player.stream = sound
+	footstep_player.play()
 
 func is_dead() -> bool:
 	return dead

@@ -1,8 +1,10 @@
-[gd_scene load_steps=88 format=3 uid="uid://ba6ga2ipepl3l"]
+[gd_scene load_steps=90 format=3 uid="uid://ba6ga2ipepl3l"]
 
 [ext_resource type="Texture2D" uid="uid://ce8wqyrbdvxvv" path="res://assets/dungeon_sidescroller-Raou/Tilesetv3.png" id="1_m153c"]
-[ext_resource type="Script" uid="uid://dpb11swcb26e6" path="res://scenese/Switch_Level_Scene/switchLevel_player.gd" id="2_l4fbc"]
+[ext_resource type="Script" uid="uid://xbcpaymfnelv" path="res://scenese/Switch_Level_Scene/switch_level_fall_down_to_dark_level_player.gd" id="2_e04ep"]
+[ext_resource type="AudioStream" uid="uid://ds2i0xwwr1o0m" path="res://audio/footstep_left.wav" id="3_djr1x"]
 [ext_resource type="Texture2D" uid="uid://c5jucflnj4aed" path="res://assets/Attack_1.png" id="3_e04ep"]
+[ext_resource type="AudioStream" uid="uid://u25accuh2d5y" path="res://audio/footstep_right.wav" id="4_06h5e"]
 [ext_resource type="Texture2D" uid="uid://c7kf350ejvyog" path="res://assets/Attack_2.png" id="4_tly7s"]
 [ext_resource type="Texture2D" uid="uid://dcc3flu6yrlq8" path="res://assets/Attack_3.png" id="5_djr1x"]
 [ext_resource type="Texture2D" uid="uid://em6u883v17hs" path="res://assets/Dead.png" id="6_06h5e"]
@@ -1261,10 +1263,12 @@ layer_19/tile_data = PackedInt32Array(75, 655360, 46, 76, 720896, 46, 77, 786432
 [node name="player" type="CharacterBody2D" parent="TileMap"]
 position = Vector2(349.99997, -17)
 scale = Vector2(0.7, 0.7)
-script = ExtResource("2_l4fbc")
-speed = 125.0
+script = ExtResource("2_e04ep")
+speed = 150.0
 jump_velocity = -250.0
 double_jump_velocity = -150.0
+footstep_left = ExtResource("3_djr1x")
+footstep_right = ExtResource("4_06h5e")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="TileMap/player"]
 position = Vector2(-7.6293945e-06, -22)
@@ -1285,6 +1289,8 @@ limit_top = -140
 limit_right = 2938
 limit_bottom = 90
 position_smoothing_enabled = true
+
+[node name="FootstepPlayerFallDownToDarkLevel" type="AudioStreamPlayer2D" parent="TileMap/player"]
 
 [node name="Switch1-Area" type="Area2D" parent="."]
 script = ExtResource("13_fntw7")
