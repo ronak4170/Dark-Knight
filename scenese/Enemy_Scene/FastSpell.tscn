@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://c0fq0lwgmoikc"]
+
+[ext_resource type="Script" uid="uid://brd0w8ogw808l" path="res://scenese/Enemy_Scene/fast_spell.gd" id="1_37qus"]
+[ext_resource type="Texture2D" uid="uid://yb40u3rtbtb6" path="res://assets/craftpix-net-440623-free-pixel-magic-sprite-effects-pack/1 Magic/3.png" id="2_v3qt1"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_37qus"]
+height = 385.96545
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k300v"]
+atlas = ExtResource("2_v3qt1")
+region = Rect2(0, 0, 576, 72)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f8rey"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k300v")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 4.0
+}]
+
+[node name="FastSpell" type="Area2D"]
+script = ExtResource("1_37qus")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(19.999992, -1.9999886)
+rotation = -1.5773612
+shape = SubResource("CapsuleShape2D_37qus")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-3.8146973e-06, -0.9999924)
+scale = Vector2(0.8003472, 0.9583333)
+sprite_frames = SubResource("SpriteFrames_f8rey")
+animation = &"idle"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

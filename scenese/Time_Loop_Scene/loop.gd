@@ -8,7 +8,8 @@ func collect_input():
 		"move": Input.get_vector("left","right","up","down"),
 		"jump": Input.is_action_just_pressed("jump"),
 		"attack": Input.is_action_just_pressed("attack"),
-		"defend": Input.is_action_pressed("defend")
+		"defend": Input.is_action_pressed("defend"),
+		"interact": Input.is_action_just_pressed("interact")
 	}
 
 func _physics_process(delta):

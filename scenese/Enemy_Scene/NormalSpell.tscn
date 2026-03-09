@@ -1,0 +1,88 @@
+[gd_scene load_steps=13 format=3 uid="uid://bv0vqrp1yb71i"]
+
+[ext_resource type="Script" uid="uid://b1i2nl6mwvmbg" path="res://scenese/Enemy_Scene/NormalSpell.gd" id="1_tp75s"]
+[ext_resource type="Texture2D" uid="uid://jaxtpv42wxvd" path="res://assets/craftpix-net-440623-free-pixel-magic-sprite-effects-pack/1 Magic/5.png" id="2_gs1mv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gs1mv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_drqq5"]
+atlas = ExtResource("2_gs1mv")
+region = Rect2(0, 0, 72, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jwsaj"]
+atlas = ExtResource("2_gs1mv")
+region = Rect2(72, 0, 72, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4c6ij"]
+atlas = ExtResource("2_gs1mv")
+region = Rect2(144, 0, 72, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2y7mt"]
+atlas = ExtResource("2_gs1mv")
+region = Rect2(216, 0, 72, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ubyv"]
+atlas = ExtResource("2_gs1mv")
+region = Rect2(288, 0, 72, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gvqgs"]
+atlas = ExtResource("2_gs1mv")
+region = Rect2(360, 0, 72, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q1i32"]
+atlas = ExtResource("2_gs1mv")
+region = Rect2(432, 0, 72, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dscrn"]
+atlas = ExtResource("2_gs1mv")
+region = Rect2(504, 0, 72, 72)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4hq6h"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_drqq5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jwsaj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4c6ij")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2y7mt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ubyv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gvqgs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q1i32")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dscrn")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 9.0
+}]
+
+[node name="NormalSpell" type="Area2D"]
+collision_layer = 2
+script = ExtResource("1_tp75s")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 1)
+shape = SubResource("CircleShape2D_gs1mv")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(1, 1)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_4hq6h")
+animation = &"idle"
+frame_progress = 0.8661406
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
