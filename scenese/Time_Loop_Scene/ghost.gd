@@ -86,25 +86,25 @@ func process_frame(delta):
 		jumps_left -= 1
 
 	# Defend
-	if input_data.get("defend", false) and is_on_floor():
-		is_defending = true
-		animated_locked = true
-		if animated_sprite.animation != "defend":
-			animated_sprite.play("defend")
-	else:
-		if is_defending:
-			is_defending = false
-			animated_locked = false
+	#if input_data.get("defend", false) and is_on_floor():
+		#is_defending = true
+		#animated_locked = true
+		#if animated_sprite.animation != "defend":
+			#animated_sprite.play("defend")
+	#else:
+		#if is_defending:
+			#is_defending = false
+			#animated_locked = false
 
-	if is_defending:
-		velocity.x = 0
-		move_and_slide()
-		update_facing_direction()
-		return
+	#if is_defending:
+		#velocity.x = 0
+		#move_and_slide()
+		#update_facing_direction()
+		#return
 
 	# Attack
-	if input_data.get("attack", false):
-		handle_attack_input()
+	#if input_data.get("attack", false):
+		#handle_attack_input()
 
 	# Horizontal movement
 	if knockback_velocity.x != 0:

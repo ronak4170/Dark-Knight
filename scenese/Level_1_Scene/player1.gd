@@ -90,34 +90,34 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 
 	# Jumping
-	if not is_defending and Input.is_action_just_pressed("jump") and jumps_left > 0:
-		if jumps_left == max_jumps:
-			jump()
-		else:
-			double_jump()
-		jumps_left -= 1
+	#if not is_defending and Input.is_action_just_pressed("jump") and jumps_left > 0:
+		#if jumps_left == max_jumps:
+			#jump()
+		#else:
+			#double_jump()
+		#jumps_left -= 1
 
 	# Defending
-	if Input.is_action_pressed("defend") and is_on_floor():
-		is_defending = true
-		animated_locked = true
-		if animated_sprite.animation != "defend":
-			animated_sprite.play("defend")
-	else:
-		if is_defending:
-			is_defending = false
-			animated_locked = false
+	#if Input.is_action_pressed("defend") and is_on_floor():
+		#is_defending = true
+		#animated_locked = true
+		#if animated_sprite.animation != "defend":
+			#animated_sprite.play("defend")
+	#else:
+		#if is_defending:
+			#is_defending = false
+			#animated_locked = false
 
-	if is_defending:
-		velocity.x = 0
-		move_and_slide()
-		update_facing_direction()
-		check_deadly_tile()
-		return
+	#if is_defending:
+		#velocity.x = 0
+		#move_and_slide()
+		#update_facing_direction()
+		#check_deadly_tile()
+		#return
 
 	# Attack input
-	if Input.is_action_just_pressed("attack"):
-		handle_attack_input()
+	#if Input.is_action_just_pressed("attack"):
+		#handle_attack_input()
 
 	# Movement
 	if is_attacking:

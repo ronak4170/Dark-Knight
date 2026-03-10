@@ -8,7 +8,7 @@ func _ready():
 	controller.is_ghost = true
 	
 	var sprite = controller.get_node("AnimatedSprite2D")
-	sprite.modulate = Color(1, 1, 1, 0.75) 
+	sprite.modulate = Color(1, 1, 1, 0.45) 
 
 func _physics_process(delta):
 

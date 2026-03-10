@@ -1,4 +1,4 @@
-[gd_scene load_steps=105 format=3 uid="uid://b3kqrrfl4n3yu"]
+[gd_scene load_steps=106 format=3 uid="uid://b3kqrrfl4n3yu"]
 
 [ext_resource type="Script" uid="uid://ctsk6g4qi8vnu" path="res://scenese/Level_2_Scene/level_2.gd" id="1_hov62"]
 [ext_resource type="Texture2D" uid="uid://ckfjcmiyewecw" path="res://assets/free-dungeon-platformer-pixel-art-tileset/PNG/Background/Bright/bg.png" id="2_syhm5"]
@@ -30,6 +30,7 @@
 [ext_resource type="Texture2D" uid="uid://b6veb1le7y841" path="res://assets/Jump.png" id="25_xg3e3"]
 [ext_resource type="Texture2D" uid="uid://b1gneict7cgpl" path="res://assets/Run.png" id="26_656ch"]
 [ext_resource type="Texture2D" uid="uid://crlgon4s02ko0" path="res://assets/Walk.png" id="27_f10lk"]
+[ext_resource type="Script" uid="uid://d1a1rrpmo0mvl" path="res://scenese/global.gd" id="29_s5wss"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yqpkv"]
 texture = ExtResource("2_syhm5")
@@ -7118,15 +7119,15 @@ layer_2/tile_data = PackedInt32Array(-131051, 327692, 5, -131050, 262156, 5, -39
 [node name="player" type="CharacterBody2D" parent="."]
 position = Vector2(-2059, -52)
 script = ExtResource("16_syhm5")
-speed = 250.0
-jump_velocity = -310.0
+speed = 230.0
+jump_velocity = -290.0
 double_jump_velocity = -260.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="player"]
 position = Vector2(-7.6293945e-06, -18)
 scale = Vector2(0.56250006, 0.7744141)
 sprite_frames = SubResource("SpriteFrames_smehm")
-animation = &"idle"
+animation = &"run"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player"]
@@ -7153,6 +7154,7 @@ offset_bottom = 40.0
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
+script = ExtResource("29_s5wss")
 
 [node name="Exit Door to Level 3 (Attack_Bats)" type="Area2D" parent="."]
 script = ExtResource("20_bxcjq")

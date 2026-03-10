@@ -29,5 +29,7 @@ func _on_orb_touched(body: Node) -> void:
 		return
 	orb_touched = true
 	while dialogue_running:
+		if not is_inside_tree():
+			return
 		await get_tree().process_frame
 	await play_dialogue(orb_dialogue, "orb_collect")

@@ -14,8 +14,8 @@ layout_mode = 3
 anchors_preset = 0
 offset_left = 10.0
 offset_top = 10.0
-offset_right = 290.0
-offset_bottom = 75.0
+offset_right = 408.0
+offset_bottom = 135.0
 
 [node name="Panel" type="Panel" parent="Control"]
 layout_mode = 1

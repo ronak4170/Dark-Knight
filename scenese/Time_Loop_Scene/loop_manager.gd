@@ -4,10 +4,13 @@ signal loop_reset
 
 @onready var player = $"../player_time_loop"
 @onready var ghosts_container = $"../Ghosts"
+
 @export var ghost_scene : PackedScene
+
 var spawn_position : Vector2
 var loop_duration := 8
 var timer := 0.0
+var loop_active := true
 
 func _ready():
 	while not player.is_on_floor():
@@ -16,9 +19,15 @@ func _ready():
 	spawn_position = player.global_position
 
 func _physics_process(delta):
+	if not loop_active:
+		return
 	timer += delta
 	if timer >= loop_duration:
 		end_loop()
+
+func stop_loops():
+	loop_active = false
+	timer = 0.0
 
 func end_loop():
 	emit_signal("loop_reset")
@@ -29,7 +38,6 @@ func end_loop():
 	player.velocity = Vector2.ZERO
 	reset_player_state(player)
 	player.global_position = spawn_position
-
 	var ghost = ghost_scene.instantiate()
 	ghosts_container.add_child(ghost)
 	ghost.get_node("GhostPlayback").recording = loop_copy

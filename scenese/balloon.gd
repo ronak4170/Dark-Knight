@@ -23,6 +23,7 @@ extends CanvasLayer
 ## A sound player for voice lines (if they exist).
 @onready var audio_stream_player: AudioStreamPlayer = %AudioStreamPlayer
 
+
 ## Temporary game states
 var temporary_game_states: Array = []
 
@@ -36,6 +37,8 @@ var will_hide_balloon: bool = false
 var locals: Dictionary = {}
 
 var _locale: String = TranslationServer.get_locale()
+
+var skip_requested: bool = false
 
 ## The current line
 var dialogue_line: DialogueLine:
@@ -88,16 +91,48 @@ func _ready() -> void:
 		start()
 
 
-func _process(delta: float) -> void:
-	if is_instance_valid(dialogue_line):
-		progress.visible = not dialogue_label.is_typing and not dialogue_line.has_tag("voice")
-		##dialogue_line.responses.size() == 0
+func _process(_delta: float) -> void:
+	if not is_instance_valid(dialogue_line):
+		return
+	progress.visible = not dialogue_label.is_typing and not dialogue_line.has_tag("voice")
+	
+	if balloon.visible:
+		if Input.is_key_pressed(KEY_SHIFT):
+			dialogue_label.seconds_per_step = 0.01
+		else:
+			dialogue_label.seconds_per_step = 0.05
 
+func _input(event: InputEvent) -> void:
+	if not balloon.visible:
+		return
+	
+	if not event is InputEventKey:
+		return
+	
+	if event.pressed and not event.echo:
+		if event.is_action("skip"):
+			get_viewport().set_input_as_handled()
+			if dialogue_label.is_typing:
+				dialogue_label.skip_typing()
+			else:
+				next(dialogue_line.next_id)
 
-func _unhandled_input(_event: InputEvent) -> void:
-	# Only the balloon is allowed to handle input while it's showing
+func _unhandled_input(event: InputEvent) -> void:
 	if will_block_other_input:
 		get_viewport().set_input_as_handled()
+	
+	if not balloon.visible:
+		return
+	
+	if not event is InputEventKey or not event.pressed or event.echo:
+		return
+	
+	if event.keycode == KEY_ENTER or event.keycode == KEY_KP_ENTER:
+		get_viewport().set_input_as_handled()
+		if dialogue_label.is_typing:
+			dialogue_label.skip_typing()
+		else:
+			skip_requested = true
 
 
 func _notification(what: int) -> void:
@@ -163,10 +198,21 @@ func apply_dialogue_line() -> void:
 		await get_tree().create_timer(time).timeout
 		next(dialogue_line.next_id)
 	else:
+	# Auto advance — but allow Enter to skip waiting
+		skip_requested = false
 		var auto_time: float = max(2.0, dialogue_line.text.length() * 0.05)
-		await get_tree().create_timer(auto_time).timeout
+		var timer = 0.0
+		while timer < auto_time:
+			if not is_instance_valid(self) or not is_inside_tree():
+				return
+			if skip_requested:
+				skip_requested = false
+				break
+			timer += get_process_delta_time()
+			await get_tree().process_frame
+		if not is_instance_valid(self):
+			return
 		next(dialogue_line.next_id)
-
 
 ## Go to the next line
 func next(next_id: String) -> void:
@@ -190,11 +236,9 @@ func _on_mutated(_mutation: Dictionary) -> void:
 
 
 func _on_balloon_gui_input(event: InputEvent) -> void:
-	# See if we need to skip typing of the dialogue
 	if dialogue_label.is_typing:
 		var mouse_was_clicked: bool = event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed()
-		var skip_button_was_pressed: bool = event.is_action_pressed(skip_action)
-		if mouse_was_clicked or skip_button_was_pressed:
+		if mouse_was_clicked:
 			get_viewport().set_input_as_handled()
 			dialogue_label.skip_typing()
 			return
@@ -202,12 +246,8 @@ func _on_balloon_gui_input(event: InputEvent) -> void:
 	if not is_waiting_for_input: return
 	if dialogue_line.responses.size() > 0: return
 
-	# When there are no response options the balloon itself is the clickable thing
 	get_viewport().set_input_as_handled()
-
 	if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
-		next(dialogue_line.next_id)
-	elif event.is_action_pressed(next_action) and get_viewport().gui_get_focus_owner() == balloon:
 		next(dialogue_line.next_id)
 
 

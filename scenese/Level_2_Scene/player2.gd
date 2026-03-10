@@ -64,25 +64,25 @@ func _physics_process(delta: float) -> void:
 			double_jump()
 		jumps_left -= 1
 	
-	if Input.is_action_pressed("defend") and is_on_floor():
-		is_defending = true
-		animated_locked = true
-		if animated_sprite.animation != "defend":
-			animated_sprite.play("defend")
-	else:
-		if is_defending:
-			is_defending = false
-			animated_locked = false
+	#if Input.is_action_pressed("defend") and is_on_floor():
+		#is_defending = true
+		#animated_locked = true
+		#if animated_sprite.animation != "defend":
+			#animated_sprite.play("defend")
+	#else:
+		#if is_defending:
+			#is_defending = false
+			#animated_locked = false
 	
-	if is_defending:
-		velocity.x = 0
-		move_and_slide()
-		update_facing_direction()
-		check_deadly_tile()
-		return
+	#if is_defending:
+		#velocity.x = 0
+		#move_and_slide()
+		#update_facing_direction()
+		#check_deadly_tile()
+		#return
 	
-	if Input.is_action_just_pressed("attack"):
-		handle_attack_input()
+	#if Input.is_action_just_pressed("attack"):
+		#handle_attack_input()
 	
 	if is_attacking:
 		velocity.x = 0

@@ -232,6 +232,7 @@ func solve_puzzle():
 	tilemap.set_layer_enabled(BLACK_LAYER, true)
 	tilemap.set_layer_modulate(DOOR_ORIGINAL, Color(1,1,1,1))
 	tilemap.set_layer_modulate(BLACK_LAYER, Color(1,1,1,1))
+	loop_manager.stop_loops()
 	#pan_camera_to_gate()
 
 func pan_camera_to_gate():

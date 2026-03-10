@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cq1vydp4a8b5o" path="res://assets/Layers/mountains.png" id="3_jr016"]
 [ext_resource type="Texture2D" uid="uid://dj2ywpl58qoda" path="res://assets/Layers/back.png" id="4_ti2vy"]
 [ext_resource type="Texture2D" uid="uid://dsheyk136ucca" path="res://assets/Layers/all-props.png" id="5_dpxlm"]
-[ext_resource type="Script" uid="uid://drgsy5uv8cpgf" path="res://scenese/Level_3_Scene/player3.gd" id="6_u64iv"]
+[ext_resource type="Script" uid="uid://b2q8nxgu7s6ft" path="res://scenese/Level_3_Scene/player3.gd" id="6_u64iv"]
 [ext_resource type="Texture2D" uid="uid://c5jucflnj4aed" path="res://assets/Attack_1.png" id="7_dfx48"]
 [ext_resource type="Texture2D" uid="uid://c7kf350ejvyog" path="res://assets/Attack_2.png" id="8_ifr1v"]
 [ext_resource type="Texture2D" uid="uid://dcc3flu6yrlq8" path="res://assets/Attack_3.png" id="9_l3i51"]
