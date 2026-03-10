@@ -42,7 +42,7 @@ size_flags_vertical = 3
 [node name="TitleLabel" type="Label" parent="Control/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "🧠 Memory"
+text = "🔴 Memory"
 label_settings = SubResource("LabelSettings_nt7kc")
 vertical_alignment = 1
 
@@ -59,4 +59,3 @@ custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 size_flags_vertical = 3
 max_value = 10.0
-show_percentage = false

@@ -10,6 +10,15 @@ extends CharacterBody2D
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var attack_hitbox = $AttackHitbox
 
+@onready var jump_sound: AudioStreamPlayer2D = $jump_sound
+@onready var double_jump_sound: AudioStreamPlayer2D = $double_jump_sound
+@export var footstep_left: AudioStream
+@export var footstep_right: AudioStream
+
+@onready var footstep_player: AudioStreamPlayer2D = $FootstepPlayerLevel2
+
+var last_run_frame := -1
+
 var animated_locked : bool = false
 var direction : Vector2 = Vector2.ZERO
 var jumps_left : int
@@ -57,11 +66,18 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	
-	if not is_defending and Input.is_action_just_pressed("jump") and jumps_left > 0:
+	if Input.is_action_just_pressed("jump") and jumps_left > 0 and not is_defending:
 		if jumps_left == max_jumps:
+			jump_sound.play()
 			jump()
 		else:
 			double_jump()
+			double_jump_sound.play()
+		if jumps_left == max_jumps:
+			velocity.y = jump_velocity
+		else:
+			velocity.y = double_jump_velocity
+		
 		jumps_left -= 1
 	
 	#if Input.is_action_pressed("defend") and is_on_floor():
@@ -111,6 +127,7 @@ func _physics_process(delta: float) -> void:
 			animated_locked = false
 	
 	update_animation()
+	_handle_run_footsteps()
 	update_facing_direction()
 
 func take_damage(damage: int):
@@ -230,6 +247,32 @@ func _on_animated_sprite_2d_animation_finished():
 			queue_attacks = 0
 			animated_locked = false
 			print("Combo finished!")
+			
+func _handle_run_footsteps() -> void:
+	if animated_sprite.animation != "run":
+		last_run_frame = -1
+		return
+
+	if not is_on_floor():
+		last_run_frame = -1
+		return
+
+	var frame = animated_sprite.frame
+
+	if frame != last_run_frame:
+		if frame == 0:
+			_play_footstep(footstep_left)
+		elif frame == 3:
+			_play_footstep(footstep_right)
+
+	last_run_frame = frame
+	
+func _play_footstep(sound: AudioStream) -> void:
+	if footstep_player == null or sound == null:
+		return
+
+	footstep_player.stream = sound
+	footstep_player.play()
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	pass

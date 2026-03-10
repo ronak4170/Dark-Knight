@@ -11,6 +11,15 @@ extends CharacterBody2D
 
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var attack_hitbox = $AttackHitbox
+@export var footstep_left: AudioStream
+@export var footstep_right: AudioStream
+
+@onready var footstep_player: AudioStreamPlayer2D = $FootstepPlayerFinalLevel
+@onready var jump_sound = $jump_sound
+@onready var double_jump_sound = $double_jump_sound
+@onready var sword_sound := get_node_or_null("SwordSound") as AudioStreamPlayer2D
+
+var last_run_frame := -1
 
 var animated_locked : bool = false
 var direction : Vector2 = Vector2.ZERO
@@ -95,8 +104,10 @@ func _physics_process(delta: float) -> void:
 
 	if not is_defending and Input.is_action_just_pressed("jump") and jumps_left > 0:
 		if jumps_left == max_jumps:
+			jump_sound.play()
 			jump()
 		else:
+			double_jump_sound.play()
 			double_jump()
 		jumps_left -= 1
 
@@ -118,8 +129,14 @@ func _physics_process(delta: float) -> void:
 		check_deadly_tile()
 		return
 
-	if Input.is_action_just_pressed("attack"):
-		handle_attack_input()
+	if Input.is_action_just_pressed("attack_1"):
+		handle_attack_input_1()
+		
+	if Input.is_action_just_pressed("attack_2"):
+		handle_attack_input_2()
+		
+	if Input.is_action_just_pressed("attack_3"):
+		handle_attack_input_3()
 
 	if knockback_velocity.x != 0:
 		knockback_velocity.x = move_toward(knockback_velocity.x, 0.0, knockback_friction * delta)
@@ -156,6 +173,7 @@ func _physics_process(delta: float) -> void:
 
 	if knockback_velocity.x == 0:
 		update_animation()
+		_handle_run_footsteps()
 		update_facing_direction()
 
 func reset_attack_state():
@@ -258,19 +276,37 @@ func double_jump():
 	animated_sprite.play("jump_start")
 	animated_locked = true
 
-func handle_attack_input():
+func handle_attack_input_1():
 	if not is_attacking:
 		is_attacking = true
 		animated_locked = true
 		attack_safety_timer = 0.0
-		combo_step = 1
-		queue_attacks = 0
 		animated_sprite.play("attack_1")
 		enable_attack_hitbox()
+		sword_sound.play()
 		return
-	if combo_step + queue_attacks < 3:
-		queue_attacks += 1
+		
+		
+func handle_attack_input_2():
+	if not is_attacking:
+		is_attacking = true
+		animated_locked = true
+		attack_safety_timer = 0.0
+		animated_sprite.play("attack_2")
+		enable_attack_hitbox()
+		sword_sound.play()
+		return
 
+func handle_attack_input_3():
+	if not is_attacking:
+		is_attacking = true
+		animated_locked = true
+		attack_safety_timer = 0.0
+		animated_sprite.play("attack_3")
+		enable_attack_hitbox()
+		sword_sound.play()
+		return
+		
 func enable_attack_hitbox():
 	if attack_hitbox:
 		await get_tree().create_timer(0.2).timeout
@@ -309,3 +345,29 @@ func _on_attack_hitbox_body_entered(body: Node2D) -> void:
 func apply_external_push(x_force: float, y_force: float) -> void:
 	velocity.x += x_force
 	velocity.y += y_force
+	
+func _handle_run_footsteps() -> void:
+	if animated_sprite.animation != "run":
+		last_run_frame = -1
+		return
+
+	if not is_on_floor():
+		last_run_frame = -1
+		return
+
+	var frame = animated_sprite.frame
+
+	if frame != last_run_frame:
+		if frame == 0:
+			_play_footstep(footstep_left)
+		elif frame == 3:
+			_play_footstep(footstep_right)
+
+	last_run_frame = frame
+	
+func _play_footstep(sound: AudioStream) -> void:
+	if footstep_player == null or sound == null:
+		return
+
+	footstep_player.stream = sound
+	footstep_player.play()

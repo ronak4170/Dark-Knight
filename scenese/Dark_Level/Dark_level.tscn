@@ -1,4 +1,4 @@
-[gd_scene load_steps=164 format=3 uid="uid://ct6xi8t6neg1s"]
+[gd_scene load_steps=166 format=3 uid="uid://ct6xi8t6neg1s"]
 
 [ext_resource type="Script" uid="uid://baddbxucf5orv" path="res://scenese/Dark_Level/dark_bat.gd" id="1_4glte"]
 [ext_resource type="Script" uid="uid://c4meixxdgnr34" path="res://scenese/Dark_Level/lantern.gd" id="1_b0k3v"]
@@ -28,9 +28,13 @@
 [ext_resource type="Texture2D" uid="uid://b1gneict7cgpl" path="res://assets/Run.png" id="14_j7kk5"]
 [ext_resource type="Texture2D" uid="uid://crlgon4s02ko0" path="res://assets/Walk.png" id="15_drbs5"]
 [ext_resource type="AudioStream" uid="uid://coryskovn1wcq" path="res://audio/SwordSound.mp3" id="16_lyp8e"]
+[ext_resource type="AudioStream" uid="uid://ds2i0xwwr1o0m" path="res://audio/footstep_left.wav" id="19_hcq3d"]
+[ext_resource type="AudioStream" uid="uid://u25accuh2d5y" path="res://audio/footstep_right.wav" id="20_8asrk"]
 [ext_resource type="Script" uid="uid://c7cq4wgx6d5h8" path="res://scenese/Dark_Level/spike_hazard.gd" id="28_b0k3v"]
 [ext_resource type="PackedScene" uid="uid://dpjh4d6f84m6f" path="res://scenese/Memory_Fragment/memory_fragment.tscn" id="30_sf0xi"]
-[ext_resource type="Script" path="res://scenese/Dark_Level/Exit door back to Switch Level.gd" id="31_5ova1"]
+[ext_resource type="AudioStream" uid="uid://cp2dg75a3l7ig" path="res://assets/Audio/player_jump.wav" id="30_w48wm"]
+[ext_resource type="Script" uid="uid://r3f2r0lbjqjy" path="res://scenese/Dark_Level/Exit door back to Switch Level.gd" id="31_5ova1"]
+[ext_resource type="Script" uid="uid://cbg11jobca3r8" path="res://scenese/Level_2_Scene/pause_menu.gd" id="32_w48wm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sf0xi"]
 size = Vector2(22, 518)
@@ -3948,7 +3952,10 @@ fill_to = Vector2(0.3, 0.1)
 radius = 50.24938
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w48wm"]
-size = Vector2(33, 129)
+size = Vector2(25, 129)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hcq3d"]
+bg_color = Color(0.78431374, 0, 0, 1)
 
 [node name="Dark_level" type="Node2D"]
 position = Vector2(-789, -355)
@@ -4098,6 +4105,9 @@ collision_layer = 2
 collision_mask = 7
 motion_mode = 1
 script = ExtResource("1_4glte")
+min_speed = 300.0
+stop_distance = 50.0
+attack_distance = 55.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Bat"]
 position = Vector2(24, 14.999999)
@@ -4135,6 +4145,7 @@ position = Vector2(25, 7)
 shape = SubResource("CapsuleShape2D_ixf42")
 
 [node name="BatAttackSound" type="AudioStreamPlayer2D" parent="Bat"]
+visible = false
 scale = Vector2(0.99999994, 0.99999994)
 stream = ExtResource("8_w48wm")
 volume_db = -6.0
@@ -4160,6 +4171,8 @@ collision_mask = 7
 script = ExtResource("5_nlan2")
 speed = 290.0
 jump_velocity = -460.0
+footstep_left = ExtResource("19_hcq3d")
+footstep_right = ExtResource("20_8asrk")
 
 [node name="AttackHitbox" type="Area2D" parent="dark_player"]
 position = Vector2(-19, 17.999996)
@@ -4202,6 +4215,15 @@ scale = Vector2(0.39279515, 0.46440947)
 energy = 2.0
 texture = SubResource("GradientTexture2D_g1flr")
 texture_scale = 4.5
+
+[node name="jump_sound" type="AudioStreamPlayer2D" parent="dark_player"]
+stream = ExtResource("30_w48wm")
+
+[node name="double_jump_sound" type="AudioStreamPlayer2D" parent="dark_player"]
+scale = Vector2(0.99999994, 0.99999994)
+stream = ExtResource("30_w48wm")
+
+[node name="FootstepPlayerDarkLevel" type="AudioStreamPlayer2D" parent="dark_player"]
 
 [node name="DirectionalLight2D2" type="DirectionalLight2D" parent="."]
 position = Vector2(1064.2, 707.4)
@@ -4279,8 +4301,126 @@ player_path = NodePath("../dark_player")
 next_level_scene = "uid://btyx3t3se7r2v"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Exit Door back to Switch Level (but with respawn)"]
-position = Vector2(3982.5, 863.5)
+position = Vector2(3986.5, 863.5)
 shape = SubResource("RectangleShape2D_w48wm")
+
+[node name="PauseMenu" type="CanvasLayer" parent="."]
+script = ExtResource("32_w48wm")
+
+[node name="PausePanel" type="Panel" parent="PauseMenu"]
+offset_top = 10.0
+offset_right = 40.0
+offset_bottom = 50.0
+
+[node name="ResumeButton" type="Button" parent="PauseMenu/PausePanel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="QuitButton" type="Button" parent="PauseMenu/PausePanel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="MenuButton" type="Button" parent="PauseMenu/PausePanel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="PausedTitle" type="Label" parent="PauseMenu/PausePanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "PAUSED"
+
+[node name="SettingsButton" type="Button" parent="PauseMenu/PausePanel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="SettingsPanel" type="Panel" parent="PauseMenu"]
+anchors_preset = -1
+anchor_left = -0.055000003
+anchor_top = -0.08400001
+anchor_right = -0.055000003
+anchor_bottom = -0.08400001
+offset_left = 331.36002
+offset_top = 69.43201
+offset_right = 759.36
+offset_bottom = 376.432
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu/SettingsPanel"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = -7.0
+offset_right = 598.0
+offset_bottom = 593.0
+theme_override_constants/separation = 10
+
+[node name="SettingsTitle" type="Label" parent="PauseMenu/SettingsPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="VolumeRow" type="Control" parent="PauseMenu/SettingsPanel/VBoxContainer"]
+custom_minimum_size = Vector2(250, 30)
+layout_mode = 2
+
+[node name="VolumeLabel" type="Label" parent="PauseMenu/SettingsPanel/VBoxContainer/VolumeRow"]
+layout_mode = 0
+offset_right = 113.0
+offset_bottom = 49.0
+theme_override_font_sizes/font_size = 35
+text = "AUDIO"
+
+[node name="VolumeSlider" type="HSlider" parent="PauseMenu/SettingsPanel/VBoxContainer/VolumeRow"]
+custom_minimum_size = Vector2(250, 20)
+layout_mode = 0
+offset_left = 102.0
+offset_top = 2.0
+offset_right = 452.0
+offset_bottom = 22.0
+size_flags_stretch_ratio = 1.5
+max_value = 1.0
+step = 0.01
+value = 1.0
+ticks_position = 3
+
+[node name="SFX" type="Control" parent="PauseMenu/SettingsPanel/VBoxContainer"]
+custom_minimum_size = Vector2(250, 30)
+layout_mode = 2
+
+[node name="SFXLabel" type="Label" parent="PauseMenu/SettingsPanel/VBoxContainer/SFX"]
+layout_mode = 0
+offset_top = 1.0
+offset_right = 35.0
+offset_bottom = 29.0
+theme_override_colors/font_color = Color(0.69803923, 0.69803923, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "SFX"
+
+[node name="SFXSlider" type="HSlider" parent="PauseMenu/SettingsPanel/VBoxContainer/SFX"]
+custom_minimum_size = Vector2(350, 20)
+layout_mode = 0
+offset_left = 103.0
+offset_top = 1.0
+offset_right = 453.0
+offset_bottom = 21.0
+max_value = 1.0
+step = 0.01
+value = 1.0
+ticks_position = 3
+
+[node name="CloseButton" type="Button" parent="PauseMenu/SettingsPanel"]
+layout_mode = 0
+offset_left = 374.0
+offset_top = 11.999996
+offset_right = 420.0
+offset_bottom = 34.999996
+theme_override_colors/font_color = Color(0.9691369, 0.9691369, 0.9691368, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_hcq3d")
+text = "X"
 
 [connection signal="body_entered" from="Bat/DetectionArea" to="Bat" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Bat/DetectionArea" to="Bat" method="_on_area_2d_body_exited"]

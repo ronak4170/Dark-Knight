@@ -6,16 +6,16 @@ extends Area2D
 var direction : Vector2
 
 func _ready():
-    body_entered.connect(_on_body_entered)
-    $AnimatedSprite2D.play("idle")
+	body_entered.connect(_on_body_entered)
+	$AnimatedSprite2D.play("idle")
 
 func _process(delta):
-    position += direction * speed * delta
+	position += direction * speed * delta
 
 func _on_body_entered(body):
-    if body.has_method("take_damage"):
-        body.take_damage(damage)
-        queue_free()
+	if body.has_method("take_damage"):
+		body.take_damage(damage)
+		queue_free()
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
-    queue_free()
+	queue_free()

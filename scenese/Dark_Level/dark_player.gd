@@ -19,6 +19,13 @@ var invulnerable := false
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_hitbox: Area2D = $AttackHitbox
 
+@export var footstep_left: AudioStream
+@export var footstep_right: AudioStream
+
+@onready var footstep_player: AudioStreamPlayer2D = $FootstepPlayerDarkLevel
+
+var last_run_frame := -1
+
 var animated_locked: bool = false
 var direction: Vector2 = Vector2.ZERO
 var jumps_left: int
@@ -58,12 +65,6 @@ func _ready() -> void:
 
 	_base_modulate = animated_sprite.modulate
 
-	Global.reset_memory()
-	# count fragments in this level
-	await get_tree().process_frame  # wait for all nodes to be ready
-	Global.memory_total = get_tree().get_nodes_in_group("memory_fragment").size()
-	print("Total fragments in level: ", Global.memory_total)
-	
 	# Save respawn point
 	var spawn = get_tree().get_first_node_in_group("spawn_point")
 	if spawn:
@@ -71,6 +72,9 @@ func _ready() -> void:
 	else:
 		respawn_point = global_position
 
+
+@onready var jump_sound = $jump_sound
+@onready var double_jump_sound = $double_jump_sound
 
 func _physics_process(delta: float) -> void:
 	# dead: just fall + slide (no input)
@@ -114,16 +118,31 @@ func _physics_process(delta: float) -> void:
 		return
 
 	# jump / double jump
+
 	if Input.is_action_just_pressed("jump") and jumps_left > 0 and not is_defending:
 		if jumps_left == max_jumps:
+			jump_sound.play()
 			jump()
 		else:
 			double_jump()
+			double_jump_sound.play()
+		if jumps_left == max_jumps:
+			velocity.y = jump_velocity
+		else:
+			velocity.y = double_jump_velocity
+		
 		jumps_left -= 1
 
 	# attack input
-	if Input.is_action_just_pressed("attack"):
-		handle_attack_input()
+	# attack input
+	if Input.is_action_just_pressed("attack_1"):
+		start_attack(1)
+
+	if Input.is_action_just_pressed("attack_2"):
+		start_attack(2)
+
+	if Input.is_action_just_pressed("attack_3"):
+		start_attack(3)
 
 	# movement
 	if is_attacking:
@@ -151,6 +170,7 @@ func _physics_process(delta: float) -> void:
 			animated_locked = false
 
 	update_animation()
+	_handle_run_footsteps()
 	update_facing_direction()
 	_update_attack_hitbox_position()
 
@@ -216,23 +236,19 @@ func land() -> void:
 	animated_locked = true
 
 
-func handle_attack_input() -> void:
-	if hitstunned or dead:
+func start_attack(num: int) -> void:
+	if hitstunned or dead or is_attacking:
 		return
 
-	if is_attacking:
-		if combo_step + queue_attacks < 3:
-			queue_attacks += 1
-		return
-
-	# start combo
 	is_attacking = true
 	animated_locked = true
-	combo_step = 1
-	queue_attacks = 0
-	animated_sprite.play("attack_1")
+	combo_step = num
+
+	animated_sprite.play("attack_%d" % num)
+
 	if sword_sound:
 		sword_sound.play()
+
 	_start_attack_hit_once()
 
 
@@ -410,6 +426,31 @@ func _respawn() -> void:
 
 	print("PLAYER RESPAWNED")
 
+func _handle_run_footsteps() -> void:
+	if animated_sprite.animation != "run":
+		last_run_frame = -1
+		return
+
+	if not is_on_floor():
+		last_run_frame = -1
+		return
+
+	var frame := animated_sprite.frame
+
+	if frame != last_run_frame:
+		if frame == 0:
+			_play_footstep(footstep_left)
+		elif frame == 3:
+			_play_footstep(footstep_right)
+
+	last_run_frame = frame
+	
+func _play_footstep(sound: AudioStream) -> void:
+	if footstep_player == null or sound == null:
+		return
+
+	footstep_player.stream = sound
+	footstep_player.play()
 
 func is_dead() -> bool:
 	return dead

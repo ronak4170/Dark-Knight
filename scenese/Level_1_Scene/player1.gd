@@ -10,6 +10,13 @@ extends CharacterBody2D
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var attack_hitbox = $AttackHitbox
 
+@export var footstep_left: AudioStream
+@export var footstep_right: AudioStream
+
+@onready var footstep_player: AudioStreamPlayer2D = $FootstepPlayerLevel1
+
+var last_run_frame := -1
+
 var animated_locked : bool = false
 var direction : Vector2 = Vector2.ZERO
 var jumps_left : int
@@ -35,8 +42,6 @@ func _ready():
 	print("Player groups: ", get_groups())
 
 	Global.reset_memory()
-	await get_tree().process_frame
-	Global.memory_total = get_tree().get_nodes_in_group("memory_fragment").size()
 	Global.emit_signal("memory_updated", Global.memory_collected, Global.memory_total)
 
 	print("Level 1 fragments: ", Global.memory_total)
@@ -148,6 +153,7 @@ func _physics_process(delta: float) -> void:
 			animated_locked = false
 
 	update_animation()
+	_handle_run_footsteps()
 	update_facing_direction()
 
 
@@ -314,6 +320,31 @@ func _on_animated_sprite_2d_animation_finished():
 
 			print("Combo finished!")
 
+func _handle_run_footsteps() -> void:
+	if animated_sprite.animation != "run":
+		last_run_frame = -1
+		return
+
+	if not is_on_floor():
+		last_run_frame = -1
+		return
+
+	var frame = animated_sprite.frame
+
+	if frame != last_run_frame:
+		if frame == 0:
+			_play_footstep(footstep_left)
+		elif frame == 3:
+			_play_footstep(footstep_right)
+
+	last_run_frame = frame
+	
+func _play_footstep(sound: AudioStream) -> void:
+	if footstep_player == null or sound == null:
+		return
+
+	footstep_player.stream = sound
+	footstep_player.play()
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	pass

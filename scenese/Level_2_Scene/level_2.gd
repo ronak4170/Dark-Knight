@@ -10,7 +10,7 @@ var orb_touched := false
 var dialogue_running := false
 
 func _ready() -> void:
-	memory_fragment.body_entered.connect(_on_orb_touched)
+	
 	$Instr_2.show_instruction("Use Space to jump / press space twice to double jump")
 	# Start move dialogue at level start
 	await get_tree().create_timer(0.5).timeout

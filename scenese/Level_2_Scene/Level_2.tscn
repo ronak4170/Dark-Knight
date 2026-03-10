@@ -1,4 +1,4 @@
-[gd_scene load_steps=106 format=3 uid="uid://b3kqrrfl4n3yu"]
+[gd_scene load_steps=108 format=3 uid="uid://b3kqrrfl4n3yu"]
 
 [ext_resource type="Script" uid="uid://ctsk6g4qi8vnu" path="res://scenese/Level_2_Scene/level_2.gd" id="1_hov62"]
 [ext_resource type="Texture2D" uid="uid://ckfjcmiyewecw" path="res://assets/free-dungeon-platformer-pixel-art-tileset/PNG/Background/Bright/bg.png" id="2_syhm5"]
@@ -16,11 +16,14 @@
 [ext_resource type="Texture2D" uid="uid://c0rejjah5olqv" path="res://assets/free-dungeon-platformer-pixel-art-tileset/PNG/Tiles_lava/lava_tile7.png" id="14_ehnxx"]
 [ext_resource type="Script" uid="uid://brerfdkyvrbf3" path="res://scenese/Level_2_Scene/instr_2.gd" id="16_27vgs"]
 [ext_resource type="Script" uid="uid://b3mbe51hew8ps" path="res://scenese/Level_2_Scene/player2.gd" id="16_syhm5"]
+[ext_resource type="AudioStream" uid="uid://ds2i0xwwr1o0m" path="res://audio/footstep_left.wav" id="18_rucce"]
 [ext_resource type="Texture2D" uid="uid://c5jucflnj4aed" path="res://assets/Attack_1.png" id="18_us71a"]
 [ext_resource type="PackedScene" uid="uid://d3aucpbiae3pl" path="res://scenese/Memory_Fragment/memory_bar.tscn" id="19_bxcjq"]
+[ext_resource type="AudioStream" uid="uid://u25accuh2d5y" path="res://audio/footstep_right.wav" id="19_o5fgg"]
 [ext_resource type="Texture2D" uid="uid://c7kf350ejvyog" path="res://assets/Attack_2.png" id="19_s5wss"]
 [ext_resource type="PackedScene" uid="uid://dpjh4d6f84m6f" path="res://scenese/Memory_Fragment/memory_fragment.tscn" id="20_55d6s"]
-[ext_resource type="Script" path="res://scenese/Level_2_Scene/ExitDoor to level 3.gd" id="20_bxcjq"]
+[ext_resource type="Script" uid="uid://8mpra38wlh0h" path="res://scenese/Level_2_Scene/ExitDoor to level 3.gd" id="20_bxcjq"]
+[ext_resource type="AudioStream" uid="uid://cp2dg75a3l7ig" path="res://assets/Audio/player_jump.wav" id="20_hodly"]
 [ext_resource type="Texture2D" uid="uid://dcc3flu6yrlq8" path="res://assets/Attack_3.png" id="20_rucce"]
 [ext_resource type="Script" uid="uid://dogvi0cotutnp" path="res://scenese/moving_platform.gd" id="21_55d6s"]
 [ext_resource type="Texture2D" uid="uid://em6u883v17hs" path="res://assets/Dead.png" id="21_o5fgg"]
@@ -31,6 +34,8 @@
 [ext_resource type="Texture2D" uid="uid://b1gneict7cgpl" path="res://assets/Run.png" id="26_656ch"]
 [ext_resource type="Texture2D" uid="uid://crlgon4s02ko0" path="res://assets/Walk.png" id="27_f10lk"]
 [ext_resource type="Script" uid="uid://d1a1rrpmo0mvl" path="res://scenese/global.gd" id="29_s5wss"]
+[ext_resource type="Script" uid="uid://cbg11jobca3r8" path="res://scenese/Level_2_Scene/pause_menu.gd" id="22_63pjn"]
+[ext_resource type="AudioStream" uid="uid://dlwdng8dgspr" path="res://audio/level2.ogg" id="23_hodly"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yqpkv"]
 texture = ExtResource("2_syhm5")
@@ -7093,6 +7098,9 @@ size = Vector2(36, 69)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_63pjn"]
 size = Vector2(91, 15)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hodly"]
+bg_color = Color(0.78431374, 0, 0, 1)
+
 [node name="Level_2" type="Node2D"]
 position = Vector2(0, 10)
 script = ExtResource("1_hov62")
@@ -7122,6 +7130,8 @@ script = ExtResource("16_syhm5")
 speed = 230.0
 jump_velocity = -290.0
 double_jump_velocity = -260.0
+footstep_left = ExtResource("18_rucce")
+footstep_right = ExtResource("19_o5fgg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="player"]
 position = Vector2(-7.6293945e-06, -18)
@@ -7136,12 +7146,21 @@ shape = SubResource("CapsuleShape2D_ur7pv")
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 position = Vector2(6, -11)
-zoom = Vector2(4.5, 4.5)
+zoom = Vector2(4, 4)
 limit_left = -2376
 limit_top = -497
 limit_right = 510
 limit_bottom = 218
 position_smoothing_enabled = true
+
+[node name="double_jump_sound" type="AudioStreamPlayer2D" parent="player"]
+scale = Vector2(0.99999994, 0.99999994)
+stream = ExtResource("20_hodly")
+
+[node name="jump_sound" type="AudioStreamPlayer2D" parent="player"]
+stream = ExtResource("20_hodly")
+
+[node name="FootstepPlayerLevel2" type="AudioStreamPlayer2D" parent="player"]
 
 [node name="Instr_2" type="Node2D" parent="."]
 script = ExtResource("16_27vgs")
@@ -7162,7 +7181,7 @@ player_path = NodePath("../player")
 next_level_scene = "uid://byossdi7xj41n"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Exit Door to Level 3 (Attack_Bats)"]
-position = Vector2(315, -67)
+position = Vector2(326, -67)
 shape = SubResource("RectangleShape2D_pocj3")
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
@@ -7235,3 +7254,124 @@ position = Vector2(118, 32)
 shape = SubResource("RectangleShape2D_63pjn")
 
 [connection signal="animation_finished" from="player/AnimatedSprite2D" to="player" method="_on_animated_sprite_2d_animation_finished"]
+[node name="PauseMenu" type="CanvasLayer" parent="."]
+script = ExtResource("22_63pjn")
+
+[node name="PausePanel" type="Panel" parent="PauseMenu"]
+offset_top = 10.0
+offset_right = 40.0
+offset_bottom = 50.0
+
+[node name="ResumeButton" type="Button" parent="PauseMenu/PausePanel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="QuitButton" type="Button" parent="PauseMenu/PausePanel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="MenuButton" type="Button" parent="PauseMenu/PausePanel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="SettingsButton" type="Button" parent="PauseMenu/PausePanel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="PausedTitle" type="Label" parent="PauseMenu/PausePanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "PAUSED"
+
+[node name="SettingsPanel" type="Panel" parent="PauseMenu"]
+anchors_preset = -1
+anchor_left = -0.055000003
+anchor_top = -0.08400001
+anchor_right = -0.055000003
+anchor_bottom = -0.08400001
+offset_left = 331.36002
+offset_top = 69.43201
+offset_right = 759.36
+offset_bottom = 376.432
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu/SettingsPanel"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = -7.0
+offset_right = 598.0
+offset_bottom = 593.0
+theme_override_constants/separation = 10
+
+[node name="SettingsTitle" type="Label" parent="PauseMenu/SettingsPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="VolumeRow" type="Control" parent="PauseMenu/SettingsPanel/VBoxContainer"]
+custom_minimum_size = Vector2(250, 30)
+layout_mode = 2
+
+[node name="VolumeLabel" type="Label" parent="PauseMenu/SettingsPanel/VBoxContainer/VolumeRow"]
+layout_mode = 0
+offset_right = 113.0
+offset_bottom = 49.0
+theme_override_font_sizes/font_size = 35
+text = "AUDIO"
+
+[node name="VolumeSlider" type="HSlider" parent="PauseMenu/SettingsPanel/VBoxContainer/VolumeRow"]
+custom_minimum_size = Vector2(250, 20)
+layout_mode = 0
+offset_left = 102.0
+offset_top = 2.0
+offset_right = 452.0
+offset_bottom = 22.0
+size_flags_stretch_ratio = 1.5
+max_value = 1.0
+step = 0.01
+value = 1.0
+ticks_position = 3
+
+[node name="SFX" type="Control" parent="PauseMenu/SettingsPanel/VBoxContainer"]
+custom_minimum_size = Vector2(250, 30)
+layout_mode = 2
+
+[node name="SFXLabel" type="Label" parent="PauseMenu/SettingsPanel/VBoxContainer/SFX"]
+layout_mode = 0
+offset_top = 1.0
+offset_right = 35.0
+offset_bottom = 29.0
+theme_override_colors/font_color = Color(0.69803923, 0.69803923, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "SFX"
+
+[node name="SFXSlider" type="HSlider" parent="PauseMenu/SettingsPanel/VBoxContainer/SFX"]
+custom_minimum_size = Vector2(350, 20)
+layout_mode = 0
+offset_left = 103.0
+offset_top = 1.0
+offset_right = 453.0
+offset_bottom = 21.0
+max_value = 1.0
+step = 0.01
+value = 1.0
+ticks_position = 3
+
+[node name="CloseButton" type="Button" parent="PauseMenu/SettingsPanel"]
+layout_mode = 0
+offset_left = 374.0
+offset_top = 11.999996
+offset_right = 420.0
+offset_bottom = 34.999996
+theme_override_colors/font_color = Color(0.9691369, 0.9691369, 0.9691368, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_hodly")
+text = "X"
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("23_hodly")
+autoplay = true

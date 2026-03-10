@@ -19,6 +19,13 @@ var invulnerable := false
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_hitbox: Area2D = $AttackHitbox
 
+@export var footstep_left: AudioStream
+@export var footstep_right: AudioStream
+
+@onready var footstep_player: AudioStreamPlayer2D = $FootstepPlayerLevel3
+
+var last_run_frame := -1
+
 var animated_locked: bool = false
 var direction: Vector2 = Vector2.ZERO
 var jumps_left: int
@@ -51,6 +58,8 @@ func _ready() -> void:
 
 	_base_modulate = animated_sprite.modulate
 
+@onready var jump_sound = $jump_sound
+@onready var double_jump_sound = $double_jump_sound
 
 func _physics_process(delta: float) -> void:
 	# dead: just fall + slide (no input)
@@ -93,18 +102,33 @@ func _physics_process(delta: float) -> void:
 		update_facing_direction()
 		return
 
+
 	# jump / double jump
+
 	if Input.is_action_just_pressed("jump") and jumps_left > 0 and not is_defending:
 		if jumps_left == max_jumps:
+			jump_sound.play()
 			jump()
 		else:
 			double_jump()
+			double_jump_sound.play()
+		if jumps_left == max_jumps:
+			velocity.y = jump_velocity
+		else:
+			velocity.y = double_jump_velocity
+		
 		jumps_left -= 1
 
 	# attack input
-	if Input.is_action_just_pressed("attack"):
-		handle_attack_input()
+	if Input.is_action_just_pressed("attack_1"):
+		start_attack(1)
 
+	if Input.is_action_just_pressed("attack_2"):
+		start_attack(2)
+
+	if Input.is_action_just_pressed("attack_3"):
+		start_attack(3)
+	
 	# movement
 	if is_attacking:
 		velocity.x = 0
@@ -131,6 +155,7 @@ func _physics_process(delta: float) -> void:
 			animated_locked = false
 
 	update_animation()
+	_handle_run_footsteps()
 	update_facing_direction()
 	_update_attack_hitbox_position()
 
@@ -180,24 +205,19 @@ func land() -> void:
 	animated_sprite.play("jump_end")
 	animated_locked = true
 
-
-func handle_attack_input() -> void:
-	if hitstunned or dead:
-		return
-	
-	if is_attacking:
-		if combo_step + queue_attacks < 3:
-			queue_attacks += 1
+func start_attack(num: int) -> void:
+	if hitstunned or dead or is_attacking:
 		return
 
-	# start combo
 	is_attacking = true
 	animated_locked = true
-	combo_step = 1
-	queue_attacks = 0
-	animated_sprite.play("attack_1")
+	combo_step = num
+
+	animated_sprite.play("attack_%d" % num)
+
 	if sword_sound:
 		sword_sound.play()
+
 	_start_attack_hit_once()
 
 
@@ -210,16 +230,10 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		return
 
 	if animated_sprite.animation.begins_with("attack_"):
-		if queue_attacks > 0 and combo_step < 3:
-			queue_attacks -= 1
-			combo_step += 1
-			animated_sprite.play("attack_%d" % combo_step)
-			_start_attack_hit_once()
-		else:
-			is_attacking = false
-			combo_step = 0
-			queue_attacks = 0
-			animated_locked = false
+		is_attacking = false
+		combo_step = 0
+		queue_attacks = 0
+		animated_locked = false
 
 
 func _start_attack_hit_once() -> void:
@@ -345,3 +359,29 @@ func is_dead() -> bool:
 	return dead
 
 @onready var sword_sound := get_node_or_null("SwordSound") as AudioStreamPlayer2D
+
+func _handle_run_footsteps() -> void:
+	if animated_sprite.animation != "run":
+		last_run_frame = -1
+		return
+
+	if not is_on_floor():
+		last_run_frame = -1
+		return
+
+	var frame := animated_sprite.frame
+
+	if frame != last_run_frame:
+		if frame == 0:
+			_play_footstep(footstep_left)
+		elif frame == 3:
+			_play_footstep(footstep_right)
+
+	last_run_frame = frame
+	
+func _play_footstep(sound: AudioStream) -> void:
+	if footstep_player == null or sound == null:
+		return
+
+	footstep_player.stream = sound
+	footstep_player.play()
