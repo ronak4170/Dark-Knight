@@ -66,14 +66,19 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	
-	if not is_defending and Input.is_action_just_pressed("jump") and jumps_left > 0:
+	if Input.is_action_just_pressed("jump") and jumps_left > 0 and not is_defending:
 		if jumps_left == max_jumps:
 			jump_sound.play()
 			jump()
 		else:
-			double_jump_sound.play()
 			double_jump()
-			jumps_left -= 1
+			double_jump_sound.play()
+		if jumps_left == max_jumps:
+			velocity.y = jump_velocity
+		else:
+			velocity.y = double_jump_velocity
+		
+		jumps_left -= 1
 	
 	if Input.is_action_pressed("defend") and is_on_floor():
 		is_defending = true

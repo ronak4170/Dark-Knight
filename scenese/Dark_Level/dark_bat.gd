@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
-@export var min_speed: float = 150.0
-@export var max_speed: float = 300.0
+@export var min_speed: float = 250.0
+@export var max_speed: float = 400.0
 @export var accel: float = 1800.0
 
 @export var hover_height: float = 65.0
