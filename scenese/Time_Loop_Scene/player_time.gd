@@ -13,6 +13,8 @@ extends CharacterBody2D
 @export var footstep_left: AudioStream
 @export var footstep_right: AudioStream
 @onready var footstep_player: AudioStreamPlayer2D = $FootstepPlayerTimeLoop
+@onready var jump_sound = $jump_sound
+@onready var double_jump_sound = $double_jump_sound
 
 var last_run_frame := -1
 
@@ -85,8 +87,10 @@ func process_frame(delta):
 	# Jump
 	if not is_defending and input_data.get("jump", false) and jumps_left > 0:
 		if jumps_left == max_jumps:
+			jump_sound.play()
 			jump()
 		else:
+			double_jump_sound.play()
 			double_jump()
 		jumps_left -= 1
 

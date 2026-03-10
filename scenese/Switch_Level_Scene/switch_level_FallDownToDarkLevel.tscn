@@ -1,4 +1,4 @@
-[gd_scene load_steps=90 format=3 uid="uid://ba6ga2ipepl3l"]
+[gd_scene load_steps=92 format=3 uid="uid://ba6ga2ipepl3l"]
 
 [ext_resource type="Texture2D" uid="uid://ce8wqyrbdvxvv" path="res://assets/dungeon_sidescroller-Raou/Tilesetv3.png" id="1_m153c"]
 [ext_resource type="Script" uid="uid://xbcpaymfnelv" path="res://scenese/Switch_Level_Scene/switch_level_fall_down_to_dark_level_player.gd" id="2_e04ep"]
@@ -15,11 +15,8 @@
 [ext_resource type="Texture2D" uid="uid://b1gneict7cgpl" path="res://assets/Run.png" id="11_bc37w"]
 [ext_resource type="Texture2D" uid="uid://crlgon4s02ko0" path="res://assets/Walk.png" id="12_hy6b8"]
 [ext_resource type="Script" uid="uid://cyl4tpgf2f0vn" path="res://scenese/Switch_Level_Scene/switch_1_area.gd" id="13_fntw7"]
-[ext_resource type="AudioStream" uid="uid://c2nq8l777acwn" path="res://assets/Audio/player_double_jump.wav" id="13_l4fbc"]
 [ext_resource type="FontFile" uid="uid://b3q6sjw4d0u62" path="res://assets/Font/Cinzel-Regular.otf" id="14_2ur1w"]
 [ext_resource type="AudioStream" uid="uid://cp2dg75a3l7ig" path="res://assets/Audio/player_jump.wav" id="14_e04ep"]
-
-[ext_resource type="PackedScene" uid="uid://d3aucpbiae3pl" path="res://scenese/Memory_Fragment/memory_bar.tscn" id="21_e04ep"]
 [ext_resource type="AudioStream" uid="uid://dt2a7c3efgsws" path="res://audio/Switch Click.wav" id="14_l4fbc"]
 [ext_resource type="AudioStream" uid="uid://iog6aib4x6xf" path="res://audio/switch_clack_final.wav" id="15_l4fbc"]
 [ext_resource type="Script" uid="uid://bj507fppfsumt" path="res://scenese/Switch_Level_Scene/SwitchPuzzle.gd" id="15_y6mr1"]
@@ -27,6 +24,7 @@
 [ext_resource type="Script" uid="uid://dff1unh5c5d0v" path="res://scenese/Switch_Level_Scene/DarkLevelJump.gd" id="18_382vt"]
 [ext_resource type="Script" uid="uid://bytf525k2s5fj" path="res://scenese/Switch_Level_Scene/StatueArea.gd" id="19_bpyos"]
 [ext_resource type="AudioStream" uid="uid://q42p8rhell25" path="res://audio/fragile_tile_sound.wav" id="19_e04ep"]
+[ext_resource type="PackedScene" uid="uid://d3aucpbiae3pl" path="res://scenese/Memory_Fragment/memory_bar.tscn" id="21_e04ep"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d25ov"]
 texture = ExtResource("1_m153c")
@@ -1296,10 +1294,11 @@ position_smoothing_enabled = true
 
 [node name="double_jump_sound" type="AudioStreamPlayer2D" parent="TileMap/player"]
 scale = Vector2(0.99999994, 0.99999994)
-stream = ExtResource("13_l4fbc")
+stream = ExtResource("14_e04ep")
 
 [node name="jump_sound" type="AudioStreamPlayer2D" parent="TileMap/player"]
 stream = ExtResource("14_e04ep")
+
 [node name="FootstepPlayerFallDownToDarkLevel" type="AudioStreamPlayer2D" parent="TileMap/player"]
 
 [node name="Switch1-Area" type="Area2D" parent="."]

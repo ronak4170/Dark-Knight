@@ -1,4 +1,4 @@
-[gd_scene load_steps=114 format=3 uid="uid://cuywyc3gn3ujv"]
+[gd_scene load_steps=115 format=3 uid="uid://cuywyc3gn3ujv"]
 
 [ext_resource type="Script" uid="uid://30wj7iaynmcg" path="res://scenese/Time_Loop_Scene/time_loop.gd" id="1_iri56"]
 [ext_resource type="Texture2D" uid="uid://cowcd44l50ixh" path="res://dungeon_sidescroller-Raou/Tilesetv3.png" id="2_b66cj"]
@@ -30,6 +30,7 @@
 [ext_resource type="Script" uid="uid://dfoopaegfb8wd" path="res://scenese/Time_Loop_Scene/flower.gd" id="20_kprkb"]
 [ext_resource type="Script" uid="uid://bt5pneart17x2" path="res://scenese/Time_Loop_Scene/checkpoint.gd" id="21_3dsw4"]
 [ext_resource type="Script" uid="uid://cdep8vqhls5co" path="res://scenese/Time_Loop_Scene/puzzle_manager.gd" id="22_248fq"]
+[ext_resource type="AudioStream" uid="uid://cp2dg75a3l7ig" path="res://assets/Audio/player_jump.wav" id="26_rwuv2"]
 [ext_resource type="Script" uid="uid://bf437piulu22u" path="res://scenese/Time_Loop_Scene/torch_area_1.gd" id="27_ceer6"]
 [ext_resource type="Script" uid="uid://c21xpffno4dvv" path="res://scenese/Time_Loop_Scene/torch_area_2.gd" id="28_qw4bw"]
 [ext_resource type="Script" uid="uid://3n2ryasg52r0" path="res://scenese/Time_Loop_Scene/pillar_area_1.gd" id="29_d7ss3"]
@@ -3488,6 +3489,12 @@ limit_right = 15245
 limit_bottom = 1970
 
 [node name="FootstepPlayerTimeLoop" type="AudioStreamPlayer2D" parent="player_time_loop"]
+
+[node name="jump_sound" type="AudioStreamPlayer2D" parent="player_time_loop"]
+stream = ExtResource("26_rwuv2")
+
+[node name="double_jump_sound" type="AudioStreamPlayer2D" parent="player_time_loop"]
+stream = ExtResource("26_rwuv2")
 
 [node name="Ghosts" type="Node2D" parent="."]
 position = Vector2(258, 3372)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=168 format=3 uid="uid://ct6xi8t6neg1s"]
+[gd_scene load_steps=167 format=3 uid="uid://ct6xi8t6neg1s"]
 
 [ext_resource type="Script" uid="uid://baddbxucf5orv" path="res://scenese/Dark_Level/dark_bat.gd" id="1_4glte"]
 [ext_resource type="Script" uid="uid://c4meixxdgnr34" path="res://scenese/Dark_Level/lantern.gd" id="1_b0k3v"]
@@ -33,8 +33,7 @@
 [ext_resource type="Script" uid="uid://c7cq4wgx6d5h8" path="res://scenese/Dark_Level/spike_hazard.gd" id="28_b0k3v"]
 [ext_resource type="PackedScene" uid="uid://dpjh4d6f84m6f" path="res://scenese/Memory_Fragment/memory_fragment.tscn" id="30_sf0xi"]
 [ext_resource type="AudioStream" uid="uid://cp2dg75a3l7ig" path="res://assets/Audio/player_jump.wav" id="30_w48wm"]
-[ext_resource type="Script" path="res://scenese/Dark_Level/Exit door back to Switch Level.gd" id="31_5ova1"]
-[ext_resource type="AudioStream" uid="uid://c2nq8l777acwn" path="res://assets/Audio/player_double_jump.wav" id="31_hcq3d"]
+[ext_resource type="Script" uid="uid://r3f2r0lbjqjy" path="res://scenese/Dark_Level/Exit door back to Switch Level.gd" id="31_5ova1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sf0xi"]
 size = Vector2(22, 518)
@@ -4218,7 +4217,7 @@ stream = ExtResource("30_w48wm")
 
 [node name="double_jump_sound" type="AudioStreamPlayer2D" parent="dark_player"]
 scale = Vector2(0.99999994, 0.99999994)
-stream = ExtResource("31_hcq3d")
+stream = ExtResource("30_w48wm")
 
 [node name="FootstepPlayerDarkLevel" type="AudioStreamPlayer2D" parent="dark_player"]
 

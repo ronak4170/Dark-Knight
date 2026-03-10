@@ -1,11 +1,11 @@
-[gd_scene load_steps=113 format=3 uid="uid://oyf4nbyrdlpy"]
+[gd_scene load_steps=115 format=3 uid="uid://oyf4nbyrdlpy"]
 
 [ext_resource type="Texture2D" uid="uid://17g1k761sjni" path="res://assets/16x16 Underground Passage/Sprites/Terrain/Sprites_00.png" id="1_gne3p"]
 [ext_resource type="Texture2D" uid="uid://burv5ie63lvy0" path="res://assets/16x16 Underground Passage/Sprites/Terrain/Sprites_17.png" id="2_alwgo"]
 [ext_resource type="Texture2D" uid="uid://sbi65lutqyiu" path="res://assets/16x16 Underground Passage/Sprites/Terrain/Sprites_18.png" id="3_rpfo7"]
 [ext_resource type="Texture2D" uid="uid://ns8ns0dojyl2" path="res://assets/16x16 Underground Passage/Sprites/Web/Web_01.png" id="4_7mxvg"]
 [ext_resource type="Texture2D" uid="uid://cuhvfkak2hug3" path="res://assets/16x16 Underground Passage/Mockup1.png" id="5_umnfu"]
-[ext_resource type="Script" uid="uid://drgsy5uv8cpgf" path="res://scenese/player.gd" id="6_gne3p"]
+[ext_resource type="Script" uid="uid://drgsy5uv8cpgf" path="res://scenese/final_player.gd" id="6_gne3p"]
 [ext_resource type="Texture2D" uid="uid://c5jucflnj4aed" path="res://assets/Attack_1.png" id="7_alwgo"]
 [ext_resource type="AudioStream" uid="uid://ds2i0xwwr1o0m" path="res://audio/footstep_left.wav" id="7_rpfo7"]
 [ext_resource type="Script" uid="uid://clx1rthkl5u67" path="res://boss2.gd" id="7_tbgk7"]
@@ -26,6 +26,8 @@
 [ext_resource type="Texture2D" uid="uid://b6veb1le7y841" path="res://assets/Jump.png" id="14_q2ref"]
 [ext_resource type="Texture2D" uid="uid://b1gneict7cgpl" path="res://assets/Run.png" id="15_8i167"]
 [ext_resource type="Texture2D" uid="uid://crlgon4s02ko0" path="res://assets/Walk.png" id="16_oduyy"]
+[ext_resource type="AudioStream" uid="uid://cp2dg75a3l7ig" path="res://assets/Audio/player_jump.wav" id="19_7mxvg"]
+[ext_resource type="AudioStream" uid="uid://coryskovn1wcq" path="res://audio/SwordSound.mp3" id="20_umnfu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p2w3n"]
 texture = ExtResource("1_gne3p")
@@ -1548,8 +1550,7 @@ position = Vector2(125, -36)
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("6_gne3p")
-jump_velocity = -280.0
-double_jump_velocity = -380.0
+attack_damage = 50
 footstep_left = ExtResource("7_rpfo7")
 footstep_right = ExtResource("8_7mxvg")
 
@@ -1579,6 +1580,17 @@ shape = SubResource("RectangleShape2D_iy5aj")
 
 [node name="FootstepPlayerFinalLevel" type="AudioStreamPlayer2D" parent="player"]
 position = Vector2(2, -6)
+
+[node name="jump_sound" type="AudioStreamPlayer2D" parent="player"]
+stream = ExtResource("19_7mxvg")
+
+[node name="double_jump_sound" type="AudioStreamPlayer2D" parent="player"]
+stream = ExtResource("19_7mxvg")
+
+[node name="SwordSound" type="AudioStreamPlayer2D" parent="player"]
+position = Vector2(13.750008, 5.000002)
+scale = Vector2(1.2499999, 1.2499999)
+stream = ExtResource("20_umnfu")
 
 [node name="Boss" type="CharacterBody2D" parent="."]
 collision_layer = 2

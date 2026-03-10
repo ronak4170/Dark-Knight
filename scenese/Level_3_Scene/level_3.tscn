@@ -25,7 +25,7 @@
 [ext_resource type="Script" uid="uid://blw4kaqldr2uh" path="res://scenese/Level_3_Scene/instr_3.gd" id="19_gscjm"]
 [ext_resource type="PackedScene" uid="uid://dpjh4d6f84m6f" path="res://scenese/Memory_Fragment/memory_fragment.tscn" id="22_u64iv"]
 [ext_resource type="PackedScene" uid="uid://d3aucpbiae3pl" path="res://scenese/Memory_Fragment/memory_bar.tscn" id="23_nk4dh"]
-[ext_resource type="Script" path="res://scenese/Level_3_Scene/Exit Door to Level 4.gd" id="24_nk4dh"]
+[ext_resource type="Script" uid="uid://ca3hqs2ob7t4q" path="res://scenese/Level_3_Scene/Exit Door to Level 4.gd" id="24_nk4dh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i3yjj"]
 size = Vector2(5.5, 353.5)
@@ -930,7 +930,7 @@ footstep_right = ExtResource("8_su4i5")
 
 [node name="double_jump_sound" type="AudioStreamPlayer2D" parent="player3"]
 scale = Vector2(0.99999994, 0.99999994)
-stream = ExtResource("7_fu3yw")
+stream = ExtResource("18_nk4dh")
 
 [node name="AttackHitbox" type="Area2D" parent="player3"]
 position = Vector2(-19, 17.999996)

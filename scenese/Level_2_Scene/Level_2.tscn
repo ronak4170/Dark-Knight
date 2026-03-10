@@ -1,4 +1,4 @@
-[gd_scene load_steps=109 format=3 uid="uid://b3kqrrfl4n3yu"]
+[gd_scene load_steps=108 format=3 uid="uid://b3kqrrfl4n3yu"]
 
 [ext_resource type="Script" uid="uid://ctsk6g4qi8vnu" path="res://scenese/Level_2_Scene/level_2.gd" id="1_hov62"]
 [ext_resource type="Texture2D" uid="uid://ckfjcmiyewecw" path="res://assets/free-dungeon-platformer-pixel-art-tileset/PNG/Background/Bright/bg.png" id="2_syhm5"]
@@ -18,12 +18,11 @@
 [ext_resource type="Script" uid="uid://b3mbe51hew8ps" path="res://scenese/Level_2_Scene/player2.gd" id="16_syhm5"]
 [ext_resource type="AudioStream" uid="uid://ds2i0xwwr1o0m" path="res://audio/footstep_left.wav" id="18_rucce"]
 [ext_resource type="Texture2D" uid="uid://c5jucflnj4aed" path="res://assets/Attack_1.png" id="18_us71a"]
-[ext_resource type="AudioStream" uid="uid://c2nq8l777acwn" path="res://assets/Audio/player_double_jump.wav" id="19_63pjn"]
 [ext_resource type="PackedScene" uid="uid://d3aucpbiae3pl" path="res://scenese/Memory_Fragment/memory_bar.tscn" id="19_bxcjq"]
 [ext_resource type="AudioStream" uid="uid://u25accuh2d5y" path="res://audio/footstep_right.wav" id="19_o5fgg"]
 [ext_resource type="Texture2D" uid="uid://c7kf350ejvyog" path="res://assets/Attack_2.png" id="19_s5wss"]
 [ext_resource type="PackedScene" uid="uid://dpjh4d6f84m6f" path="res://scenese/Memory_Fragment/memory_fragment.tscn" id="20_55d6s"]
-[ext_resource type="Script" path="res://scenese/Level_2_Scene/ExitDoor to level 3.gd" id="20_bxcjq"]
+[ext_resource type="Script" uid="uid://8mpra38wlh0h" path="res://scenese/Level_2_Scene/ExitDoor to level 3.gd" id="20_bxcjq"]
 [ext_resource type="AudioStream" uid="uid://cp2dg75a3l7ig" path="res://assets/Audio/player_jump.wav" id="20_hodly"]
 [ext_resource type="Texture2D" uid="uid://dcc3flu6yrlq8" path="res://assets/Attack_3.png" id="20_rucce"]
 [ext_resource type="Script" uid="uid://dogvi0cotutnp" path="res://scenese/moving_platform.gd" id="21_55d6s"]
@@ -7150,7 +7149,7 @@ position_smoothing_enabled = true
 
 [node name="double_jump_sound" type="AudioStreamPlayer2D" parent="player"]
 scale = Vector2(0.99999994, 0.99999994)
-stream = ExtResource("19_63pjn")
+stream = ExtResource("20_hodly")
 
 [node name="jump_sound" type="AudioStreamPlayer2D" parent="player"]
 stream = ExtResource("20_hodly")
