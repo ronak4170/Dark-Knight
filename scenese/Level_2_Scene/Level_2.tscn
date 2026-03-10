@@ -1,4 +1,4 @@
-[gd_scene load_steps=107 format=3 uid="uid://b3kqrrfl4n3yu"]
+[gd_scene load_steps=109 format=3 uid="uid://b3kqrrfl4n3yu"]
 
 [ext_resource type="Script" uid="uid://ctsk6g4qi8vnu" path="res://scenese/Level_2_Scene/level_2.gd" id="1_hov62"]
 [ext_resource type="Texture2D" uid="uid://ckfjcmiyewecw" path="res://assets/free-dungeon-platformer-pixel-art-tileset/PNG/Background/Bright/bg.png" id="2_syhm5"]
@@ -16,9 +16,11 @@
 [ext_resource type="Texture2D" uid="uid://c0rejjah5olqv" path="res://assets/free-dungeon-platformer-pixel-art-tileset/PNG/Tiles_lava/lava_tile7.png" id="14_ehnxx"]
 [ext_resource type="Script" uid="uid://brerfdkyvrbf3" path="res://scenese/Level_2_Scene/instr_2.gd" id="16_27vgs"]
 [ext_resource type="Script" uid="uid://b3mbe51hew8ps" path="res://scenese/Level_2_Scene/player2.gd" id="16_syhm5"]
+[ext_resource type="AudioStream" uid="uid://ds2i0xwwr1o0m" path="res://audio/footstep_left.wav" id="18_rucce"]
 [ext_resource type="Texture2D" uid="uid://c5jucflnj4aed" path="res://assets/Attack_1.png" id="18_us71a"]
 [ext_resource type="AudioStream" uid="uid://c2nq8l777acwn" path="res://assets/Audio/player_double_jump.wav" id="19_63pjn"]
 [ext_resource type="PackedScene" uid="uid://d3aucpbiae3pl" path="res://scenese/Memory_Fragment/memory_bar.tscn" id="19_bxcjq"]
+[ext_resource type="AudioStream" uid="uid://u25accuh2d5y" path="res://audio/footstep_right.wav" id="19_o5fgg"]
 [ext_resource type="Texture2D" uid="uid://c7kf350ejvyog" path="res://assets/Attack_2.png" id="19_s5wss"]
 [ext_resource type="PackedScene" uid="uid://dpjh4d6f84m6f" path="res://scenese/Memory_Fragment/memory_fragment.tscn" id="20_55d6s"]
 [ext_resource type="Script" path="res://scenese/Level_2_Scene/ExitDoor to level 3.gd" id="20_bxcjq"]
@@ -7089,7 +7091,7 @@ radius = 7.0
 height = 56.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pocj3"]
-size = Vector2(36, 69)
+size = Vector2(20, 69)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_63pjn"]
 size = Vector2(91, 15)
@@ -7123,6 +7125,8 @@ script = ExtResource("16_syhm5")
 speed = 250.0
 jump_velocity = -310.0
 double_jump_velocity = -260.0
+footstep_left = ExtResource("18_rucce")
+footstep_right = ExtResource("19_o5fgg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="player"]
 position = Vector2(-7.6293945e-06, -18)
@@ -7151,6 +7155,8 @@ stream = ExtResource("19_63pjn")
 [node name="jump_sound" type="AudioStreamPlayer2D" parent="player"]
 stream = ExtResource("20_hodly")
 
+[node name="FootstepPlayerLevel2" type="AudioStreamPlayer2D" parent="player"]
+
 [node name="Instr_2" type="Node2D" parent="."]
 script = ExtResource("16_27vgs")
 
@@ -7169,7 +7175,7 @@ player_path = NodePath("../player")
 next_level_scene = "uid://byossdi7xj41n"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Exit Door to Level 3 (Attack_Bats)"]
-position = Vector2(315, -67)
+position = Vector2(326, -67)
 shape = SubResource("RectangleShape2D_pocj3")
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]

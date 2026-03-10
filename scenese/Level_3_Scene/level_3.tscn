@@ -8,7 +8,9 @@
 [ext_resource type="Script" uid="uid://drgsy5uv8cpgf" path="res://scenese/Level_3_Scene/player3.gd" id="6_fu3yw"]
 [ext_resource type="Texture2D" uid="uid://c5jucflnj4aed" path="res://assets/Attack_1.png" id="7_dfx48"]
 [ext_resource type="AudioStream" uid="uid://c2nq8l777acwn" path="res://assets/Audio/player_double_jump.wav" id="7_fu3yw"]
+[ext_resource type="AudioStream" uid="uid://ds2i0xwwr1o0m" path="res://audio/footstep_left.wav" id="7_fu3yw"]
 [ext_resource type="Texture2D" uid="uid://c7kf350ejvyog" path="res://assets/Attack_2.png" id="8_ifr1v"]
+[ext_resource type="AudioStream" uid="uid://u25accuh2d5y" path="res://audio/footstep_right.wav" id="8_su4i5"]
 [ext_resource type="Texture2D" uid="uid://dcc3flu6yrlq8" path="res://assets/Attack_3.png" id="9_l3i51"]
 [ext_resource type="Texture2D" uid="uid://em6u883v17hs" path="res://assets/Dead.png" id="10_d1g0s"]
 [ext_resource type="Texture2D" uid="uid://byvdsnlebsw1t" path="res://assets/Protection.png" id="11_l4ney"]
@@ -24,7 +26,7 @@
 [ext_resource type="Script" uid="uid://blw4kaqldr2uh" path="res://scenese/Level_3_Scene/instr_3.gd" id="19_gscjm"]
 [ext_resource type="PackedScene" uid="uid://dpjh4d6f84m6f" path="res://scenese/Memory_Fragment/memory_fragment.tscn" id="22_u64iv"]
 [ext_resource type="PackedScene" uid="uid://d3aucpbiae3pl" path="res://scenese/Memory_Fragment/memory_bar.tscn" id="23_nk4dh"]
-[ext_resource type="Script" path="res://scenese/Level_3_Scene/Exit Door to Level 4.gd" id="24_nk4dh"]
+[ext_resource type="Script" uid="uid://ca3hqs2ob7t4q" path="res://scenese/Level_3_Scene/Exit Door to Level 4.gd" id="24_nk4dh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i3yjj"]
 size = Vector2(5.5, 353.5)
@@ -887,14 +889,14 @@ radius = 12.0
 height = 70.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u64iv"]
-size = Vector2(17, 70.5)
+size = Vector2(30.5, 70.5)
 
 [node name="Level_3" type="Node2D"]
 position = Vector2(-113, -297)
 script = ExtResource("1_3tpim")
 
 [node name="BoundaryWalls" type="StaticBody2D" parent="."]
-position = Vector2(3445, 217)
+position = Vector2(3452, 216)
 
 [node name="CollisionShape2D_left" type="CollisionShape2D" parent="BoundaryWalls"]
 position = Vector2(-3328.75, -149)
@@ -923,11 +925,13 @@ layer_3/tile_data = PackedInt32Array(327721, 2, 3, 393257, 2, 4, 458793, 2, 5, 5
 position = Vector2(307, 209)
 scale = Vector2(0.8, 0.8)
 collision_mask = 7
-script = ExtResource("6_fu3yw")
+script = ExtResource("6_u64iv")
+footstep_left = ExtResource("7_fu3yw")
+footstep_right = ExtResource("8_su4i5")
 
 [node name="double_jump_sound" type="AudioStreamPlayer2D" parent="player3"]
 scale = Vector2(0.99999994, 0.99999994)
-stream = ExtResource("7_fu3yw")
+stream = ExtResource("90_djump")
 
 [node name="AttackHitbox" type="Area2D" parent="player3"]
 position = Vector2(-19, 17.999996)
@@ -968,6 +972,7 @@ stream = ExtResource("17_i3yjj")
 
 [node name="jump_sound" type="AudioStreamPlayer2D" parent="player3"]
 stream = ExtResource("18_nk4dh")
+[node name="FootstepPlayerLevel3" type="AudioStreamPlayer2D" parent="player3"]
 
 [node name="Bat" parent="." groups=["player_group"] instance=ExtResource("17_0v417")]
 position = Vector2(1786, 162)
@@ -999,7 +1004,7 @@ player_path = NodePath("../player3")
 next_level_scene = "uid://ba6ga2ipepl3l"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Exit Door to Level 4 (Switch Level)"]
-position = Vector2(3450.5, 205.25)
+position = Vector2(3459.25, 206)
 shape = SubResource("RectangleShape2D_u64iv")
 
 [connection signal="animation_finished" from="player3/AnimatedSprite2D" to="player3" method="_on_animated_sprite_2d_animation_finished"]

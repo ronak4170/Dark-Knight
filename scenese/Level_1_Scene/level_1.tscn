@@ -1,4 +1,4 @@
-[gd_scene load_steps=89 format=3 uid="uid://b2nmvvkrwhpm2"]
+[gd_scene load_steps=91 format=3 uid="uid://b2nmvvkrwhpm2"]
 
 [ext_resource type="Script" uid="uid://dokwdqy4h4eeu" path="res://scenese/Level_1_Scene/level_1.gd" id="1_tnuwx"]
 [ext_resource type="PackedScene" uid="uid://dpjh4d6f84m6f" path="res://scenese/Memory_Fragment/memory_fragment.tscn" id="2_0ly4g"]
@@ -9,15 +9,17 @@
 [ext_resource type="Texture2D" uid="uid://c7kf350ejvyog" path="res://assets/Attack_2.png" id="5_0ly4g"]
 [ext_resource type="Script" uid="uid://bdje0da88p78e" path="res://scenese/Level_1_Scene/instr1.gd" id="5_5t241"]
 [ext_resource type="Texture2D" uid="uid://dcc3flu6yrlq8" path="res://assets/Attack_3.png" id="6_16dq7"]
+[ext_resource type="AudioStream" uid="uid://ds2i0xwwr1o0m" path="res://audio/footstep_left.wav" id="6_bdrbi"]
 [ext_resource type="Texture2D" uid="uid://em6u883v17hs" path="res://assets/Dead.png" id="7_05i61"]
+[ext_resource type="AudioStream" uid="uid://u25accuh2d5y" path="res://audio/footstep_right.wav" id="7_5njk0"]
 [ext_resource type="Texture2D" uid="uid://byvdsnlebsw1t" path="res://assets/Protection.png" id="8_alg4v"]
 [ext_resource type="Texture2D" uid="uid://b478l4e2yk8fj" path="res://assets/Hurt.png" id="9_ass0x"]
 [ext_resource type="Texture2D" uid="uid://dtl3kq5rsv61x" path="res://assets/Idle.png" id="10_bdrbi"]
 [ext_resource type="Texture2D" uid="uid://b6veb1le7y841" path="res://assets/Jump.png" id="11_5njk0"]
 [ext_resource type="Texture2D" uid="uid://b1gneict7cgpl" path="res://assets/Run.png" id="12_r45wr"]
 [ext_resource type="Texture2D" uid="uid://crlgon4s02ko0" path="res://assets/Walk.png" id="13_ggtcp"]
-[ext_resource type="Script" path="res://scenese/Level_1_Scene/pause_menu.gd" id="16_0ly4g"]
-[ext_resource type="Script" path="res://scenese/Level_1_Scene/Exit door to Level 2.gd" id="17_16dq7"]
+[ext_resource type="Script" uid="uid://udvbrpgotds" path="res://scenese/Level_1_Scene/pause_menu.gd" id="16_0ly4g"]
+[ext_resource type="Script" uid="uid://c2mss75yih01b" path="res://scenese/Level_1_Scene/Exit door to Level 2.gd" id="17_16dq7"]
 [ext_resource type="AudioStream" uid="uid://7mdnle4vfvjb" path="res://audio/level1.ogg" id="18_audio"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_16dq7"]
@@ -1252,7 +1254,7 @@ radius = 7.0
 height = 56.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0ly4g"]
-size = Vector2(16, 66)
+size = Vector2(15, 66)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_16dq7"]
 bg_color = Color(0.78431374, 0, 0, 1)
@@ -1293,6 +1295,8 @@ collision_layer = 3
 script = ExtResource("4_6gjcc")
 speed = 250.0
 jump_velocity = -320.0
+footstep_left = ExtResource("6_bdrbi")
+footstep_right = ExtResource("7_5njk0")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="player"]
 position = Vector2(-53.000008, 8)
@@ -1315,6 +1319,8 @@ limit_top = -109
 limit_right = 2141
 limit_bottom = 21
 
+[node name="FootstepPlayerLevel1" type="AudioStreamPlayer2D" parent="player"]
+
 [node name="Instr_1" type="Node2D" parent="."]
 position = Vector2(622, 40)
 script = ExtResource("5_5t241")
@@ -1334,7 +1340,7 @@ player_path = NodePath("../player")
 next_level_scene = "uid://b3kqrrfl4n3yu"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Exit Door to Level 2 (Jump and Lava)"]
-position = Vector2(2030, 148)
+position = Vector2(2030.5, 148)
 shape = SubResource("RectangleShape2D_0ly4g")
 
 [node name="PauseMenu" type="CanvasLayer" parent="."]
