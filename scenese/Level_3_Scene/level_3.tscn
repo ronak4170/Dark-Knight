@@ -1,4 +1,4 @@
-[gd_scene load_steps=93 format=3 uid="uid://byossdi7xj41n"]
+[gd_scene load_steps=94 format=3 uid="uid://byossdi7xj41n"]
 
 [ext_resource type="Script" uid="uid://cjwgwuf4527pc" path="res://scenese/Level_3_Scene/level_3.gd" id="1_3tpim"]
 [ext_resource type="Texture2D" uid="uid://dfocwi30g3sao" path="res://assets/Layers/tileset.png" id="2_vv5ey"]
@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://dsheyk136ucca" path="res://assets/Layers/all-props.png" id="5_dpxlm"]
 [ext_resource type="Script" uid="uid://drgsy5uv8cpgf" path="res://scenese/Level_3_Scene/player3.gd" id="6_fu3yw"]
 [ext_resource type="Texture2D" uid="uid://c5jucflnj4aed" path="res://assets/Attack_1.png" id="7_dfx48"]
-[ext_resource type="AudioStream" uid="uid://c2nq8l777acwn" path="res://assets/Audio/player_double_jump.wav" id="7_fu3yw"]
 [ext_resource type="AudioStream" uid="uid://ds2i0xwwr1o0m" path="res://audio/footstep_left.wav" id="7_fu3yw"]
 [ext_resource type="Texture2D" uid="uid://c7kf350ejvyog" path="res://assets/Attack_2.png" id="8_ifr1v"]
 [ext_resource type="AudioStream" uid="uid://u25accuh2d5y" path="res://audio/footstep_right.wav" id="8_su4i5"]
@@ -26,7 +25,7 @@
 [ext_resource type="Script" uid="uid://blw4kaqldr2uh" path="res://scenese/Level_3_Scene/instr_3.gd" id="19_gscjm"]
 [ext_resource type="PackedScene" uid="uid://dpjh4d6f84m6f" path="res://scenese/Memory_Fragment/memory_fragment.tscn" id="22_u64iv"]
 [ext_resource type="PackedScene" uid="uid://d3aucpbiae3pl" path="res://scenese/Memory_Fragment/memory_bar.tscn" id="23_nk4dh"]
-[ext_resource type="Script" uid="uid://ca3hqs2ob7t4q" path="res://scenese/Level_3_Scene/Exit Door to Level 4.gd" id="24_nk4dh"]
+[ext_resource type="Script" path="res://scenese/Level_3_Scene/Exit Door to Level 4.gd" id="24_nk4dh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i3yjj"]
 size = Vector2(5.5, 353.5)
@@ -925,13 +924,13 @@ layer_3/tile_data = PackedInt32Array(327721, 2, 3, 393257, 2, 4, 458793, 2, 5, 5
 position = Vector2(307, 209)
 scale = Vector2(0.8, 0.8)
 collision_mask = 7
-script = ExtResource("6_u64iv")
+script = ExtResource("6_fu3yw")
 footstep_left = ExtResource("7_fu3yw")
 footstep_right = ExtResource("8_su4i5")
 
 [node name="double_jump_sound" type="AudioStreamPlayer2D" parent="player3"]
 scale = Vector2(0.99999994, 0.99999994)
-stream = ExtResource("90_djump")
+stream = ExtResource("7_fu3yw")
 
 [node name="AttackHitbox" type="Area2D" parent="player3"]
 position = Vector2(-19, 17.999996)
@@ -972,6 +971,7 @@ stream = ExtResource("17_i3yjj")
 
 [node name="jump_sound" type="AudioStreamPlayer2D" parent="player3"]
 stream = ExtResource("18_nk4dh")
+
 [node name="FootstepPlayerLevel3" type="AudioStreamPlayer2D" parent="player3"]
 
 [node name="Bat" parent="." groups=["player_group"] instance=ExtResource("17_0v417")]
