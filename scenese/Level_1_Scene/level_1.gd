@@ -1,5 +1,5 @@
 extends Node2D
-
+@export var level_music: AudioStream
 @onready var player = $player
 @onready var orb_spot = $Orb_spot
 @onready var memory_fragment = $memory_fragment
@@ -21,6 +21,7 @@ func _ready() -> void:
 	player.animated_locked = true
 	player.animated_sprite.play("revive")
 	player.animated_sprite.speed_scale = 0.5
+	Music.play_music(level_music)
 	orb_spot.body_entered.connect(_on_orb_spotted)
 	memory_fragment.body_entered.connect(_on_orb_touched)
 	start_intro_sequence()

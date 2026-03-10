@@ -1,4 +1,4 @@
-[gd_scene load_steps=108 format=3 uid="uid://b3kqrrfl4n3yu"]
+[gd_scene load_steps=112 format=3 uid="uid://b3kqrrfl4n3yu"]
 
 [ext_resource type="Script" uid="uid://ctsk6g4qi8vnu" path="res://scenese/Level_2_Scene/level_2.gd" id="1_hov62"]
 [ext_resource type="Texture2D" uid="uid://ckfjcmiyewecw" path="res://assets/free-dungeon-platformer-pixel-art-tileset/PNG/Background/Bright/bg.png" id="2_syhm5"]
@@ -27,15 +27,15 @@
 [ext_resource type="Texture2D" uid="uid://dcc3flu6yrlq8" path="res://assets/Attack_3.png" id="20_rucce"]
 [ext_resource type="Script" uid="uid://dogvi0cotutnp" path="res://scenese/moving_platform.gd" id="21_55d6s"]
 [ext_resource type="Texture2D" uid="uid://em6u883v17hs" path="res://assets/Dead.png" id="21_o5fgg"]
+[ext_resource type="Script" uid="uid://cbg11jobca3r8" path="res://scenese/Level_2_Scene/pause_menu.gd" id="22_63pjn"]
 [ext_resource type="Texture2D" uid="uid://byvdsnlebsw1t" path="res://assets/Protection.png" id="22_dbf45"]
 [ext_resource type="Texture2D" uid="uid://b478l4e2yk8fj" path="res://assets/Hurt.png" id="23_4m6gk"]
+[ext_resource type="AudioStream" uid="uid://dlwdng8dgspr" path="res://audio/level2.ogg" id="23_hodly"]
 [ext_resource type="Texture2D" uid="uid://dtl3kq5rsv61x" path="res://assets/Idle.png" id="24_3vtjb"]
 [ext_resource type="Texture2D" uid="uid://b6veb1le7y841" path="res://assets/Jump.png" id="25_xg3e3"]
 [ext_resource type="Texture2D" uid="uid://b1gneict7cgpl" path="res://assets/Run.png" id="26_656ch"]
 [ext_resource type="Texture2D" uid="uid://crlgon4s02ko0" path="res://assets/Walk.png" id="27_f10lk"]
 [ext_resource type="Script" uid="uid://d1a1rrpmo0mvl" path="res://scenese/global.gd" id="29_s5wss"]
-[ext_resource type="Script" uid="uid://cbg11jobca3r8" path="res://scenese/Level_2_Scene/pause_menu.gd" id="22_63pjn"]
-[ext_resource type="AudioStream" uid="uid://dlwdng8dgspr" path="res://audio/level2.ogg" id="23_hodly"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yqpkv"]
 texture = ExtResource("2_syhm5")
@@ -7104,6 +7104,7 @@ bg_color = Color(0.78431374, 0, 0, 1)
 [node name="Level_2" type="Node2D"]
 position = Vector2(0, 10)
 script = ExtResource("1_hov62")
+level_music = ExtResource("23_hodly")
 
 [node name="MemoryBar" parent="." instance=ExtResource("19_bxcjq")]
 
@@ -7253,7 +7254,6 @@ color = Color(0.09215572, 0.002646962, 0.038462374, 1)
 position = Vector2(118, 32)
 shape = SubResource("RectangleShape2D_63pjn")
 
-[connection signal="animation_finished" from="player/AnimatedSprite2D" to="player" method="_on_animated_sprite_2d_animation_finished"]
 [node name="PauseMenu" type="CanvasLayer" parent="."]
 script = ExtResource("22_63pjn")
 
@@ -7372,6 +7372,4 @@ theme_override_colors/font_color = Color(0.9691369, 0.9691369, 0.9691368, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_hodly")
 text = "X"
 
-[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("23_hodly")
-autoplay = true
+[connection signal="animation_finished" from="player/AnimatedSprite2D" to="player" method="_on_animated_sprite_2d_animation_finished"]

@@ -1,7 +1,8 @@
-[gd_scene load_steps=166 format=3 uid="uid://ct6xi8t6neg1s"]
+[gd_scene load_steps=171 format=3 uid="uid://ct6xi8t6neg1s"]
 
 [ext_resource type="Script" uid="uid://baddbxucf5orv" path="res://scenese/Dark_Level/dark_bat.gd" id="1_4glte"]
 [ext_resource type="Script" uid="uid://c4meixxdgnr34" path="res://scenese/Dark_Level/lantern.gd" id="1_b0k3v"]
+[ext_resource type="Script" uid="uid://y20es6qfcq5c" path="res://scenese/Dark_Level/dark_level.gd" id="1_ehite"]
 [ext_resource type="PackedScene" uid="uid://d3aucpbiae3pl" path="res://scenese/Memory_Fragment/memory_bar.tscn" id="1_rh12e"]
 [ext_resource type="Texture2D" uid="uid://blwsu765b1r40" path="res://assets/Dark/Lantern 1 - Silver and Orange.png" id="2_rh12e"]
 [ext_resource type="Texture2D" uid="uid://cy2br5hc31elt" path="res://assets/Bat with VFX/Bat-Attack2.png" id="2_x4v6s"]
@@ -35,6 +36,7 @@
 [ext_resource type="AudioStream" uid="uid://cp2dg75a3l7ig" path="res://assets/Audio/player_jump.wav" id="30_w48wm"]
 [ext_resource type="Script" uid="uid://r3f2r0lbjqjy" path="res://scenese/Dark_Level/Exit door back to Switch Level.gd" id="31_5ova1"]
 [ext_resource type="Script" uid="uid://cbg11jobca3r8" path="res://scenese/Level_2_Scene/pause_menu.gd" id="32_w48wm"]
+[ext_resource type="AudioStream" uid="uid://dmdxf8vhlufs8" path="res://audio/DarkLevel.ogg" id="36_6yh6g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sf0xi"]
 size = Vector2(22, 518)
@@ -3959,6 +3961,8 @@ bg_color = Color(0.78431374, 0, 0, 1)
 
 [node name="Dark_level" type="Node2D"]
 position = Vector2(-789, -355)
+script = ExtResource("1_ehite")
+level_music = ExtResource("36_6yh6g")
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 7

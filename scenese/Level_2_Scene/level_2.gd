@@ -1,5 +1,5 @@
 extends Node2D
-
+@export var level_music: AudioStream
 @onready var memory_fragment = $memory_fragment
 @onready var instr_2 = $Instr_2
 
@@ -10,11 +10,12 @@ var orb_touched := false
 var dialogue_running := false
 
 func _ready() -> void:
-	
+	Music.play_music(level_music)
 	$Instr_2.show_instruction("Use Space to jump / press space twice to double jump")
 	# Start move dialogue at level start
 	await get_tree().create_timer(0.5).timeout
 	await play_dialogue(move_dialogue, "move")
+	Music.play_music(level_music)
 
 func play_dialogue(resource: DialogueResource, title: String) -> void:
 	if dialogue_running:

@@ -13,6 +13,11 @@ extends CharacterBody2D
 @export var fast_spell : PackedScene
 @export var homing_spell : PackedScene
 @export var heavy_spell : PackedScene
+@export var attack_sound_1: AudioStream
+@export var attack_sound_2: AudioStream
+@export var attack_sound_3: AudioStream
+
+
 
 # -----------------------------------
 # VARIABLES
@@ -30,6 +35,7 @@ var is_attacking : bool = false
 @onready var spell_spawn = $SpellSpawn
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var player = get_tree().get_first_node_in_group("player")
+@onready var attack_sfx: AudioStreamPlayer2D = $AttackSFX
 
 var health_bar = null
 
@@ -144,6 +150,7 @@ func _on_attack_timer_timeout():
 # -----------------------------------
 
 func cast_circle_pattern():
+	play_attack_sound(attack_sound_1)
 	var bullet_count = 12
 	for i in bullet_count:
 		var angle = i * (TAU / bullet_count)
@@ -152,6 +159,7 @@ func cast_circle_pattern():
 func cast_spread_pattern():
 	if player == null:
 		return
+	play_attack_sound(attack_sound_1)
 	var base_direction = (player.global_position - spell_spawn.global_position).normalized()
 	for i in range(-2, 3):
 		var spread = base_direction.rotated(deg_to_rad(i * 15))
@@ -160,6 +168,7 @@ func cast_spread_pattern():
 func cast_fast_burst():
 	if player == null:
 		return
+	play_attack_sound(attack_sound_3)
 	var direction = (player.global_position - spell_spawn.global_position).normalized()
 	for i in 5:
 		spawn_specific_spell(fast_spell, direction)
@@ -169,9 +178,11 @@ func cast_homing_attack():
 	spawn_specific_spell(homing_spell)
 
 func cast_heavy_shot():
+	play_attack_sound(attack_sound_2)
 	spawn_specific_spell(heavy_spell)
 
 func cast_spiral_attack():
+	play_attack_sound(attack_sound_1)
 	var bullets = 20
 	for i in bullets:
 		var angle = i * (TAU / bullets)
@@ -221,3 +232,11 @@ func die():
 	await animated_sprite.animation_finished
 
 	queue_free()
+	
+	
+func play_attack_sound(sound: AudioStream) -> void:
+	if attack_sfx == null or sound == null:
+		return
+
+	attack_sfx.stream = sound
+	attack_sfx.play()

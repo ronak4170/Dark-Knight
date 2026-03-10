@@ -1,4 +1,4 @@
-[gd_scene load_steps=117 format=3 uid="uid://cuywyc3gn3ujv"]
+[gd_scene load_steps=118 format=3 uid="uid://cuywyc3gn3ujv"]
 
 [ext_resource type="Script" uid="uid://30wj7iaynmcg" path="res://scenese/Time_Loop_Scene/time_loop.gd" id="1_iri56"]
 [ext_resource type="Texture2D" uid="uid://cowcd44l50ixh" path="res://dungeon_sidescroller-Raou/Tilesetv3.png" id="2_b66cj"]
@@ -37,8 +37,9 @@
 [ext_resource type="Script" uid="uid://crfcats67ry44" path="res://scenese/Time_Loop_Scene/pillar_area_2.gd" id="30_ggrlu"]
 [ext_resource type="Script" uid="uid://csp2qpp7inbqq" path="res://scenese/Time_Loop_Scene/torch_ui.gd" id="31_msohq"]
 [ext_resource type="Script" uid="uid://b5v6pt5uo4mn0" path="res://scenese/Time_Loop_Scene/torch_area_3.gd" id="32_71lwo"]
-[ext_resource type="Script" path="res://scenese/Time_Loop_Scene/Exit Door to Final Boss Level.gd" id="37_71lwo"]
-[ext_resource type="Script" path="res://scenese/Level_2_Scene/pause_menu.gd" id="39_u4fd7"]
+[ext_resource type="Script" uid="uid://ds7v2psdsii61" path="res://scenese/Time_Loop_Scene/Exit Door to Final Boss Level.gd" id="37_71lwo"]
+[ext_resource type="Script" uid="uid://cbg11jobca3r8" path="res://scenese/Level_2_Scene/pause_menu.gd" id="39_u4fd7"]
+[ext_resource type="AudioStream" uid="uid://cb3a36ve3yb8v" path="res://audio/TimeLoopLevel.ogg" id="40_5kody"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bv0gu"]
 texture = ExtResource("2_b66cj")
@@ -3413,6 +3414,7 @@ bg_color = Color(0.78431374, 0, 0, 1)
 [node name="Time_Loop" type="Node2D"]
 position = Vector2(-14, -1871)
 script = ExtResource("1_iri56")
+level_music = ExtResource("40_5kody")
 
 [node name="memory_fragment" parent="." instance=ExtResource("2_d7ss3")]
 position = Vector2(2303, 3778)

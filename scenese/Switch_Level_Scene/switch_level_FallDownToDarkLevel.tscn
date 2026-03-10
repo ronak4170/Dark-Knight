@@ -1,7 +1,8 @@
-[gd_scene load_steps=94 format=3 uid="uid://ba6ga2ipepl3l"]
+[gd_scene load_steps=96 format=3 uid="uid://ba6ga2ipepl3l"]
 
 [ext_resource type="Texture2D" uid="uid://ce8wqyrbdvxvv" path="res://assets/dungeon_sidescroller-Raou/Tilesetv3.png" id="1_m153c"]
-[ext_resource type="Script" path="res://scenese/Switch_Level_Scene/switch_level_fall_down_to_dark_level_player.gd" id="2_e04ep"]
+[ext_resource type="Script" uid="uid://d2ngaogmprfq2" path="res://scenese/Switch_Level_Scene/switch_level_fall_down_to_dark_level.gd" id="1_p5h0h"]
+[ext_resource type="Script" uid="uid://xbcpaymfnelv" path="res://scenese/Switch_Level_Scene/switch_level_fall_down_to_dark_level_player.gd" id="2_e04ep"]
 [ext_resource type="AudioStream" uid="uid://ds2i0xwwr1o0m" path="res://audio/footstep_left.wav" id="3_djr1x"]
 [ext_resource type="Texture2D" uid="uid://c5jucflnj4aed" path="res://assets/Attack_1.png" id="3_e04ep"]
 [ext_resource type="AudioStream" uid="uid://u25accuh2d5y" path="res://audio/footstep_right.wav" id="4_06h5e"]
@@ -21,11 +22,12 @@
 [ext_resource type="AudioStream" uid="uid://iog6aib4x6xf" path="res://audio/switch_clack_final.wav" id="15_l4fbc"]
 [ext_resource type="Script" uid="uid://bj507fppfsumt" path="res://scenese/Switch_Level_Scene/SwitchPuzzle.gd" id="15_y6mr1"]
 [ext_resource type="Script" uid="uid://dvtksnul8myw8" path="res://scenese/Switch_Level_Scene/FragileTileManager.gd" id="17_gbsh4"]
-[ext_resource type="Script" path="res://scenese/Switch_Level_Scene/DarkLevelJump.gd" id="18_382vt"]
-[ext_resource type="Script" path="res://scenese/Switch_Level_Scene/StatueArea.gd" id="19_bpyos"]
+[ext_resource type="Script" uid="uid://dff1unh5c5d0v" path="res://scenese/Switch_Level_Scene/DarkLevelJump.gd" id="18_382vt"]
+[ext_resource type="Script" uid="uid://bytf525k2s5fj" path="res://scenese/Switch_Level_Scene/StatueArea.gd" id="19_bpyos"]
 [ext_resource type="AudioStream" uid="uid://q42p8rhell25" path="res://audio/fragile_tile_sound.wav" id="19_e04ep"]
 [ext_resource type="PackedScene" uid="uid://d3aucpbiae3pl" path="res://scenese/Memory_Fragment/memory_bar.tscn" id="21_e04ep"]
 [ext_resource type="Script" uid="uid://cbg11jobca3r8" path="res://scenese/Level_2_Scene/pause_menu.gd" id="26_8kcsc"]
+[ext_resource type="AudioStream" uid="uid://b0cyrs7l2j8iu" path="res://audio/switchLevel.ogg" id="27_ytblk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d25ov"]
 texture = ExtResource("1_m153c")
@@ -1217,6 +1219,8 @@ bg_color = Color(0.07058824, 0.07058824, 0.09411765, 0)
 bg_color = Color(0.78431374, 0, 0, 1)
 
 [node name="switchLevel_FallDownToDarkLevel" type="Node2D"]
+script = ExtResource("1_p5h0h")
+level_music = ExtResource("27_ytblk")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_7njrc")

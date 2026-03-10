@@ -1,4 +1,4 @@
-[gd_scene load_steps=96 format=3 uid="uid://byossdi7xj41n"]
+[gd_scene load_steps=97 format=3 uid="uid://byossdi7xj41n"]
 
 [ext_resource type="Script" uid="uid://cjwgwuf4527pc" path="res://scenese/Level_3_Scene/level_3.gd" id="1_3tpim"]
 [ext_resource type="Texture2D" uid="uid://dfocwi30g3sao" path="res://assets/Layers/tileset.png" id="2_vv5ey"]
@@ -25,8 +25,9 @@
 [ext_resource type="Script" uid="uid://blw4kaqldr2uh" path="res://scenese/Level_3_Scene/instr_3.gd" id="19_gscjm"]
 [ext_resource type="PackedScene" uid="uid://dpjh4d6f84m6f" path="res://scenese/Memory_Fragment/memory_fragment.tscn" id="22_u64iv"]
 [ext_resource type="PackedScene" uid="uid://d3aucpbiae3pl" path="res://scenese/Memory_Fragment/memory_bar.tscn" id="23_nk4dh"]
-[ext_resource type="Script" path="res://scenese/Level_2_Scene/pause_menu.gd" id="24_fu3yw"]
-[ext_resource type="Script" path="res://scenese/Level_3_Scene/Exit Door to Level 4.gd" id="24_nk4dh"]
+[ext_resource type="Script" uid="uid://cbg11jobca3r8" path="res://scenese/Level_2_Scene/pause_menu.gd" id="24_fu3yw"]
+[ext_resource type="Script" uid="uid://ca3hqs2ob7t4q" path="res://scenese/Level_3_Scene/Exit Door to Level 4.gd" id="24_nk4dh"]
+[ext_resource type="AudioStream" uid="uid://dkkqmlh47ayf2" path="res://audio/level3.ogg" id="28_avwls"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i3yjj"]
 size = Vector2(5.5, 353.5)
@@ -897,6 +898,7 @@ bg_color = Color(0.78431374, 0, 0, 1)
 [node name="Level_3" type="Node2D"]
 position = Vector2(-113, -297)
 script = ExtResource("1_3tpim")
+level_music = ExtResource("28_avwls")
 
 [node name="BoundaryWalls" type="StaticBody2D" parent="."]
 position = Vector2(3452, 216)

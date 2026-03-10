@@ -18,7 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://b6veb1le7y841" path="res://assets/Jump.png" id="11_5njk0"]
 [ext_resource type="Texture2D" uid="uid://b1gneict7cgpl" path="res://assets/Run.png" id="12_r45wr"]
 [ext_resource type="Texture2D" uid="uid://crlgon4s02ko0" path="res://assets/Walk.png" id="13_ggtcp"]
-[ext_resource type="Script" path="res://scenese/Level_1_Scene/Exit door to Level 2.gd" id="17_16dq7"]
+[ext_resource type="Script" uid="uid://c2mss75yih01b" path="res://scenese/Level_1_Scene/Exit door to Level 2.gd" id="17_16dq7"]
 [ext_resource type="Script" uid="uid://cbg11jobca3r8" path="res://scenese/Level_2_Scene/pause_menu.gd" id="18_05i61"]
 [ext_resource type="AudioStream" uid="uid://7mdnle4vfvjb" path="res://audio/level1.ogg" id="18_audio"]
 
@@ -1262,6 +1262,7 @@ bg_color = Color(0.78431374, 0, 0, 1)
 [node name="Level1" type="Node2D"]
 position = Vector2(17, -189)
 script = ExtResource("1_tnuwx")
+level_music = ExtResource("18_audio")
 
 [node name="MemoryBar" parent="." instance=ExtResource("2_16dq7")]
 
@@ -1463,10 +1464,6 @@ offset_bottom = 34.999996
 theme_override_colors/font_color = Color(0.9691369, 0.9691369, 0.9691368, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_alg4v")
 text = "X"
-
-[node name="BackgroundMusic2" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("18_audio")
-autoplay = true
 
 [connection signal="body_entered" from="Orb_spot" to="." method="_on_orb_spot_body_entered"]
 [connection signal="animation_finished" from="player/AnimatedSprite2D" to="player" method="_on_animated_sprite_2d_animation_finished"]

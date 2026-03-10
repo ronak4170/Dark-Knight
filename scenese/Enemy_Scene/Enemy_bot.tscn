@@ -1,14 +1,15 @@
-[gd_scene load_steps=128 format=3 uid="uid://oyf4nbyrdlpy"]
+[gd_scene load_steps=133 format=3 uid="uid://oyf4nbyrdlpy"]
 
+[ext_resource type="Script" uid="uid://kiowpclt17h5" path="res://scenese/Enemy_Scene/enemy_bot_root.gd" id="1_abysj"]
 [ext_resource type="Texture2D" uid="uid://17g1k761sjni" path="res://assets/16x16 Underground Passage/Sprites/Terrain/Sprites_00.png" id="1_gne3p"]
 [ext_resource type="Texture2D" uid="uid://burv5ie63lvy0" path="res://assets/16x16 Underground Passage/Sprites/Terrain/Sprites_17.png" id="2_alwgo"]
 [ext_resource type="Texture2D" uid="uid://sbi65lutqyiu" path="res://assets/16x16 Underground Passage/Sprites/Terrain/Sprites_18.png" id="3_rpfo7"]
 [ext_resource type="Texture2D" uid="uid://ns8ns0dojyl2" path="res://assets/16x16 Underground Passage/Sprites/Web/Web_01.png" id="4_7mxvg"]
 [ext_resource type="Texture2D" uid="uid://cuhvfkak2hug3" path="res://assets/16x16 Underground Passage/Mockup1.png" id="5_umnfu"]
-[ext_resource type="Script" path="res://scenese/final_player.gd" id="6_rpfo7"]
+[ext_resource type="Script" uid="uid://drgsy5uv8cpgf" path="res://scenese/final_player.gd" id="6_rpfo7"]
 [ext_resource type="Texture2D" uid="uid://c5jucflnj4aed" path="res://assets/Attack_1.png" id="7_alwgo"]
 [ext_resource type="AudioStream" uid="uid://ds2i0xwwr1o0m" path="res://audio/footstep_left.wav" id="7_rpfo7"]
-[ext_resource type="Script" path="res://boss2.gd" id="7_tbgk7"]
+[ext_resource type="Script" uid="uid://clx1rthkl5u67" path="res://boss2.gd" id="7_tbgk7"]
 [ext_resource type="AudioStream" uid="uid://u25accuh2d5y" path="res://audio/footstep_right.wav" id="8_7mxvg"]
 [ext_resource type="PackedScene" uid="uid://bv0vqrp1yb71i" path="res://scenese/Enemy_Scene/NormalSpell.tscn" id="8_iy5aj"]
 [ext_resource type="Texture2D" uid="uid://c7kf350ejvyog" path="res://assets/Attack_2.png" id="8_rpfo7"]
@@ -23,14 +24,18 @@
 [ext_resource type="Texture2D" uid="uid://cbw16fwjgpyg2" path="res://craftpix-net-123681-free-samurai-pixel-art-sprite-sheets (1)/Samurai_Archer/Dead.png" id="13_bjkv0"]
 [ext_resource type="Texture2D" uid="uid://dtl3kq5rsv61x" path="res://assets/Idle.png" id="13_q2ref"]
 [ext_resource type="Texture2D" uid="uid://b6veb1le7y841" path="res://assets/Jump.png" id="14_8i167"]
-[ext_resource type="Script" path="res://scenese/Enemy_Scene/heath_bar.gd" id="14_iy5aj"]
+[ext_resource type="Script" uid="uid://bftpjo0xqmyuk" path="res://scenese/Enemy_Scene/heath_bar.gd" id="14_iy5aj"]
 [ext_resource type="Texture2D" uid="uid://b1gneict7cgpl" path="res://assets/Run.png" id="15_oduyy"]
 [ext_resource type="Texture2D" uid="uid://crlgon4s02ko0" path="res://assets/Walk.png" id="16_abysj"]
 [ext_resource type="AudioStream" uid="uid://cp2dg75a3l7ig" path="res://assets/Audio/player_jump.wav" id="18_umnfu"]
 [ext_resource type="AudioStream" uid="uid://coryskovn1wcq" path="res://audio/SwordSound.mp3" id="19_j0ccq"]
-[ext_resource type="Script" path="res://scenese/Level_2_Scene/pause_menu.gd" id="25_alwgo"]
+[ext_resource type="Script" uid="uid://cbg11jobca3r8" path="res://scenese/Level_2_Scene/pause_menu.gd" id="25_alwgo"]
+[ext_resource type="AudioStream" uid="uid://rffffcatkru6" path="res://audio/boss_attack_1.wav" id="25_oduyy"]
+[ext_resource type="AudioStream" uid="uid://bmlrybeh3ahfk" path="res://audio/boss_attack_2.wav" id="26_abysj"]
+[ext_resource type="AudioStream" uid="uid://bualnums7lhc4" path="res://audio/boss_attack_3.wav" id="27_bfqwb"]
 [ext_resource type="PackedScene" uid="uid://d3aucpbiae3pl" path="res://scenese/Memory_Fragment/memory_bar.tscn" id="30_jk0k1"]
 [ext_resource type="PackedScene" uid="uid://dpjh4d6f84m6f" path="res://scenese/Memory_Fragment/memory_fragment.tscn" id="31_1n2e6"]
+[ext_resource type="AudioStream" uid="uid://fk2kpxdylar" path="res://audio/FinalLevelMusic.ogg" id="35_abysj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p2w3n"]
 texture = ExtResource("1_gne3p")
@@ -1607,6 +1612,8 @@ height = 60.0
 bg_color = Color(0.78431374, 0, 0, 1)
 
 [node name="Node2D" type="Node2D"]
+script = ExtResource("1_abysj")
+level_music = ExtResource("35_abysj")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_mclpv")
@@ -1667,12 +1674,15 @@ teleport_positions = Array[Vector2]([Vector2(200, 0), Vector2(300, 0), Vector2(2
 normal_spell = ExtResource("8_iy5aj")
 fast_spell = ExtResource("9_1s2ak")
 heavy_spell = ExtResource("10_bjkv0")
+attack_sound_1 = ExtResource("25_oduyy")
+attack_sound_2 = ExtResource("26_abysj")
+attack_sound_3 = ExtResource("27_bfqwb")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Boss"]
 position = Vector2(395, -55)
 scale = Vector2(0.921875, 0.84375)
 sprite_frames = SubResource("SpriteFrames_n53x4")
-animation = &"Idle"
+animation = &"death"
 autoplay = "Idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Boss"]
@@ -1706,6 +1716,8 @@ offset_left = 318.0
 offset_top = -165.0
 offset_right = 383.0
 offset_bottom = -142.0
+
+[node name="AttackSFX" type="AudioStreamPlayer2D" parent="Boss"]
 
 [node name="PauseMenu" type="CanvasLayer" parent="."]
 script = ExtResource("25_alwgo")

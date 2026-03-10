@@ -1,16 +1,20 @@
 extends Node
 
-@onready var bgm: AudioStreamPlayer = $BGM
+@onready var player: AudioStreamPlayer = $BGM
 
-func play_track(stream: AudioStream, volume_db := 0.0):
-	if bgm.stream == stream and bgm.playing:
+var current_track: AudioStream = null
+
+func play_music(track: AudioStream) -> void:
+	if track == null:
 		return
 
-	bgm.stop()
-	bgm.stream = stream
-	bgm.volume_db = volume_db
-	bgm.play()
+	# if same music is already playing, do nothing
+	if player.stream == track and player.playing:
+		return
 
-func stop_music():
-	if bgm.playing:
-		bgm.stop()
+	player.stream = track
+	player.play()
+
+func stop_music() -> void:
+	player.stop()
+	current_track = null
