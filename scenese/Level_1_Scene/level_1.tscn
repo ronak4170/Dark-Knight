@@ -18,8 +18,8 @@
 [ext_resource type="Texture2D" uid="uid://b6veb1le7y841" path="res://assets/Jump.png" id="11_5njk0"]
 [ext_resource type="Texture2D" uid="uid://b1gneict7cgpl" path="res://assets/Run.png" id="12_r45wr"]
 [ext_resource type="Texture2D" uid="uid://crlgon4s02ko0" path="res://assets/Walk.png" id="13_ggtcp"]
-[ext_resource type="Script" uid="uid://udvbrpgotds" path="res://scenese/Level_1_Scene/pause_menu.gd" id="16_0ly4g"]
-[ext_resource type="Script" uid="uid://c2mss75yih01b" path="res://scenese/Level_1_Scene/Exit door to Level 2.gd" id="17_16dq7"]
+[ext_resource type="Script" path="res://scenese/Level_1_Scene/Exit door to Level 2.gd" id="17_16dq7"]
+[ext_resource type="Script" uid="uid://cbg11jobca3r8" path="res://scenese/Level_2_Scene/pause_menu.gd" id="18_05i61"]
 [ext_resource type="AudioStream" uid="uid://7mdnle4vfvjb" path="res://audio/level1.ogg" id="18_audio"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_16dq7"]
@@ -1256,7 +1256,7 @@ height = 56.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0ly4g"]
 size = Vector2(15, 66)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_16dq7"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_alg4v"]
 bg_color = Color(0.78431374, 0, 0, 1)
 
 [node name="Level1" type="Node2D"]
@@ -1343,8 +1343,42 @@ next_level_scene = "uid://b3kqrrfl4n3yu"
 position = Vector2(2030.5, 148)
 shape = SubResource("RectangleShape2D_0ly4g")
 
+[node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
+autoplay = true
+
 [node name="PauseMenu" type="CanvasLayer" parent="."]
-script = ExtResource("16_0ly4g")
+script = ExtResource("18_05i61")
+
+[node name="PausePanel" type="Panel" parent="PauseMenu"]
+offset_top = 10.0
+offset_right = 40.0
+offset_bottom = 50.0
+
+[node name="ResumeButton" type="Button" parent="PauseMenu/PausePanel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="QuitButton" type="Button" parent="PauseMenu/PausePanel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="MenuButton" type="Button" parent="PauseMenu/PausePanel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="PausedTitle" type="Label" parent="PauseMenu/PausePanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "PAUSED"
+
+[node name="SettingsButton" type="Button" parent="PauseMenu/PausePanel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
 
 [node name="SettingsPanel" type="Panel" parent="PauseMenu"]
 anchors_preset = -1
@@ -1352,17 +1386,17 @@ anchor_left = -0.055000003
 anchor_top = -0.08400001
 anchor_right = -0.055000003
 anchor_bottom = -0.08400001
-offset_left = 336.36002
-offset_top = 60.432003
-offset_right = 764.36
-offset_bottom = 367.432
+offset_left = 331.36002
+offset_top = 69.43201
+offset_right = 759.36
+offset_bottom = 376.432
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu/SettingsPanel"]
 layout_mode = 0
-offset_left = -1.0
-offset_top = -16.0
-offset_right = 599.0
-offset_bottom = 584.0
+offset_left = -2.0
+offset_top = -7.0
+offset_right = 598.0
+offset_bottom = 593.0
 theme_override_constants/separation = 10
 
 [node name="SettingsTitle" type="Label" parent="PauseMenu/SettingsPanel/VBoxContainer"]
@@ -1371,36 +1405,50 @@ theme_override_font_sizes/font_size = 45
 text = "Settings"
 horizontal_alignment = 1
 
-[node name="VolumeRow" type="HBoxContainer" parent="PauseMenu/SettingsPanel/VBoxContainer"]
+[node name="VolumeRow" type="Control" parent="PauseMenu/SettingsPanel/VBoxContainer"]
 custom_minimum_size = Vector2(250, 30)
 layout_mode = 2
 
 [node name="VolumeLabel" type="Label" parent="PauseMenu/SettingsPanel/VBoxContainer/VolumeRow"]
-layout_mode = 2
+layout_mode = 0
+offset_right = 113.0
+offset_bottom = 49.0
 theme_override_font_sizes/font_size = 35
 text = "AUDIO"
 
 [node name="VolumeSlider" type="HSlider" parent="PauseMenu/SettingsPanel/VBoxContainer/VolumeRow"]
 custom_minimum_size = Vector2(250, 20)
-layout_mode = 2
+layout_mode = 0
+offset_left = 102.0
+offset_top = 2.0
+offset_right = 452.0
+offset_bottom = 22.0
 size_flags_stretch_ratio = 1.5
 max_value = 1.0
 step = 0.01
 value = 1.0
 ticks_position = 3
 
-[node name="SFX" type="HBoxContainer" parent="PauseMenu/SettingsPanel/VBoxContainer"]
+[node name="SFX" type="Control" parent="PauseMenu/SettingsPanel/VBoxContainer"]
 custom_minimum_size = Vector2(250, 30)
 layout_mode = 2
 
 [node name="SFXLabel" type="Label" parent="PauseMenu/SettingsPanel/VBoxContainer/SFX"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 35
+layout_mode = 0
+offset_top = 1.0
+offset_right = 35.0
+offset_bottom = 29.0
+theme_override_colors/font_color = Color(0.69803923, 0.69803923, 1, 1)
+theme_override_font_sizes/font_size = 22
 text = "SFX"
 
 [node name="SFXSlider" type="HSlider" parent="PauseMenu/SettingsPanel/VBoxContainer/SFX"]
-custom_minimum_size = Vector2(250, 20)
-layout_mode = 2
+custom_minimum_size = Vector2(350, 20)
+layout_mode = 0
+offset_left = 103.0
+offset_top = 1.0
+offset_right = 453.0
+offset_bottom = 21.0
 max_value = 1.0
 step = 0.01
 value = 1.0
@@ -1408,15 +1456,15 @@ ticks_position = 3
 
 [node name="CloseButton" type="Button" parent="PauseMenu/SettingsPanel"]
 layout_mode = 0
-offset_left = 382.0
-offset_top = 5.0
-offset_right = 428.0
-offset_bottom = 28.0
+offset_left = 374.0
+offset_top = 11.999996
+offset_right = 420.0
+offset_bottom = 34.999996
 theme_override_colors/font_color = Color(0.9691369, 0.9691369, 0.9691368, 1)
-theme_override_styles/normal = SubResource("StyleBoxFlat_16dq7")
+theme_override_styles/normal = SubResource("StyleBoxFlat_alg4v")
 text = "X"
 
-[node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
+[node name="BackgroundMusic2" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("18_audio")
 autoplay = true
 

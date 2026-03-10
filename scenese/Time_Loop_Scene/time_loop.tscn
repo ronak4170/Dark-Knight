@@ -1,4 +1,4 @@
-[gd_scene load_steps=115 format=3 uid="uid://cuywyc3gn3ujv"]
+[gd_scene load_steps=117 format=3 uid="uid://cuywyc3gn3ujv"]
 
 [ext_resource type="Script" uid="uid://30wj7iaynmcg" path="res://scenese/Time_Loop_Scene/time_loop.gd" id="1_iri56"]
 [ext_resource type="Texture2D" uid="uid://cowcd44l50ixh" path="res://dungeon_sidescroller-Raou/Tilesetv3.png" id="2_b66cj"]
@@ -27,17 +27,18 @@
 [ext_resource type="Texture2D" uid="uid://b6veb1le7y841" path="res://assets/Jump.png" id="14_s72ex"]
 [ext_resource type="Texture2D" uid="uid://b1gneict7cgpl" path="res://assets/Run.png" id="15_lmaqt"]
 [ext_resource type="Texture2D" uid="uid://crlgon4s02ko0" path="res://assets/Walk.png" id="16_pgtg6"]
-[ext_resource type="Script" uid="uid://dfoopaegfb8wd" path="res://scenese/Time_Loop_Scene/flower.gd" id="20_kprkb"]
-[ext_resource type="Script" uid="uid://bt5pneart17x2" path="res://scenese/Time_Loop_Scene/checkpoint.gd" id="21_3dsw4"]
-[ext_resource type="Script" uid="uid://cdep8vqhls5co" path="res://scenese/Time_Loop_Scene/puzzle_manager.gd" id="22_248fq"]
+[ext_resource type="Script" path="res://scenese/Time_Loop_Scene/flower.gd" id="20_kprkb"]
+[ext_resource type="Script" path="res://scenese/Time_Loop_Scene/checkpoint.gd" id="21_3dsw4"]
+[ext_resource type="Script" path="res://scenese/Time_Loop_Scene/puzzle_manager.gd" id="22_248fq"]
 [ext_resource type="AudioStream" uid="uid://cp2dg75a3l7ig" path="res://assets/Audio/player_jump.wav" id="26_rwuv2"]
-[ext_resource type="Script" uid="uid://bf437piulu22u" path="res://scenese/Time_Loop_Scene/torch_area_1.gd" id="27_ceer6"]
-[ext_resource type="Script" uid="uid://c21xpffno4dvv" path="res://scenese/Time_Loop_Scene/torch_area_2.gd" id="28_qw4bw"]
-[ext_resource type="Script" uid="uid://3n2ryasg52r0" path="res://scenese/Time_Loop_Scene/pillar_area_1.gd" id="29_d7ss3"]
-[ext_resource type="Script" uid="uid://crfcats67ry44" path="res://scenese/Time_Loop_Scene/pillar_area_2.gd" id="30_ggrlu"]
-[ext_resource type="Script" uid="uid://csp2qpp7inbqq" path="res://scenese/Time_Loop_Scene/torch_ui.gd" id="31_msohq"]
-[ext_resource type="Script" uid="uid://b5v6pt5uo4mn0" path="res://scenese/Time_Loop_Scene/torch_area_3.gd" id="32_71lwo"]
-[ext_resource type="Script" uid="uid://ds7v2psdsii61" path="res://scenese/Time_Loop_Scene/Exit Door to Final Boss Level.gd" id="37_71lwo"]
+[ext_resource type="Script" path="res://scenese/Time_Loop_Scene/torch_area_1.gd" id="27_ceer6"]
+[ext_resource type="Script" path="res://scenese/Time_Loop_Scene/torch_area_2.gd" id="28_qw4bw"]
+[ext_resource type="Script" path="res://scenese/Time_Loop_Scene/pillar_area_1.gd" id="29_d7ss3"]
+[ext_resource type="Script" path="res://scenese/Time_Loop_Scene/pillar_area_2.gd" id="30_ggrlu"]
+[ext_resource type="Script" path="res://scenese/Time_Loop_Scene/torch_ui.gd" id="31_msohq"]
+[ext_resource type="Script" path="res://scenese/Time_Loop_Scene/torch_area_3.gd" id="32_71lwo"]
+[ext_resource type="Script" path="res://scenese/Time_Loop_Scene/Exit Door to Final Boss Level.gd" id="37_71lwo"]
+[ext_resource type="Script" uid="uid://cbg11jobca3r8" path="res://scenese/Level_2_Scene/pause_menu.gd" id="39_u4fd7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bv0gu"]
 texture = ExtResource("2_b66cj")
@@ -3406,6 +3407,9 @@ size = Vector2(55, 85)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_71lwo"]
 size = Vector2(136, 51)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5kody"]
+bg_color = Color(0.78431374, 0, 0, 1)
+
 [node name="Time_Loop" type="Node2D"]
 position = Vector2(-14, -1871)
 script = ExtResource("1_iri56")
@@ -3641,6 +3645,124 @@ shape = SubResource("RectangleShape2D_msohq")
 [node name="ExitDoorAir" type="CollisionShape2D" parent="Exit Door to Final Boss Level"]
 position = Vector2(2485, 3728.5)
 shape = SubResource("RectangleShape2D_71lwo")
+
+[node name="PauseMenu" type="CanvasLayer" parent="."]
+script = ExtResource("39_u4fd7")
+
+[node name="PausePanel" type="Panel" parent="PauseMenu"]
+offset_top = 10.0
+offset_right = 40.0
+offset_bottom = 50.0
+
+[node name="ResumeButton" type="Button" parent="PauseMenu/PausePanel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="QuitButton" type="Button" parent="PauseMenu/PausePanel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="MenuButton" type="Button" parent="PauseMenu/PausePanel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="SettingsButton" type="Button" parent="PauseMenu/PausePanel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="PausedTitle" type="Label" parent="PauseMenu/PausePanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "PAUSED"
+
+[node name="SettingsPanel" type="Panel" parent="PauseMenu"]
+anchors_preset = -1
+anchor_left = -0.055000003
+anchor_top = -0.08400001
+anchor_right = -0.055000003
+anchor_bottom = -0.08400001
+offset_left = 331.36002
+offset_top = 69.43201
+offset_right = 759.36
+offset_bottom = 376.432
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu/SettingsPanel"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = -7.0
+offset_right = 598.0
+offset_bottom = 593.0
+theme_override_constants/separation = 10
+
+[node name="SettingsTitle" type="Label" parent="PauseMenu/SettingsPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="VolumeRow" type="Control" parent="PauseMenu/SettingsPanel/VBoxContainer"]
+custom_minimum_size = Vector2(250, 30)
+layout_mode = 2
+
+[node name="VolumeLabel" type="Label" parent="PauseMenu/SettingsPanel/VBoxContainer/VolumeRow"]
+layout_mode = 0
+offset_right = 113.0
+offset_bottom = 49.0
+theme_override_font_sizes/font_size = 35
+text = "AUDIO"
+
+[node name="VolumeSlider" type="HSlider" parent="PauseMenu/SettingsPanel/VBoxContainer/VolumeRow"]
+custom_minimum_size = Vector2(250, 20)
+layout_mode = 0
+offset_left = 102.0
+offset_top = 2.0
+offset_right = 452.0
+offset_bottom = 22.0
+size_flags_stretch_ratio = 1.5
+max_value = 1.0
+step = 0.01
+value = 1.0
+ticks_position = 3
+
+[node name="SFX" type="Control" parent="PauseMenu/SettingsPanel/VBoxContainer"]
+custom_minimum_size = Vector2(250, 30)
+layout_mode = 2
+
+[node name="SFXLabel" type="Label" parent="PauseMenu/SettingsPanel/VBoxContainer/SFX"]
+layout_mode = 0
+offset_top = 1.0
+offset_right = 35.0
+offset_bottom = 29.0
+theme_override_colors/font_color = Color(0.69803923, 0.69803923, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "SFX"
+
+[node name="SFXSlider" type="HSlider" parent="PauseMenu/SettingsPanel/VBoxContainer/SFX"]
+custom_minimum_size = Vector2(350, 20)
+layout_mode = 0
+offset_left = 103.0
+offset_top = 1.0
+offset_right = 453.0
+offset_bottom = 21.0
+max_value = 1.0
+step = 0.01
+value = 1.0
+ticks_position = 3
+
+[node name="CloseButton" type="Button" parent="PauseMenu/SettingsPanel"]
+layout_mode = 0
+offset_left = 374.0
+offset_top = 11.999996
+offset_right = 420.0
+offset_bottom = 34.999996
+theme_override_colors/font_color = Color(0.9691369, 0.9691369, 0.9691368, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_5kody")
+text = "X"
 
 [connection signal="animation_finished" from="player_time_loop/AnimatedSprite2D" to="player_time_loop" method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="Flower" to="Flower" method="_on_body_entered"]
