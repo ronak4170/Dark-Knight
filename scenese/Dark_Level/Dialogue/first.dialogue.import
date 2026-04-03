@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://i1mn158ilc5l"
+path="res://.godot/imported/first.dialogue-dfc8d5135041eff43e5fe68fb6e0df2c.tres"
+
+[deps]
+
+source_file="res://scenese/Dark_Level/Dialogue/first.dialogue"
+dest_files=["res://.godot/imported/first.dialogue-dfc8d5135041eff43e5fe68fb6e0df2c.tres"]
+
+[params]
+
+defaults=true

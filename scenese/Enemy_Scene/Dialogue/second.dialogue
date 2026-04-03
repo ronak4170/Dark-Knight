@@ -1,0 +1,11 @@
+~ second
+
+EnemySmile: Do you remember?
+Player: Remember what?
+EnemySmile: You are me and I am you. 
+EnemySmile: I know what we are. We're the same. 
+do show_input_box()
+if player_answered_correctly
+	EnemySpecial: You remembered. Good. 
+else
+	EnemySmile: I guess I'll remind you. 

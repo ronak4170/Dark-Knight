@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dy8sj2rbctrcy"
+path="res://.godot/imported/checkpoint2.dialogue-4ed41e8464dfd210b92c3c9dd03c0274.tres"
+
+[deps]
+
+source_file="res://scenese/Time_Loop_Scene/Dialogue/checkpoint2.dialogue"
+dest_files=["res://.godot/imported/checkpoint2.dialogue-4ed41e8464dfd210b92c3c9dd03c0274.tres"]
+
+[params]
+
+defaults=true

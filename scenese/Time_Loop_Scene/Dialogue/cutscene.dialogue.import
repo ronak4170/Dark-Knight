@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://oawl7d4kcww"
+path="res://.godot/imported/cutscene.dialogue-f53a91ffa9c4ae6edfe76ec5730da6f2.tres"
+
+[deps]
+
+source_file="res://scenese/Time_Loop_Scene/Dialogue/cutscene.dialogue"
+dest_files=["res://.godot/imported/cutscene.dialogue-f53a91ffa9c4ae6edfe76ec5730da6f2.tres"]
+
+[params]
+
+defaults=true

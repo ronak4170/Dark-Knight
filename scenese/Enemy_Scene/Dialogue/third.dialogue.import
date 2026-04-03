@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://bp8nna4ii28jn"
+path="res://.godot/imported/third.dialogue-1debb0425fb6452106416d671e0e15b2.tres"
+
+[deps]
+
+source_file="res://scenese/Enemy_Scene/Dialogue/third.dialogue"
+dest_files=["res://.godot/imported/third.dialogue-1debb0425fb6452106416d671e0e15b2.tres"]
+
+[params]
+
+defaults=true

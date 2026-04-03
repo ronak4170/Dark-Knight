@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cdmujw65ifcpn"
+path="res://.godot/imported/first.dialogue-df9e211c1923098aaadd22af1c71c926.tres"
+
+[deps]
+
+source_file="res://scenese/Enemy_Scene/Dialogue/first.dialogue"
+dest_files=["res://.godot/imported/first.dialogue-df9e211c1923098aaadd22af1c71c926.tres"]
+
+[params]
+
+defaults=true

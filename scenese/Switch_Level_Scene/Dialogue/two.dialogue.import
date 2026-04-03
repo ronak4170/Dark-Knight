@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://da457yii4qful"
+path="res://.godot/imported/two.dialogue-1ba06146af3703eb31ffcad8406b9072.tres"
+
+[deps]
+
+source_file="res://scenese/Switch_Level_Scene/Dialogue/two.dialogue"
+dest_files=["res://.godot/imported/two.dialogue-1ba06146af3703eb31ffcad8406b9072.tres"]
+
+[params]
+
+defaults=true

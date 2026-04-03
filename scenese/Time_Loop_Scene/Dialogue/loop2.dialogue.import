@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dtlah3swua023"
+path="res://.godot/imported/loop2.dialogue-ba9eba76e5deb300a70bf1fce9d813c0.tres"
+
+[deps]
+
+source_file="res://scenese/Time_Loop_Scene/Dialogue/loop2.dialogue"
+dest_files=["res://.godot/imported/loop2.dialogue-ba9eba76e5deb300a70bf1fce9d813c0.tres"]
+
+[params]
+
+defaults=true
