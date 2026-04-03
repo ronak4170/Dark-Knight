@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dprspwp1hjej7"
+path="res://.godot/imported/move.dialogue-899ce86031f60e74bf7a0bf55c82bf55.tres"
+
+[deps]
+
+source_file="res://scenese/Level_2_Scene/Dialogue/move.dialogue"
+dest_files=["res://.godot/imported/move.dialogue-899ce86031f60e74bf7a0bf55c82bf55.tres"]
+
+[params]
+
+defaults=true
